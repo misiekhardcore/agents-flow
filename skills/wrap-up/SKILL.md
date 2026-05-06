@@ -1,6 +1,7 @@
 ---
 name: wrap-up
-description: Clean up local state after a PR is open — remove the worktree, delete the branch, and clear NOTES.md. User-invoked utility; run when ready to discard the feature worktree.
+description: Clean up local state after a PR is open — remove the worktree, delete the branch, and clear NOTES.md.
+when_to_use: Run when ready to discard the feature worktree after a PR is open.
 model: sonnet
 ---
 

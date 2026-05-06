@@ -1,8 +1,10 @@
 ---
 name: discovery
 description: Full discovery phase — explore a problem and produce a GitHub issue with acceptance criteria. Use at the start of any new feature.
+when_to_use: Use at the start of any new feature or to explore a vague problem statement. Precedes /define. For clearly-specified issues with existing AC, skip to /implement.
+argument-hint: "[issue# | description]"
 model: opus
-effortLevel: high
+effort: high
 ---
 
 You are leading the discovery phase. Your goal is to take a vague idea and produce a well-specified GitHub issue ready for architecture and implementation.

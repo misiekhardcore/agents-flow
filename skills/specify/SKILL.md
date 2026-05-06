@@ -1,6 +1,7 @@
 ---
 name: specify
 description: Define acceptance criteria, edge cases, and scope for a feature. Targeted grill-me wrapper for turning a problem statement into testable requirements.
+when_to_use: Use after /describe has produced a problem statement. Invoked by /discovery; may run standalone.
 model: sonnet
 ---
 

@@ -1,6 +1,8 @@
 ---
 name: build
-description: Build a feature from a GitHub issue. Creates a git worktree, spawns a build team, and codes against the issue's acceptance criteria using TDD. Use after /define has produced approved architecture decisions.
+description: Build a feature from a GitHub issue. Creates a git worktree and codes against acceptance criteria using TDD.
+when_to_use: Use after /define has produced approved architecture decisions. Invoked automatically by /implement.
+argument-hint: "[issue#]"
 model: sonnet
 ---
 

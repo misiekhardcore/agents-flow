@@ -6,7 +6,21 @@ GitHub Releases (with auto-generated notes and source tarballs) remain the canon
 
 ## [Unreleased]
 
-_No changes yet._
+### Changed
+
+- **`effortLevel` → `effort` migration** — all 6 skills that declared `effortLevel: high` (architecture, define, describe, discovery, epic-autopilot, review) now use the correct harness field `effort: high`. Templates (`SKILL.specialist.template.md`, `SKILL.orchestrator.template.md`) and plugin guidance (`CLAUDE.md`, `AUTHORING.md`) updated in lockstep. Previously `effortLevel: high` was silently ignored; `effort: high` now enables the intended higher-effort execution.
+
+- **`AUTHORING.md` frontmatter table expanded** — `effortLevel` row replaced by `effort` (`low|medium|high|xhigh|max`); new rows added for `when_to_use`, `argument-hint`, `user-invocable`, and `disable-model-invocation`. Notes added for the 1,536-char combined `description + when_to_use` cap and the upstream `argument-hint` autocomplete bug ([anthropics/claude-code#46626](https://github.com/anthropics/claude-code/issues/46626)). Canonical frontmatter field order documented.
+
+- **`argument-hint` added** to 8 positional-argument skills: build (`[issue#]`), implement (`[issue#]`), review (`[PR# or URL]`), resolve-pr-feedback (`[thread-URL]`), audit-issues (`[owner/repo | #NN | owner/repo#NN]`), epic-autopilot (`[epic# | description]`), discovery (`[issue# | description]`), define (`[issue#]`).
+
+- **Descriptions trimmed to ≤150 chars** across 13 skills (prune, review, new-skill, grill-me, define, epic-autopilot, resolve-pr-feedback, verify, build, describe, wrap-up, architecture, design). Trigger-phrase content relocated to `when_to_use`; other overflow moved to skill body. No information discarded.
+
+- **`when_to_use` field added** to describe, discovery, specify, define (disambiguation guidance), and additionally to build, epic-autopilot, grill-me, prune, resolve-pr-feedback, wrap-up (trigger-phrase overflow from trimmed descriptions).
+
+- **`/new-skill` scaffolder updated** — step (e) renamed to `effort`, two new interview questions added: (f) `argument-hint` (free-text positional-arg hint; asked after description) and user-invocable follow-up in step (c) for Specialist/Primitive roles. Generation step updated to emit all four new fields in canonical order.
+
+- **Frontmatter field order normalized** across all SKILL.md files to canonical order: `name → description → when_to_use → argument-hint → model → effort → allowed-tools → user-invocable → disable-model-invocation`.
 
 ## [1.0.2] — 2026-05-04
 

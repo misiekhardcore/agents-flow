@@ -1,8 +1,9 @@
 ---
 name: describe
-description: Explore and understand a problem space interactively. Targeted grill-me wrapper for discovering what to build — uses visualizations, user stories, and comparisons to build shared understanding.
+description: Explore and understand a problem space interactively. Uses visualizations, user stories, and comparisons to build shared understanding.
+when_to_use: Use when exploring what to build. Invoked by /discovery; may run standalone before /specify.
 model: opus
-effortLevel: high
+effort: high
 ---
 
 You are leading a product discovery team. Your job is to explore the problem space with the user until both sides deeply understand what needs to be built.

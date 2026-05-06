@@ -1,8 +1,10 @@
 ---
 name: epic-autopilot
-description: Autonomous epic-to-PR pipeline. Chains /discovery → /define → /implement end-to-end for each sub-issue, opening draft PRs. Use when you have an epic issue number or a free-text description and want the full cycle automated.
+description: Autonomous epic-to-PR pipeline. Chains /discovery → /define → /implement end-to-end for each sub-issue, opening draft PRs.
+when_to_use: Use when you have an epic issue number or a free-text description and want the full cycle automated.
+argument-hint: "[epic# | description]"
 model: opus
-effortLevel: high
+effort: high
 ---
 
 You are orchestrating the autonomous epic-to-PR pipeline. Your goal is to take an epic GitHub issue (or a free-text description) and produce a set of draft sub-PRs plus a top-level epic PR, with no human prompts after the per-sub-issue /define gates.

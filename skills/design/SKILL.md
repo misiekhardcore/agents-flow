@@ -1,6 +1,6 @@
 ---
 name: design
-description: Explore visual and UX design for a feature. Targeted grill-me wrapper for making design decisions — UI layouts, interaction flows, component structure.
+description: Explore visual and UX design for a feature. Targeted grill-me wrapper for design decisions — UI layouts, interaction flows, component structure.
 model: sonnet
 ---
 

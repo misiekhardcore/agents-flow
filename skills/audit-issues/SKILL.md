@@ -1,6 +1,7 @@
 ---
 name: audit-issues
 description: Audit open GitHub issues for staleness vs. current repo state. Flags broken file refs, stale counts, resolved questions, cross-issue contradictions.
+argument-hint: "[owner/repo | #NN | owner/repo#NN]"
 model: sonnet
 ---
 

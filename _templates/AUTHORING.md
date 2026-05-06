@@ -8,7 +8,7 @@ Every skill fills one of five authoring roles. These extend the three-role compo
 
 | Role                              | Definition                                                                                                                                                      | Examples                                                      | Typical model                |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------- |
-| **Research-leading orchestrator** | Leads a phase; spawns a research team, then a main team of specialists; writes the handoff artifact. Used when deep reasoning happens at the orchestrator tier  | `/discovery`, `/define`                                       | `opus` + `effortLevel: high` |
+| **Research-leading orchestrator** | Leads a phase; spawns a research team, then a main team of specialists; writes the handoff artifact. Used when deep reasoning happens at the orchestrator tier  | `/discovery`, `/define`                                       | `opus` + `effort: high` |
 | **Coordinator orchestrator**      | Sequences already-designed sub-skills in a loop (e.g. build → review → verify). Deep reasoning lives in the sub-skills, not the orchestrator — no research team | `/implement`                                                  | `sonnet`                     |
 | **Specialist**                    | Executes a bounded task; receives a seed brief; reports findings to the orchestrator                                                                            | `/build`, `/review`, `/architecture`, `/specify`              | `sonnet`                     |
 | **Interactive primitive**         | Reusable inline behavior; invoked by specialists; no team, no handoff                                                                                           | `/grill-me`                                                   | `sonnet`                     |
@@ -37,8 +37,22 @@ Use the role-specific templates for new skills: orchestrator, specialist, or pri
 | `name`          | yes      | lowercase kebab-case          | Matches the directory name under `skills/`                                                                                                                                                                                                                           |
 | `description`   | yes      | 1–2 sentences, ≤150 chars     | Primary trigger mechanism — include both what it does and when to use it. Hard cap: 150 chars; move examples and use-cases into the skill body where they load on invocation only |
 | `model`         | yes      | `haiku` \| `sonnet` \| `opus` | See model guide below                                                                                                                                                                                                                                                |
-| `effortLevel`   | no       | `high`                        | Only for long-form research/decision-making (discovery, define, architecture, describe)                                                                                                                                                                              |
+| `effort`        | no       | `low|medium|high|xhigh|max` | Elevates model effort for long-form research/decision-making. Use `high` for opus-tier research skills (discovery, define, architecture, describe).                                                                                                                  |
+| `when_to_use`   | no       | free text                     | Trigger phrases and "use before/after X" guidance. Rendered in the slash-command picker alongside `description`. Combined cap with `description`: 1,536 chars; keep `description` itself ≤150 chars per plugin convention.                                           |
+| `argument-hint` | no       | `[hint text]`                 | Hint shown after the slash command in the picker (e.g. `[issue#]`, `[PR# or URL]`). Forward-compatible; not yet rendered in plugin autocomplete (upstream bug [anthropics/claude-code#46626](https://github.com/anthropics/claude-code/issues/46626)).               |
+| `user-invocable`| no       | `false`                       | Set to `false` to hide the skill from the slash-command menu. Omit to keep visible (default). Use for orchestrator-internal specialists not meant for direct user invocation.                                                                                         |
+| `disable-model-invocation` | no | `true`                   | Prevents Claude from auto-invoking the skill without explicit user action.                                                                                                                                                                                            |
 | `allowed-tools` | no       | space-separated tool names    | Pre-approves listed tools so they run without per-use permission prompts. Does **not** restrict access — every tool remains callable. Omit by default; to actually block tools, use deny rules in `.claude/settings.json` or a subagent with its own `tools:` field. |
+
+### Canonical field order
+
+When multiple fields are present, use this order so diffs are predictable:
+
+```
+name → description → when_to_use → argument-hint → model → effort → allowed-tools → user-invocable → disable-model-invocation
+```
+
+Omit optional fields when not set — never write empty strings or `null` as values.
 
 ### Model guide
 

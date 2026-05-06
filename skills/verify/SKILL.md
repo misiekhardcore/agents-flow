@@ -1,6 +1,6 @@
 ---
 name: verify
-description: QA verification of an implementation against acceptance criteria. Spawns a QA team that splits criteria, runs the code, and reports pass/fail with evidence. Wraps superpowers:verification-before-completion.
+description: QA verification of an implementation against acceptance criteria. Spawns a QA team that runs the code and reports pass/fail per criterion.
 model: haiku
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: compound
-description: Capture learnings from completed work into durable, searchable wiki notes. Invoke when the user says "it's fixed", "that worked", "working now", or explicitly via /compound — also after a non-trivial debugging session or implementation concludes successfully. When the claude-obsidian plugin is installed, filing is delegated to its /save flow; otherwise the structured note is emitted inline for the user to capture.
+description: "Capture learnings from completed work into durable wiki notes. Delegates to /save when claude-obsidian is available; otherwise emits inline."
 model: sonnet
 ---
 

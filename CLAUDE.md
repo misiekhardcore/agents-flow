@@ -26,7 +26,7 @@ The building blocks: `/describe`, `/specify`, `/architecture`, `/design`, `/buil
 ## Implementation Rules
 
 - **Default to single-agent.** Use `TeamCreate` only for parallelizable work across 3+ independent files or sub-issues.
-- **Use the cheapest viable model.** Skills set their own `model:` and `effortLevel:` — trust them.
+- **Use the cheapest viable model.** Skills set their own `model:` and `effort:` — trust them.
 - **Respond concisely.** No filler, no preamble.
 
 ## Token budgets

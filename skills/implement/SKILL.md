@@ -1,6 +1,7 @@
 ---
 name: implement
 description: Full implementation cycle — build, review, and verify a feature from a GitHub issue, then open a PR.
+argument-hint: "[issue#]"
 model: sonnet
 ---
 

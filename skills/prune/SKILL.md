@@ -1,6 +1,7 @@
 ---
 name: prune
-description: Audit CLAUDE.md rules, memory files, and (optionally) the claude-obsidian vault for staleness. Also checks CLAUDE.md / AGENTS.md files for empirically-grounded authoring quality issues (length, warning density, architecture smell, decision-table candidates). Use monthly or after major refactors.
+description: Audit CLAUDE.md rules, AGENTS.md / SKILL.md authoring quality, and (optionally) the claude-obsidian vault for staleness.
+when_to_use: Use monthly or after major refactors. Vault-internal health (orphans, broken links, frontmatter gaps) is delegated to claude-obsidian's wiki-lint when available.
 model: haiku
 ---
 
