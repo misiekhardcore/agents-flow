@@ -8,7 +8,7 @@ GitHub Releases (with auto-generated notes and source tarballs) remain the canon
 
 ### Changed
 
-- **`effortLevel` → `effort` migration** — all 6 skills that declared `effortLevel: high` (architecture, define, describe, discovery, epic-autopilot, review) now use the correct harness field `effort: high`. Templates (`SKILL.specialist.template.md`, `SKILL.orchestrator.template.md`) and plugin guidance (`CLAUDE.md`, `AUTHORING.md`) updated in lockstep. Skills using `effortLevel: high` were silently running without elevated effort — the harness did not recognise the field name. Using `effort: high` now enables the intended higher-effort execution for all six affected skills.
+- **`effortLevel` → `effort` migration** — all 6 skills that declared `effortLevel: high` (architecture, define, describe, discovery, epic-autopilot, review) now use the correct harness field `effort: high`. Templates (`SKILL.specialist.template.md`, `SKILL.orchestrator.template.md`) and plugin guidance (`CLAUDE.md`, `AUTHORING.md`) updated in lockstep. Previously `effortLevel: high` was silently ignored; `effort: high` now enables the intended higher-effort execution.
 
 - **`AUTHORING.md` frontmatter table expanded** — `effortLevel` row replaced by `effort` (`low|medium|high|xhigh|max`); new rows added for `when_to_use`, `argument-hint`, `user-invocable`, and `disable-model-invocation`. Notes added for the 1,536-char combined `description + when_to_use` cap and the upstream `argument-hint` autocomplete bug ([anthropics/claude-code#46626](https://github.com/anthropics/claude-code/issues/46626)). Canonical frontmatter field order documented.
 
