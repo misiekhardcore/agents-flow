@@ -1,6 +1,8 @@
 ---
 name: resolve-pr-feedback
-description: Process PR review feedback in bulk — fetch unresolved threads, triage by category, fix in parallel, and reply with verdicts. Use when a PR has review comments to address or when given a specific review thread URL.
+description: Process PR review feedback in bulk — fetch unresolved threads, triage by category, fix in parallel, and reply with verdicts.
+when_to_use: Use when a PR has review comments to address or when given a specific review thread URL.
+argument-hint: "[thread-URL]"
 model: sonnet
 ---
 
