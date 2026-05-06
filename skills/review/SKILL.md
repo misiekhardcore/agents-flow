@@ -1,8 +1,9 @@
 ---
 name: review
-description: Review an implementation against its issue requirements. Spawns a review team — one for correctness, one for style/standards. Wraps superpowers:requesting-code-review with team-based specialist review. Optionally accepts a PR number/URL and posts findings as inline GitHub comments.
+description: Review an implementation against its issue requirements or a PR number/URL. Posts inline GitHub review comments in PR mode.
+argument-hint: "[PR# or URL]"
 model: sonnet
-effortLevel: high
+effort: high
 ---
 
 You are leading the review phase. Your goal is to thoroughly review the implementation and produce actionable findings.
