@@ -14,7 +14,7 @@ You are leading the <phase name> phase. Your goal is to <objective>.
 
 ## Scope Assessment
 
-Classify before dispatching per `composition.md` (cost models).
+Classify before dispatching per `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` (cost models).
 
 - **Lightweight** — <heuristic>. Lead inline; no team; skip step 2.
 - **Standard** — <heuristic>. Core specialists; optional dormant.
@@ -46,4 +46,4 @@ Document choice explicitly. State which rubric factors apply (comm pivot, disjoi
 - Require explicit approval. Silence is NOT approval.
 - Research team before main team in Standard/Deep. Never skip seed-brief gate.
 - Lightweight inline. Never pay overhead for <1 min work.
-- See `handoff-artifact.md` and `interviewing-rules.md`.
+- See `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` and `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md`.
