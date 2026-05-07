@@ -1,6 +1,6 @@
 {
   "name": "claude-workflow",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Workflow skills for Claude Code — standardized feature lifecycle: /discovery → /define → /implement. Ships a family of lifecycle skills, shared protocols, an authoring standard, and the /new-skill scaffolder.",
   "author": {
     "name": "Michal Konopski",
