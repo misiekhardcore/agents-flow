@@ -6,7 +6,25 @@ GitHub Releases (with auto-generated notes and source tarballs) remain the canon
 
 ## [Unreleased]
 
+### Added
+
+- **`agents/` directory** — new top-level directory for reusable agent definitions, mirroring the claude-obsidian pattern. Seeded with `agents/prune-lane.md`: a single-lane audit worker for `/prune` that documents the spawn-prompt contract (CWD verification, pre-enumerated file list, structured report output). (#76)
+
 ### Changed
+
+- **`/prune` dispatches one Task sub-agent per lane** — rules, authoring, and vault lanes now run as parallel Task sub-agents. The main thread enumerates files and dispatches once, then aggregates the three lane reports. Prevents inline overrun on large skill plugin directories. Every spawn prompt includes `cd <abs-path> && pwd` CWD verification. (#76)
+
+- **`/resolve-pr-feedback` fix-dispatch threshold lowered to ≥2 file groups** — previously TeamCreate was gated at ≥3 groups; parallel subagents now trigger at ≥2 non-overlapping file groups. Reply drafting is always delegated (one sub-agent per thread) — pure I/O with no synthesis on the main thread. Spawn prompts include CWD verification. (#76)
+
+- **`/find-skills` delegates search to a research sub-agent** — the leaderboard check + CLI search pass is delegated to a haiku-model Task sub-agent; the main thread receives a list of candidate skills with one-line summaries and handles install confirmation and execution. Prevents verbose web-fetch results from bloating the main context. (#76)
+
+- **`/wrap-up`, `/grill-me`, `/specify` stay inline** — one-line rationale comments added to each SKILL.md: wrap-up (destructive sequential / low context cost), grill-me (interactive primitive), specify (interactive). No behavior change. (#76)
+
+- **`_shared/composition.md` — "Main-thread overrun" sub-section added** — counter-rule to "default to single-agent" for three trigger shapes: multi-file read sweep (≥5 files), N-way fan-out over independent items, and verbose-I/O with thin synthesis. Includes concrete spawn-prompt requirements (CWD verification, pre-enumerated paths, prior findings). References the existing `Inline overrun` failure-mode row. (#76)
+
+- **`_templates/AUTHORING.md` — inline-overrun smell checklist added** — four smells (file-sweep, fan-out, thin-synthesis, verbose-tool-output) with a remediation note. Placed in the Parallelism decision section so new skills are reviewed for delegation gaps at authoring time. (#76)
+
+- **`_templates/SKILL.orchestrator.template.md` — Spawn justification stub updated** — "inline overrun" listed as a valid dispatch trigger alongside cost-based parallelism, with a reference to the new composition.md sub-section. (#76)
 
 - **`effortLevel` → `effort` migration** — all 6 skills that declared `effortLevel: high` (architecture, define, describe, discovery, epic-autopilot, review) now use the correct harness field `effort: high`. Templates (`SKILL.specialist.template.md`, `SKILL.orchestrator.template.md`) and plugin guidance (`CLAUDE.md`, `AUTHORING.md`) updated in lockstep. Previously `effortLevel: high` was silently ignored; `effort: high` now enables the intended higher-effort execution.
 

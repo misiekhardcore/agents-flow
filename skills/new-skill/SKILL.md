@@ -4,7 +4,7 @@ description: Scaffold a new skill conforming to the authoring standard. Intervie
 when_to_use: Use when creating a new skill for personal use, a project, or this plugin.
 model: haiku
 ---
-You are an interactive skill scaffolder. Your job is to help the author create a new skill that conforms to the claude-workflow authoring standard, without them having to read the standard end-to-end first.
+Interactive skill scaffolder. Help author create skill conforming to claude-workflow standard. One question at a time.
 
 ## Input
 

@@ -1,51 +1,46 @@
 # NOTES.md — In-Phase Memory Tier
 
-`.claude/NOTES.md` is the **rot-immune external memory** for in-phase state. Because in-context recall degrades as a session accumulates concepts, the model cannot trust its own memory of what it decided ten turns ago — `.claude/NOTES.md` is where that state lives durably, on disk, outside the rotting context.
-
-This file is reference material — read it on demand when a skill creates, updates, or harvests `.claude/NOTES.md`. Do not preload.
+`.claude/NOTES.md` is rot-immune external memory for in-phase state. Read on-demand when creating, updating, or harvesting; do not preload.
 
 ## Where it sits in the memory hierarchy
 
-Four tiers, no overlap:
+Four tiers:
 
 |Tier|Where|Lifetime|Authoritative for|
 |-|-|-|-|
-|`TodoWrite`|In-context|This session only|Throwaway working scratchpad|
-|`.claude/NOTES.md`|Worktree-local file (gitignored)|This phase, across sessions|In-flight decisions, current task, open questions|
+|`TodoWrite`|In-context|This session|Throwaway scratchpad|
+|`.claude/NOTES.md`|Worktree-local, gitignored|This phase, across sessions|In-flight decisions, current task, open questions|
 |GitHub issue|Remote|Cross-phase|Acceptance criteria, prior-phase decisions, handoff state|
-|Durable vault (optional)|The claude-obsidian vault (git-tracked)|Durable, cross-feature|Compounded knowledge — patterns, bug-fix history, architectural insights|
+|Durable vault|claude-obsidian vault (git-tracked)|Durable, cross-feature|Patterns, bug-fix history, architectural insights|
 
-`TodoWrite` and `.claude/NOTES.md` are not mirrored — they serve different roles, and manual sync invites drift. The durable vault tier only materializes when the `claude-obsidian` plugin is installed and a vault has been bootstrapped (`/wiki`); without it, the tier is absent and skills that would write to it degrade gracefully.
+Do not mirror `TodoWrite` and `.claude/NOTES.md` — they serve different roles. The vault tier materializes when `claude-obsidian` is installed; without it, skills that would write degrade gracefully.
 
 ## NOTES.md vs the vault's recency channels
 
-The `claude-obsidian` plugin ships its own running-memory mechanisms inside the vault. They look superficially similar to `.claude/NOTES.md` but serve a different purpose — keep the boundary sharp:
+|Artifact|Scope|Lifetime|Committed?|
+|-|-|-|-|
+|`.claude/NOTES.md`|One worktree, one feature|Ends when worktree removed|No (gitignored)|
+|Vault hot cache|Whole repo, all work|Cross-session, curated|Yes|
+|Session archive|One session|Permanent|Yes|
+|Vault log|Whole repo|Permanent, append-only|Yes|
 
-|Artifact|Scope|Lifetime|Written by|Committed?|
-|-|-|-|-|-|
-|`.claude/NOTES.md`|One worktree, one feature|Ends when the worktree is removed|`/build` (scratch while coding)|No (gitignored)|
-|Vault hot cache|Whole repo, all work|Cross-session, curated recent context|`/save`, `/compound`, or manual vault edits|Yes|
-|Session archive|One session's archive|Permanent|`/save` at session end (Karpathy-style session capture)|Yes|
-|Vault log|Whole repo|Permanent, append-only|Every `/save` or `/compound` emits a line|Yes|
-
-Rule of thumb:
-- **While working** — log to `.claude/NOTES.md`. It's phase-local scratch; nothing leaves the worktree.
-- **Between sessions on the same feature** — resume from `.claude/NOTES.md` (it's the authoritative in-flight state).
-- **Between features** — promote durable learnings to the vault's concept notes via `/compound` (which delegates to `claude-obsidian`'s `/save` when available). That's what crosses the worktree boundary.
-- **Want a quick "what have I been working on lately" cache across the repo** — that's the vault's hot cache, not NOTES.md. Hot cache is curated and committed; NOTES.md is raw and ephemeral.
+- **While working** — log to `.claude/NOTES.md` (phase-local scratch).
+- **Between sessions on same feature** — resume from `.claude/NOTES.md` (authoritative in-flight state).
+- **Between features** — promote durable learnings to vault via `/compound`. That crosses the worktree boundary.
+- **For recent context across repo** — use vault's hot cache (curated, committed), not NOTES.md (raw, ephemeral).
 
 `/implement` is the harvest point: at PR creation it reads NOTES.md, flows the decisions and open questions into the PR body, then deletes NOTES.md after `/compound` has run.
 
 ## Location and lifecycle
 
-- **Path:** `<worktree-root>/.claude/NOTES.md`. Resolve the worktree root with `git rev-parse --show-toplevel` if CWD is uncertain. One per worktree, one per feature.
-- **Created by `/build`** at the start of the phase, immediately after `git worktree add`, with the initial task list harvested from the issue.
-- **Updated by `/build`** after each completed task, each significant decision, and before any summarization-based `/compact`.
+- **Path:** `<worktree-root>/.claude/NOTES.md`.
+- **Created by `/build`** at phase start, immediately after `git worktree add`, with initial task list from issue.
+- **Updated by `/build`** after each completed task, significant decision, and before `/compact`.
 - **Read on resume by `/build`** — before re-reading the issue.
-- **Harvested by `/implement`** at PR-creation time — `## Decisions made this session` and `## Open questions` flow into the PR body's `## Notes` section.
-- **Deleted by `/implement`** after `/compound` has run. If `/implement` exits abnormally between PR creation and deletion, NOTES.md persists; `/wrap-up`'s worktree removal will clean it up implicitly.
-- **Left in place** by standalone `/build`, `/review`, or `/verify` runs — they do not open PRs and do not harvest. Cleanup happens when the worktree is removed (`wt remove` deletes the worktree directory and `.claude/NOTES.md` goes with it).
-- **Not committed to git.** Ensure `/.claude/NOTES.md` is gitignored at the repo root before creating it; add the entry if missing.
+- **Harvested by `/implement`** at PR-creation time. `## Decisions made this session` and `## Open questions` flow into PR body's `## Notes` section.
+- **Deleted by `/implement`** after `/compound` runs. If `/implement` exits abnormally, NOTES.md persists; `/wrap-up` cleans it up with worktree removal.
+- **Left in place** by standalone `/build`, `/review`, `/verify` — cleanup happens when worktree is removed.
+- **Not committed to git.** Ensure `/.claude/NOTES.md` is gitignored; add entry if missing.
 
 ## Required sections
 
@@ -75,30 +70,26 @@ Rule of thumb:
 
 ## Update cadence
 
-Update at these points (bullet-level only — fast):
+Update at these points (bullet-level only):
 
-- **After each completed task** — flip the checkbox, log any decision that resulted from completing it.
-- **After each significant decision** — one line, with rationale.
-- **Before any summarization-based `/compact`** — write the Keep list into the file *first*, so the post-compaction summary can be diffed against an external record.
-- **Before ending the session normally** — `/implement` will harvest it at PR-creation time.
+- **After each completed task** — flip checkbox, log any decision.
+- **After each significant decision** — one line with rationale.
+- **Before any `/compact`** — write Keep list first, so post-compaction summary can be diffed against external record.
+- **Before ending session normally** — `/implement` harvests at PR-creation time.
 
-Do not update for trivial moves (opening a file, running a test command). It is a checkpoint log, not a transcript.
+Don't update for trivial moves (opening file, running test). Checkpoint log, not transcript.
 
 ## Resume protocol
 
-On a fresh session in an existing worktree, `.claude/NOTES.md` exists ⇒ this is a resume:
+When `.claude/NOTES.md` exists in worktree, it's a resume:
 
 1. Read `./.claude/NOTES.md` first.
-2. Read the GitHub issue second (for cross-phase decisions and acceptance criteria).
-3. Resume from **Next action on resume** — or, if that field is stale, from the first unchecked item in the Task list.
-4. Before your first real action, update **Current task** and **Next action on resume** to reflect the new session.
+2. Read the GitHub issue second (cross-phase decisions and acceptance criteria).
+3. Resume from **Next action on resume**, or from first unchecked item in Task list if stale.
+4. Update **Current task** and **Next action on resume** before first real action.
 
 ## Rules
 
-- **`.claude/NOTES.md` is authoritative for in-flight state.** In-context recall is rot-degraded by the time the file matters; trust the file.
-- **The issue is authoritative for cross-phase state.** Acceptance criteria, locked architectural decisions, prior-phase handoff content live in the issue, not the file.
-- **Deletion is `/implement`'s responsibility.** It deletes NOTES.md after `/compound` runs at PR-creation time. Standalone `/build` runs leave it in place — do not delete from within a running build phase.
-
-## Why
-
-Context rot makes in-context recall unreliable for long sessions, even when the window is nowhere near full. The fix is to externalize the state that the model needs to trust — onto disk, in a file the model re-reads on demand. A gitignored worktree-local worklog is the cheapest durable answer. See `${CLAUDE_PLUGIN_ROOT}/docs/context-hygiene.md` for the full rationale and `${CLAUDE_PLUGIN_ROOT}/docs/token-budgets.md` for the <1k cap alongside the other artifact budgets.
+- **NOTES.md is authoritative for in-flight state.** Trust the file; in-context recall is rot-degraded.
+- **Issue is authoritative for cross-phase state.** Acceptance criteria, locked decisions, prior-phase handoff live in issue, not file.
+- **Deletion is `/implement`'s responsibility.** It deletes after `/compound` runs. Standalone `/build` leaves in place.

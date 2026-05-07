@@ -5,25 +5,24 @@ model: <haiku | sonnet>
 # Uncomment only to pre-approve a narrow tool surface (skips permission prompts; does not restrict access):
 # allowed-tools: Read Grep Glob Bash
 ---
-<!-- Primitives are reusable inline behaviors — no team, no handoff artifact. Keep under 50 lines. -->
+<!-- Primitives: reusable inline behaviors, no team, no handoff. Keep <50 lines. -->
 
 ## Input
 
-<!-- What the primitive receives — a question, a prompt, or a bounded context. -->
+<!-- Primitive receives — question, prompt, or bounded context. -->
 
 ## Process
 
-<!-- Primitives are short. 2–4 steps max. -->
+<!-- 2–4 steps max. -->
 
 1. <Step 1>
-
 2. <Step 2>
 
 ## Output
 
-<!-- What the primitive returns to the caller — always a structured, bounded response. -->
+<!-- Structured, bounded response to caller. -->
 
 ## Rules
 
-- No team, no handoff. This skill is called inline and returns results to the caller.
+- No team, no handoff. Returns results inline.
 - <Rule 2>

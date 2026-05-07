@@ -81,11 +81,9 @@ flowchart TB
     class Obsidian ext
 ```
 
-**Legend**: phase orchestrators (medium gray subgraphs) spawn specialists (light gray nodes) that do the bounded work. Plugin-level tools including `/grill-me` (gray) run outside the phase lifecycle. The claude-obsidian subgraph (dashed pink) shows integrations that activate only when that plugin is installed.
+**Legend**: phase orchestrators (gray subgraphs) spawn specialists (light nodes) that do the bounded work. Plugin-level tools run outside the phase lifecycle. The claude-obsidian subgraph shows integrations that activate only when installed.
 
 ## Install
-
-This repo is its own marketplace — the plugin and marketplace manifests both live in `.claude-plugin/`, so a single `marketplace add` points Claude Code at both.
 
 ```bash
 claude plugin marketplace add misiekhardcore/claude-workflow
@@ -96,13 +94,13 @@ Then enable it in your project or globally in Claude Code settings.
 
 ## Prerequisites
 
-Skills that spawn parallel sub-agents (`/discovery`, `/define`, `/implement`, and others that use `TeamCreate`) require:
+Skills that spawn parallel sub-agents require:
 
 ```bash
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 ```
 
-Without this flag, `TeamCreate` is unavailable. Skills detect its absence and fall back to spawning sub-agents individually (without team coordination), noting the degraded mode explicitly.
+Without this flag, `TeamCreate` is unavailable. Skills detect its absence and fall back to spawning sub-agents individually with a note.
 
 ## Skills
 
@@ -111,7 +109,7 @@ Without this flag, `TeamCreate` is unavailable. Skills detect its absence and fa
 |`/discovery`|Explore a problem and produce a GitHub issue with acceptance criteria|
 |`/define`|Plan architecture and design; produces the implementation handoff|
 |`/implement`|Full build→review→verify cycle, ends with a draft PR|
-|`/epic-autopilot`|Autonomous epic→PR pipeline; chains `/discovery → /define → /implement` per sub-issue with gated approvals|
+|`/epic-autopilot`|Autonomous epic→PR pipeline; chains `/discovery → /define → /implement` per sub-issue|
 |`/build`|Code against an issue's acceptance criteria using TDD|
 |`/review`|Review an implementation or external PR; correctness, standards, and conditional specialists|
 |`/verify`|QA verification of every acceptance criterion|
@@ -120,23 +118,23 @@ Without this flag, `TeamCreate` is unavailable. Skills detect its absence and fa
 |`/architecture`|Decide on technical architecture — components, data flow, trade-offs|
 |`/design`|Visual and UX design decisions — layouts, interaction flows|
 |`/grill-me`|Relentless interviewing to stress-test a plan or design|
-|`/compound`|Capture learnings as structured wiki notes; files via `claude-obsidian` when installed, otherwise reports inline|
-|`/wrap-up`|Post-PR cleanup utility: remove the feature worktree, delete the branch, clear NOTES.md|
-|`/prune`|Audit CLAUDE.md for staleness; delegates vault audit to `wiki-lint` when `claude-obsidian` is installed|
-|`/audit-issues`|Drift-check open GitHub issues against the current repo state; offers per-issue edit / close / skip|
+|`/compound`|Capture learnings as structured wiki notes|
+|`/wrap-up`|Post-PR cleanup: remove feature worktree, delete branch, clear NOTES.md|
+|`/prune`|Audit CLAUDE.md, SKILL.md, and memory for staleness|
+|`/audit-issues`|Drift-check open GitHub issues against the current repo state|
 |`/find-skills`|Discover and install skills from the ecosystem|
 |`/resolve-pr-feedback`|Process PR review feedback in bulk|
 |`/new-skill`|Scaffold a new skill conforming to this authoring standard|
 
 ## Optional: claude-obsidian integration
 
-claude-workflow doesn't ship its own knowledge store. When the [claude-obsidian](https://github.com/AgriciDaniel/claude-obsidian) plugin is installed and a vault has been bootstrapped (`/wiki`), several skills light up vault-aware paths automatically:
+When installed and bootstrapped, several skills light up vault-aware paths:
 
-- `/compound` files captures via `/save` instead of reporting the note inline.
-- `/prune` delegates vault audit to `wiki-lint` and folds its findings into the report.
-- `/architecture` and `/define` query the vault for prior patterns/decisions via `wiki-query`.
+- `/compound` files captures via `/save` instead of reporting inline.
+- `/prune` delegates vault audit to `wiki-lint`.
+- `/architecture` and `/define` query the vault for prior patterns/decisions.
 
-Without `claude-obsidian` every skill still runs; vault operations are skipped with a one-line note, and `/compound` emits a structured Markdown block the user can capture wherever they like. No hard dependency — install it if it's useful, skip it otherwise.
+Without `claude-obsidian`, every skill still runs; vault operations are skipped with a note, and `/compound` emits a structured Markdown block for manual capture. No hard dependency.
 
 ## Workflow paths
 
@@ -150,38 +148,33 @@ Full lifecycle walkthrough: [`docs/workflow.md`](docs/workflow.md)
 
 ## Token budgets and CLAUDE.md placement
 
-Per-artifact and per-phase token budgets, the context-rot threshold (~12% of window), CLAUDE.md placement and `@`-import syntax, and the skill-invocation duplication anti-pattern: [`docs/token-budgets.md`](docs/token-budgets.md). For *why* phases reset, see [`docs/context-hygiene.md`](docs/context-hygiene.md).
+Per-artifact and per-phase token budgets, context-rot threshold, CLAUDE.md placement, and `@`-import syntax: [`docs/token-budgets.md`](docs/token-budgets.md). Context-hygiene rationale: [`docs/context-hygiene.md`](docs/context-hygiene.md).
 
 ## Ecosystem
 
-When working across multiple plugins and repositories, see [`docs/cross-plugin.md`](docs/cross-plugin.md) for guidance on:
-- MCP scope (shared vs. plugin-bundled servers)
-- Inter-plugin dependency declarations
-- Optional `claude-obsidian` integration via runtime detection
+Multi-plugin coordination: MCP scope, inter-plugin dependencies, optional `claude-obsidian` integration via runtime detection: [`docs/cross-plugin.md`](docs/cross-plugin.md).
 
 ## Authoring standard
 
-This plugin ships an authoring standard for creating new skills:
+- **Templates**: role-specific skeletons in `_templates/`
+- **Convention doc**: `_templates/AUTHORING.md` — skill types, frontmatter, `_shared/` references
+- **Scaffolder**: `/new-skill` — interactive generator
 
-- **Templates**: role-specific skeletons in `_templates/` — `SKILL.orchestrator.template.md`, `SKILL.specialist.template.md`, `SKILL.primitive.template.md`
-- **Convention doc**: `_templates/AUTHORING.md` — skill types, frontmatter fields, and when to reference `_shared/` protocols
-- **Scaffolder**: `/new-skill` — interactive, generates a conformant `SKILL.md`
-
-Shared protocols live at `_shared/`:
+Shared protocols at `_shared/`:
 
 |File|Purpose|
 |-|-|
-|`handoff-artifact.md`|Five-field structure for cross-phase GitHub issue handoffs|
+|`handoff-artifact.md`|Five-field GitHub issue handoff structure|
 |`interviewing-rules.md`|One-question-at-a-time interview protocol|
 |`notes-md-protocol.md`|In-phase NOTES.md memory tier|
 |`compaction-protocol.md`|Context editing → delegation → /compact order|
-|`composition.md`|Multi-skill composition patterns, skill roles, and brief contracts|
+|`composition.md`|Multi-skill composition patterns and contracts|
 
 ## Releasing
 
-Versions in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (both `metadata.version` and `plugins[0].version`) must agree — the marketplace listing and distribution tooling depend on it. Trigger the **Release** workflow (`.github/workflows/release.yml`) via `workflow_dispatch` to bump all three in lockstep, commit, tag, and publish. Do not hand-edit; if you must, update all three fields in the same commit.
+Versions in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (both `metadata.version` and `plugins[0].version`) must agree. Trigger the **Release** workflow via `workflow_dispatch` to bump all three in lockstep, commit, tag, and publish.
 
-Per-release notes (with full diffs) live on [GitHub Releases](https://github.com/misiekhardcore/claude-workflow/releases). A mirrored, in-repo summary is at [`CHANGELOG.md`](CHANGELOG.md).
+Per-release notes with full diffs: [GitHub Releases](https://github.com/misiekhardcore/claude-workflow/releases). In-repo summary: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## License
 

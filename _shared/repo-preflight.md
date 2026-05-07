@@ -1,21 +1,16 @@
 # Repository Pre-flight — Shared Protocol
 
-Used by skills that originate `gh` mutations or `git push` operations. Read this file when you reach a step that creates or edits issues, comments, PRs, or pushes code.
+Used for skills that create/edit issues, comments, PRs, or push code. Read before `gh` or `git push` operations.
 
 ## Steps
 
-1. Run `git remote -v` and `pwd` to detect the repository and working directory. Run `git branch --show-current` (or `git rev-parse --abbrev-ref HEAD`) to detect the current branch.
-2. Display:
-   - Detected repository (owner/repo from origin remote URL)
-   - Current branch name (omit when the caller has set `Suppress branch line: true` colocated with the reference — used by worktree-spawning callers like `/implement` where the displayed branch would imply the work lands on the current branch)
-   - Working directory path
-3. Ask the user to confirm. Default prompt: "Does this match the repo and branch you intend to operate on?" — when the caller has set `Suppress branch line: true`, drop the "and branch" clause so the prompt becomes "Does this match the repo you intend to operate on?" (the user was not shown a branch and should not be asked to confirm one). Callers may override either default by setting a `Confirmation prompt:` line colocated with the reference.
-4. Do not proceed with any `gh` or `git push` operation until the user explicitly confirms.
+1. Run `git remote -v`, `pwd`, and `git branch --show-current` to detect repo, working directory, and branch.
+2. Display detected repo (owner/repo), branch (omit if caller set `Suppress branch line: true`), and working directory.
+3. Confirm with user. Default: "Does this match the repo and branch you intend to operate on?" (drop "and branch" if branch was suppressed). Callers may override via `Confirmation prompt:` line.
+4. Do not proceed with `gh` or `git push` until user explicitly confirms.
 
-## Why
-
-`gh` issue and PR mutations are public, persistent, and cross-repo (the `--repo` flag silently routes to a different upstream). A wrong-repo mutation has higher blast radius than a wrong-branch push. This single gate covers both surfaces.
+`gh` mutations are public and cross-repo (the `--repo` flag routes silently). Wrong-repo mutations have high blast radius.
 
 ## Orchestrator pattern
 
-When an orchestrator (e.g. `/implement`) runs this preflight at entry, it passes `preflight_verified: true` in every seed brief it issues to specialists. Specialists skip this step when a valid seed brief is present — see `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md`.
+Orchestrators (e.g., `/implement`) run this at entry and pass `preflight_verified: true` in seed briefs to specialists. Specialists skip this when valid brief is present.

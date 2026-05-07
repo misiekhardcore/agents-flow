@@ -6,8 +6,7 @@ model: <opus for research-leading orchestrators; sonnet for coordinator orchestr
 ---
 You are leading the <phase name> phase. Your goal is to <objective>.
 
-<!-- Coordinator variants (e.g. /implement): drop step 2 — upstream phases or sub-skills own research. -->
-<!-- Coordinator variants that are terminal phases (e.g. /implement): drop step 5 — output is the PR, not an issue body update. -->
+<!-- Coordinator: drop step 2. Terminal: drop step 5. -->
 
 ## Input
 
@@ -15,36 +14,36 @@ You are leading the <phase name> phase. Your goal is to <objective>.
 
 ## Scope Assessment
 
-Classify before dispatching. See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for the right-sizing rationale and cost models.
+Classify before dispatching per `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` (cost models).
 
-- **Lightweight** — <heuristic>. Lead runs inline; no team; skip step 2.
-- **Standard** — <heuristic>. Core specialists only; optional roles stay dormant.
-- **Deep** — <heuristic>. Full team + critique/adversarial pass.
+- **Lightweight** — <heuristic>. Lead inline; no team; skip step 2.
+- **Standard** — <heuristic>. Core specialists; optional dormant.
+- **Deep** — <heuristic>. Full team + critique/adversarial.
 
 ### Spawn justification
 
-Document your choice explicitly. State which rubric factors from composition.md apply (communication pivot, file disjointness, parallelism, wall-clock payoff) and which gate conditions trigger dispatch. See `/discovery`, `/define`, `/implement` for the established pattern.
+Document choice explicitly. State which rubric factors apply (comm pivot, disjoint, parallel, payoff) and which gates trigger dispatch. Triggers: parallelism payoff AND/OR inline overrun (multi-file sweep, N-way fan-out, verbose I/O). See `/discovery`, `/define`, `/implement` patterns.
 
 ## Process
 
-1. Read the input and confirm the scope classification.
-2. **Dispatch a research team** (TeamCreate; Standard/Deep only — skip in Lightweight):
-   - **Codebase research agent** — scans tech stack, modules, patterns. Outputs a research brief.
-   - **Patterns/learnings agent** — gathers prior art from the vault (`claude-obsidian:wiki-query` if available), then project docs, then external sources.
-3. **Spawn the main team** (TeamCreate), seeded with research output. Width scales with scope — include only the specialists the classification calls for:
-   - **Specialist A** — runs /<skill> to <do thing>. Seeded with brief; skips internal research.
-   - **Specialist B** — runs /<skill> to <do thing>.
-4. <Serialization rule — which specialist goes first and why.>
-5. **Write the handoff artifact** — update the GitHub issue body in place with decisions and the five-field block. See `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md`.
-6. Present output to the user for approval. After sign-off, tell them to start the next phase in a fresh session.
+1. Read input; confirm scope classification.
+2. **Research team** (TeamCreate; Standard/Deep only):
+   - **Codebase research** — tech stack, modules, patterns. Outputs research brief.
+   - **Prior art** — vault, project docs, external sources.
+3. **Main team** (TeamCreate), seeded with research. Width = scope. Include only needed specialists:
+   - **Specialist A** — `/<skill>` to <do thing>. Seeded; skips research.
+   - **Specialist B** — `/<skill>` to <do thing>.
+4. <Serialization rule — which specialist first and why.>
+5. **Handoff artifact** — update GitHub issue body in place with decisions and five-field block.
+6. Present output; require explicit approval. After sign-off, tell user to start next phase fresh.
 
 ## Output
 
-<!-- Durable artifact — updated issue body, sub-issues, PR, etc. -->
+<!-- Durable artifact — issue body update, sub-issues, PR, etc. -->
 
 ## Rules
 
-- Require explicit approval before finalizing. Silence is NOT approval.
-- Spawn research team before the main team in Standard/Deep — never skip the seed-brief gate.
-- Lightweight runs inline — never pay coordination overhead for under-a-minute work.
-- See `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` and `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md`.
+- Require explicit approval. Silence is NOT approval.
+- Research team before main team in Standard/Deep. Never skip seed-brief gate.
+- Lightweight inline. Never pay overhead for <1 min work.
+- See `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` and `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md`.

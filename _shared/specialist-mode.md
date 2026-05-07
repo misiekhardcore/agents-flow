@@ -1,87 +1,42 @@
 # Specialist Mode — Shared Protocol
 
-A specialist skill runs in one of two modes depending on how it was invoked: **standalone** (invoked directly by the user) or **specialist** (invoked by an orchestrator that has already run preflights and scoped the work).
-
-This file is reference material — read it when a skill needs to detect its invocation mode or document which prompts it skips when seeded.
+Logic for standalone vs. orchestrator-invoked (seeded) execution.
 
 ## Detection
+`specialist_mode = True` if `<seed-brief>` block exists in prompt.
+- **Seeded**: Verified fields replace preflights.
+- **Standalone**: All prompts active.
 
-A specialist detects specialist mode by checking for a `<seed-brief>` block in its prompt at startup:
+## Seed-Brief Contract
+**Format**: Raw YAML in XML tag `<seed-brief>`, no inner fence.
 
-```
-if "<seed-brief>" in prompt → specialist_mode = True
-```
-
-When a seed brief is present, the verified fields in it replace the specialist's own preflight checks. When no brief is present, the specialist runs in standalone mode with all prompts active.
-
-## Seed-brief transport format
-
-Orchestrators pass seed briefs as raw YAML inside an XML tag — no inner code fence:
-
-```
-<seed-brief>
-preflight_verified: true
-scope_class: Lightweight|Standard|Deep
-repo: owner/repo
-branch: feat/branch-name
-active_issue: 42
-autonomous: false  # optional — see field table below
-payload:
-  type: fix|research|prior-art
-  # type-specific fields per _shared/composition.md
-</seed-brief>
-```
-
-The XML tag marks the boundary; the YAML is parseable without a fence. The `payload` envelope decouples brief metadata from the type-specific research, fix, or prior-art content.
-
-## Required fields
-
-|Field|Type|Required|Notes|
+|Field|Type|Req|Notes|
 |-|-|-|-|
-|`preflight_verified`|boolean|yes|Brief is rejected if `false` or missing|
-|`scope_class`|string|yes|Must be `Lightweight`, `Standard`, or `Deep`|
-|`repo`|string|yes|`owner/repo` — verified against `git remote -v` of the spawning worktree|
-|`branch`|string|yes|`feat/<slug>` — verified against `git rev-parse --abbrev-ref HEAD`|
-|`active_issue`|integer|yes|Ties the brief to its GitHub issue|
-|`payload`|object|yes|`{ type: fix|research|prior-art, ... }` — type-specific fields per `_shared/composition.md`|
-|`autonomous`|boolean|no|Default `false`. When `true`, suppresses `/implement`'s exhausted-exit prompt; only consumed by `/implement`. Do not set from non-autopilot orchestrators — default `false` preserves the rigor gate.|
+|`preflight_verified`|bool|Yes|Must be `true`|
+|`scope_class`|string|Yes|`Lightweight`, `Standard`, or `Deep`|
+|`repo`|string|Yes|`owner/repo` (verified vs `git remote -v`)|
+|`branch`|string|Yes|`feat/<slug>` (verified vs `git rev-parse`)|
+|`active_issue`|int|Yes|GitHub issue ID|
+|`payload`|object|Yes|`{ type: fix\|research\|prior-art, ... }` (per `composition.md`)|
+|`autonomous`|bool|No|Default `false`. If `true`, suppresses `/implement` exit prompt|
 
-When verification fails (wrong repo, wrong branch, missing required field), the specialist rejects the brief and falls back to standalone behavior with full prompts. Log which check failed.
+**Failure**: Invalid brief → Fallback to standalone + log failure.
 
-## What gets skipped in specialist mode
+## Execution Delta
+Confirmations verifying *state* are skipped; *discovery/rigor* gates remain.
 
-Confirmations that verify *state* are skipped when seeded; confirmations that drive *discovery* or *rigor* stay live.
-
-|Specialist|Skipped when seeded|Always kept|
+|Specialist|Skipped when Seeded|Always Kept|
 |-|-|-|
-|`/build`|repo-preflight, scope-preflight, scope-class confirmation|design gate (architecture must be cross-phase verified)|
-|`/review`|repo-preflight|severity/finding-depth gates|
+|`/build`|repo/scope preflights, scope confirmation|design gate|
+|`/review`|repo-preflight|severity/depth gates|
 |`/verify`|repo-preflight|AC verification rigor|
-|`/describe`|internal prior-art search (declared in Input section)|Product Pressure Test, grill-me interactions|
-|`/specify`|scope-class + file-scope confirmation|AC derivation gates|
-|`/architecture`|codebase-research / patterns-research subagent dispatches|architecture session (grill-me + devil's advocate)|
-|`/design`|design-space research subagents|interactive design session|
-|`/implement`|_(none — orchestrator role; preflights run at entry)_|exhausted-exit prompt (rigor gate — suppressed only when `autonomous: true` in seed brief)|
+|`/describe`|internal prior-art search|PPT, grill-me|
+|`/specify`|scope/file confirmation|AC derivation gates|
+|`/architecture`|codebase/pattern research|architecture session (grill-me/devil's advocate)|
+|`/design`|design-space research|interactive session|
+|`/implement`|(handled by orchestrator)|exhausted-exit prompt (unless `autonomous: true`)|
 
-Each specialist documents a "Specialist mode" subsection in its own SKILL.md naming which prompts it skips.
-
-## Standalone invocation
-
-When no seed brief is present, the specialist runs with all prompts as documented in its SKILL.md. There is no partial-brief state — either a valid `<seed-brief>` block is present or the specialist runs standalone.
-
-## Orchestrator responsibilities
-
-When an orchestrator spawns a specialist, it must:
-
-1. Run repo-preflight (see `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md`) once at entry — not per specialist.
-2. Run scope-preflight (see `${CLAUDE_PLUGIN_ROOT}/_shared/scope-preflight.md`) once at entry — not per specialist.
-3. Pass a valid seed brief with `preflight_verified: true` to every specialist it spawns.
-4. Include the verified `repo`, `branch`, and `active_issue` in every brief so specialists can sanity-check without re-running preflight.
-
-Orchestrators that follow this contract: `/implement` → `/build`, `/review`, `/verify`; `/discovery` → `/describe`, `/specify`; `/define` → `/architecture`, `/design`, `/specify`.
-
-## See also
-
-- `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` — seed-brief types (research, prior-art, fix) and the full field list for each.
-- `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md` — the preflight protocol orchestrators run once at entry.
-- `${CLAUDE_PLUGIN_ROOT}/_shared/scope-preflight.md` — the scope-preflight protocol orchestrators run once at entry.
+## Orchestrator Duties
+1. Run repo/scope-preflight once at entry.
+2. Pass valid seed-brief (`preflight_verified: true`) to every specialist.
+3. Include `repo`, `branch`, `active_issue` for sanity checks.

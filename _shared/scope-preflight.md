@@ -1,12 +1,12 @@
 # Scope Pre-flight — Shared Protocol
 
-Used by skills that perform bulk file edits. Read this file when you are about to modify multiple files or take an action whose blast radius is unclear from the user's request.
+Used by skills performing bulk file edits. Read before modifying 3+ files or actions with unclear blast radius.
 
 ## Trigger
 
-Run this gate when **either** condition holds:
-- The proposed change touches **3 or more files**.
-- The user request matches one of the verbs: `audit`, `refactor`, `normalize`, `sweep`, `propagate`, `extract`, `rename`.
+Run when either condition holds:
+- Proposed change touches **3+ files**.
+- User request matches: `audit`, `refactor`, `normalize`, `sweep`, `propagate`, `extract`, `rename`.
 
 ## File-list confirmation
 
@@ -31,4 +31,4 @@ Re-prompt with a narrowed list when the user provides scope.
 
 ## Orchestrator pattern
 
-When an orchestrator (e.g. `/implement`) runs this preflight at entry and passes `scope_class` in every seed brief, specialists skip their own scope-class and file-scope confirmations. See `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md`.
+Orchestrators run this at entry and pass `scope_class` in seed briefs. Specialists skip their own scope confirmations when brief is present.
