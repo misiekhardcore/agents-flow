@@ -11,7 +11,8 @@ You are leading the PR feedback resolution process. Your job is to systematicall
 
 Rubric: `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md`.
 
-- **Fix team**: TeamCreate at ≥3 file groups, else parallel subagents. Comm-pivot  at scale (cross-thread regressions), disjoint  (mapped pre-dispatch), parallel , payoff ≥3× at ≥3 groups. Gate: ≥3 non-overlapping file groups. Fallback: parallel subagents or sequential.
+- **Fix team**: TeamCreate at ≥3 file groups, else parallel subagents at ≥2 file groups. Comm-pivot  at scale (cross-thread regressions), disjoint  (mapped pre-dispatch), parallel , payoff ≥3× at ≥2 groups. Gate: ≥2 non-overlapping file groups. Fallback: parallel subagents or sequential.
+- **Reply drafting**: always delegated to a sub-agent (one per thread) — pure I/O with no synthesis required on the main thread. Prevents inline overrun on PRs with many threads. Each reply sub-agent spawn prompt must start with `cd <repo-abs-path> && pwd`.
 
 ## Input
 
@@ -91,7 +92,7 @@ Group threads by concern category. Present the triage summary to the user before
 
 **Conflict avoidance:** Before dispatching, map each thread to the file(s) it affects. No two agents may work on the same file in parallel. Threads touching the same file are handled sequentially within one agent.
 
-**Dispatch fix agents** per the Spawn justification gate (TeamCreate at ≥3 file groups, else parallel subagents):
+**Dispatch fix agents** per the Spawn justification gate (TeamCreate at ≥3 file groups, else parallel subagents at ≥2 file groups, else sequential):
 - One worker per non-overlapping file group
 - Each receives its assigned threads and the full PR diff for context
 - Each agent:
@@ -106,6 +107,13 @@ Group threads by concern category. Present the triage summary to the user before
 **Cross-thread regression check:** After all fix agents complete, run the project's test suite to catch cross-thread regressions before replying.
 
 ### Phase 4 — Reply
+
+Reply drafting is always delegated. Spawn one sub-agent per thread; each receives: thread content, chosen verdict, fix commit SHA (if applicable), PR context. Sub-agents draft and post the reply; the main thread collects verdicts and the resolution summary only.
+
+Each reply sub-agent spawn prompt must start with:
+```
+cd <repo-abs-path> && pwd  # verify CWD — sub-agents do not inherit parent CWD
+```
 
 Each thread gets a verdict:
 

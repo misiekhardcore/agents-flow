@@ -23,7 +23,7 @@ Classify before dispatching. See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` 
 
 ### Spawn justification
 
-Document your choice explicitly. State which rubric factors from composition.md apply (communication pivot, file disjointness, parallelism, wall-clock payoff) and which gate conditions trigger dispatch. See `/discovery`, `/define`, `/implement` for the established pattern.
+Document your choice explicitly. State which rubric factors from composition.md apply (communication pivot, file disjointness, parallelism, wall-clock payoff) and which gate conditions trigger dispatch. Valid triggers include cost-based parallelism payoff AND inline overrun (multi-file sweep, N-way fan-out, or verbose-I/O work that would dominate the lead's context — see `_shared/composition.md` § "Main-thread overrun"). See `/discovery`, `/define`, `/implement` for the established pattern.
 
 ## Process
 

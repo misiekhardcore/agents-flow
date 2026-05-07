@@ -12,7 +12,28 @@ This skill has three lanes:
 - **Authoring lane** — always runs. Checks `CLAUDE.md` / `AGENTS.md` / `SKILL.md` files for structural quality issues grounded in the Augment Code empirical study on AGENTS.md authoring.
 - **Vault lane** — optional. If the `claude-obsidian` plugin is installed, delegates the vault audit to its `wiki-lint` command and folds the findings in. If not, the vault lane is skipped with a one-line note.
 
+<!-- Inline rationale: /prune stays inline (no sub-agent delegation) intentionally only for the final aggregation step. Each lane is dispatched to its own Task sub-agent (see Spawn justification below); the main thread only aggregates findings. Three lanes read many files each — delegating prevents inline overrun. -->
+
+### Spawn justification
+
+Rubric: `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md`.
+
+- **Three lane sub-agents (rules, authoring, vault)**: 3 parallel Task sub-agents. Comm-pivot  (lanes are independent; only the summary returns to main thread), disjoint  (rules reads CLAUDE.md/memory, authoring reads SKILL.md/AGENTS.md, vault delegates to wiki-lint — no file overlap), parallel  (all lanes can run simultaneously), payoff ≥3× (each lane reads many files; inline reading would dominate context). Model: `haiku` — retrieval/scan work, no synthesis. Fallback: sequential sub-agents (dispatch one lane at a time and merge findings).
+
+Each sub-agent spawn prompt must begin with:
+```
+cd /path/to/repo && pwd  # verify CWD — sub-agents do not inherit parent CWD
+```
+
 ## Process
+
+### Dispatch
+
+Spawn one Task sub-agent per lane. Pass the working directory as an absolute path. Each sub-agent prompt must start with `cd <abs-path> && pwd` to verify CWD before reading any files. Dispatch all three in parallel; collect their output; proceed to the Classification and Output steps.
+
+- **Rules sub-agent** — runs the Rules lane below. Receives: `cwd`, global CLAUDE.md path, project CLAUDE.md path (if found), `~/.claude/projects/<project>/memory/` path.
+- **Authoring sub-agent** — runs the Authoring lane below. Receives: `cwd`, enumerated list of CLAUDE.md / AGENTS.md / SKILL.md paths (pass pre-enumerated to avoid re-enumeration overhead).
+- **Vault sub-agent** — runs the Vault lane below. Receives: `cwd`, whether `claude-obsidian` is installed (check once on main thread before dispatching).
 
 ### Rules lane (always)
 
@@ -82,13 +103,17 @@ For each discovered file, run the five checks below. Each finding must cite its 
     - Skip step 9.
     - Add a single line to the report: `Vault audit skipped — install claude-obsidian (claude plugin marketplace add AgriciDaniel/claude-obsidian) to enable.`
 
-### Classification
+### Classification (main thread — after sub-agents return)
 
-11. **Classify each rules-lane item:**
+11. **Classify each rules-lane item** from the rules sub-agent's output:
     - **Current** — still relevant, keep as-is
     - **Stale** — references things that no longer exist, recommend removal
     - **Superseded** — replaced by a newer rule/doc, recommend consolidation
     - **Unclear** — cannot determine relevance, flag for human review
+
+### Aggregation (main thread)
+
+12. Merge the three sub-agent reports into the single audit report. Do not re-read files — synthesize only from the sub-agent outputs.
 
 ## Output
 
@@ -105,7 +130,7 @@ An audit report with:
 
 - Never delete rules or docs automatically — present recommendations and wait for approval.
 - When in doubt, classify as "unclear" rather than "stale".
-- Check the actual codebase, not just the rule text — a rule might reference an outdated name but the intent is still valid.
+- Main thread only aggregates — do not re-read files after sub-agents return; synthesize from sub-agent reports.
 - Do not scan vault files directly. The vault's structure is the `claude-obsidian` plugin's responsibility; this skill calls into it rather than walking paths.
 - Authoring-lane checks are non-destructive — list findings only; do not rewrite files.
 - Omit authoring-lane check sub-sections that have no findings; do not emit empty sections.

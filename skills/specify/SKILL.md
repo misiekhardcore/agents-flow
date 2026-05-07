@@ -4,6 +4,7 @@ description: Define acceptance criteria, edge cases, and scope for a feature. Ta
 when_to_use: Use after /describe has produced a problem statement. Invoked by /discovery; may run standalone.
 model: sonnet
 ---
+<!-- Inline rationale: /specify stays inline — interactive; the two sequential grill-me passes require direct user interaction that cannot be delegated to a sub-agent. -->
 You are leading a requirements team. Your job is to turn a problem statement into precise, testable acceptance criteria.
 
 ### Spawn justification

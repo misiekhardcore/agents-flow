@@ -148,6 +148,17 @@ When authoring an orchestrator or designing a multi-skill workflow, you must mak
 - **Primitive choice**: Default to inline → subagent → TeamCreate. Parallel adds coordination overhead — confirm genuine communication pivot, file disjointness, classifiable parallelism, and ≥3× wall-clock payoff before paying the ~7× token premium.
 - **Spawn justification**: Document your choice in the skill body. State which rubric factors apply and which don't. See the template below for the canonical shape.
 
+### Inline-overrun smell checklist
+
+When reviewing a new orchestrator or utility skill for delegation gaps, check each smell below. One or more smells present means the skill is a candidate for subagent delegation (see `_shared/composition.md` § "Main-thread overrun"):
+
+- [ ] **File-sweep smell** — the skill reads ≥5 files in a loop or enumerated list before synthesizing. Each file read echoes tool output into the lead's context.
+- [ ] **Fan-out smell** — the skill iterates over N independent items (threads, lanes, issues) and processes each one similarly. N × item-size grows the lead's context linearly with no synthesis benefit.
+- [ ] **Thin-synthesis smell** — the work is retrieval or formatting only (fetch → parse → format → return). The lead's role is to receive a summary, not to run the retrieval itself.
+- [ ] **Verbose-tool-output smell** — a single tool call (web fetch, CLI run, GraphQL query) returns verbose output that the skill then scans for a small set of fields. Most of the output is discarded after reading.
+
+Remediation: assign the smelly work to a Task sub-agent with a bounded prompt; the sub-agent returns only the summary. Document the choice in the `### Spawn justification` block.
+
 New skills created via `/new-skill` will be guided through this decision during scaffolding.
 
 ### Spawn justification template

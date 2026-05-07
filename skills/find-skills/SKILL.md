@@ -7,6 +7,14 @@ model: haiku
 
 This skill helps you discover and install skills from the open agent skills ecosystem.
 
+<!-- Inline rationale: /find-skills delegates discovery (web search + leaderboard fetch) to a research sub-agent. The main thread handles install confirmation and execution only, keeping it from bloating on verbose search results. -->
+
+### Spawn justification
+
+Rubric: `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md`.
+
+- **Discovery sub-agent**: single Task sub-agent for the search/leaderboard pass. Comm-pivot  (no cross-agent coordination needed), disjoint n/a (single agent), parallel n/a, payoff ≥3× (web fetch + JSON parsing bloats main context without any benefit; summary is all the main thread needs). Model: `haiku` — retrieval-only. Fallback: n/a — no flag dependency. The sub-agent spawn prompt must start with `cd <cwd> && pwd`.
+
 ## When to Use This Skill
 
 Use this skill when the user:
@@ -41,7 +49,16 @@ When a user asks for help with something, identify:
 2. The specific task (e.g., writing tests, creating animations, reviewing PRs)
 3. Whether this is a common enough task that a skill likely exists
 
-### Step 2: Check the Leaderboard First
+### Step 2: Dispatch a Discovery Sub-agent
+
+Delegate steps 3–4 (leaderboard check + CLI search) to a research sub-agent. Pass: query terms derived from step 1, the user's stated goal. The sub-agent returns a list of candidate skills with one-line summaries, install counts, and source reputations. The main thread handles install confirmation and execution.
+
+Sub-agent spawn prompt must start with:
+```
+cd <cwd> && pwd  # verify CWD — sub-agents do not inherit parent CWD
+```
+
+### Step 3: Check the Leaderboard First (sub-agent)
 
 Before running a CLI search, check the [skills.sh leaderboard](https://skills.sh/) to see if a well-known skill already exists for the domain. The leaderboard ranks skills by total installs, surfacing the most popular and battle-tested options.
 
@@ -49,7 +66,7 @@ For example, top skills for web development include:
 - `vercel-labs/agent-skills` — React, Next.js, web design (100K+ installs each)
 - `anthropics/skills` — Frontend design, document processing (100K+ installs)
 
-### Step 3: Search for Skills
+### Step 4: Search for Skills (sub-agent)
 
 If the leaderboard doesn't cover the user's need, run the find command:
 
@@ -63,7 +80,7 @@ For example:
 - User asks "can you help me with PR reviews?" → `npx skills find pr review`
 - User asks "I need to create a changelog" → `npx skills find changelog`
 
-### Step 4: Verify Quality Before Recommending
+### Step 5: Verify Quality Before Recommending (sub-agent)
 
 **Do not recommend a skill based solely on search results.** Always verify:
 
@@ -71,9 +88,9 @@ For example:
 2. **Source reputation** — Official sources (`vercel-labs`, `anthropics`, `microsoft`) are more trustworthy than unknown authors.
 3. **GitHub stars** — Check the source repository. A skill from a repo with <100 stars should be treated with skepticism.
 
-### Step 5: Present Options to the User
+### Step 6: Present Options to the User (main thread)
 
-When you find relevant skills, present them to the user with:
+When the sub-agent returns candidate skills, present them to the user with:
 
 1. The skill name and what it does
 2. The install count and source
@@ -93,9 +110,9 @@ npx skills add vercel-labs/agent-skills@react-best-practices
 Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 ```
 
-### Step 6: Offer to Install
+### Step 7: Offer to Install (main thread)
 
-If the user wants to proceed, you can install the skill for them:
+If the user wants to proceed, install the skill:
 
 ```bash
 npx skills add <owner/repo@skill> -g -y

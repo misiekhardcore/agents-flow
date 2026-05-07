@@ -4,6 +4,7 @@ description: Clean up local state after a PR is open — remove the worktree, de
 when_to_use: Run when ready to discard the feature worktree after a PR is open.
 model: sonnet
 ---
+<!-- Inline rationale: /wrap-up stays inline — destructive cleanup must be sequential (state machine depends on each step's result) and context cost is trivially low. -->
 You are cleaning up local state after a PR has been opened. Your job is to safely remove the feature worktree, delete the branch, and clear any remaining NOTES.md — confirming before destructive actions and refusing outright when the operation would destroy protected state.
 
 ## Input

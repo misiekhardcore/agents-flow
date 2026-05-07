@@ -66,6 +66,23 @@ Rules:
 - Gate optional specialists on concrete signals (diff patterns, scope class, file paths) — not on orchestrator discretion.
 - Never pay coordination overhead for work a single agent completes in under a minute.
 
+### Main-thread overrun
+
+Counter-rule to "default to single-agent": when inline work would dominate the lead's context window, delegating prevents overrun even below the TeamCreate threshold.
+
+**Delegate to a subagent when any of these conditions hold:**
+
+1. **Multi-file read sweep** — the task requires reading ≥5 independent files whose combined output would saturate the lead's context before synthesis (e.g., auditing all SKILL.md files, walking a large dependency graph).
+2. **N-way fan-out over independent items** — the task processes N items where each item is self-contained and returns only a short summary (e.g., reply-drafting per PR thread, per-lane audit passes). The `N × item_size > context_budget` shape is the signal, not N alone.
+3. **Verbose I/O with thin synthesis** — the work is pure retrieval or formatting (web fetch, CLI parse, file stat) and the lead only needs the distilled result. The lead's intermediate tool-result echo would fill context that adds no reasoning value.
+
+The failure mode is `Inline overrun` in the Failure modes table above. Each `/prune` lane, each `/resolve-pr-feedback` reply, and the `/find-skills` discovery pass are canonical examples.
+
+**What to pass in the spawn prompt** — sub-agents do not inherit the parent's CWD or file-read cache. Every spawn prompt must include:
+1. `cd <abs-path> && pwd` — verify CWD before reading any files.
+2. The absolute paths or pre-enumerated file lists the sub-agent needs — do not re-derive them from scratch.
+3. Prior findings that are load-bearing for the sub-agent's task — no inheritance means no implicit context.
+
 See `skills/discovery/SKILL.md` and `skills/review/SKILL.md` for canonical Scope Assessment blocks. The orchestrator template at `_templates/SKILL.orchestrator.template.md` includes a Scope Assessment stub.
 
 ## Structured briefs
