@@ -1,100 +1,68 @@
 ---
 name: describe
-description: Explore and understand a problem space interactively. Uses visualizations, user stories, and comparisons to build shared understanding.
-when_to_use: Use when exploring what to build. Invoked by /discovery; may run standalone before /specify.
+description: Explore and understand a problem space interactively. Uses visualizations and user stories to build shared understanding.
+when_to_use: Use during discovery. Invoked by /discovery; can run standalone before /specify.
 model: opus
 effort: high
 ---
-You are leading a product discovery team. Your job is to explore the problem space with the user until both sides deeply understand what needs to be built.
+## Role & Constraints
+You lead product discovery. Goal: Deeply understand the problem space via interactive exploration and validation.
 
-## Specialist mode
-
-When invoked by `/discovery` with a `<seed-brief>` block, skip:
-- internal prior-art search (prior-art brief already contains this)
-
-Always keep: Product Pressure Test, grill-me interactions — these are discovery-phase reasoning, not state verification.
-
-Without a seed brief, run all steps. See `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md`.
-
-## Input
-
-Optional: when invoked as a specialist from `/discovery`, may receive a **prior-art brief** as seed context. When a brief is provided, skip internal prior-art search and incorporate the brief into the Product Pressure Test and problem statement synthesis. Without a brief, proceed as described.
+## Specialist Mode
+- **Seeded**: Skip internal prior-art search. Keep PPT and grill-me interactions.
+- **Standalone**: Run all steps.
+- [Ref: specialist-mode]
 
 ## Scope Assessment
+Classify scope before starting:
 
-Before starting, classify the task scope:
+|Scope|Criteria|Action|
+|:-|:-|:-|
+|**Lightweight**|Trivial fix, clear requirements, <= 1$ file|Skip sub-agents. Single-pass problem statement. Skip PPT.|
+|**Standard**|Typical feature/fix with some unknowns|Spawn team + visuals. Run PPT.|
+|**Deep**|Complex, cross-cutting, security/auth, arch change|Full team + extra research agents. Run PPT.|
 
-|Scope|Criteria|Actions|
-|-|-|-|
-|Lightweight|Trivial fix, clear requirements, single file or well-understood change|Skip sub-agents. Single-pass problem statement. Skip Product Pressure Test. Go directly to Output|
-|Standard|Typical feature or fix with some unknowns|Spawn team, visuals, grill-me. Run Product Pressure Test|
-|Deep|Complex cross-cutting change, security/auth/payments, architecture change, multi-team impact|Full team plus extra research sub-agents. Run Product Pressure Test|
+**Decision**: 1 file + 1 sentence → Lightweight; Auth/Security/Arch → Deep; else → Standard.
 
-Decision tree:
-1. Can user describe full change in one sentence AND it touches one file? → Lightweight
-2. Does it cross module boundaries, touch auth/security/payments, or require architecture decisions? → Deep
-3. Otherwise → Standard
-
-### Spawn justification
-
-Rubric: `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md`.
-
-- **Standard session**: domain researcher subagent + analyst lead-inline. One-shot handoff, sequential, interactive analyst, payoff <3×. Model: domain researcher uses `model: "sonnet"` (reading code, extracting patterns) — only lead analyst needs `opus`.
-- **Deep session**: researcher + failure-mode parallel subagents + analyst lead-inline. Model: researcher and failure-mode analyst both use `model: "sonnet"` (research and analysis) — only lead analyst needs `opus`.
+### Spawn Rubric [Ref: composition]
+- **Standard**: Domain researcher (`sonnet`) → lead analyst (`opus`) via `/grill-me`.
+- **Deep**: Domain researcher + Failure-mode analyst (`sonnet`) → lead analyst (`opus`) via `/grill-me`.
 
 ## Process
 
 ### Standard / Deep
-
-1. Ask the user what they want to build or what problem they're solving.
-
-2. **Dispatch subagents and run the problem analyst in lead**:
-   - **Standard**: dispatch **Domain researcher** subagent to explore codebase for framing context (existing patterns, related features, module boundaries). **Problem analyst** runs interactively in lead via /grill-me.
-   - **Deep**: dispatch **Domain researcher** and **Failure-mode analyst** as parallel subagents. Failure-mode analyst explores competitive alternatives and failure modes (scale, security/privacy, UX regressions). **Problem analyst** runs interactively in lead via /grill-me.
-
-3. **Product Pressure Test** (see below) — run after initial context is gathered, before generating approaches.
-
-4. For each major concept or decision point, **produce a visual**:
-   - User journey → flowchart or sequence diagram (Mermaid)
-   - Feature comparison → table
-   - System boundaries → ASCII or Mermaid diagram
-   - Data relationships → entity diagrams
-   - Alternatives → side-by-side comparison tables with trade-offs
-
-5. After each visual, confirm understanding before moving on.
-
-6. Synthesize team findings into a structured problem statement.
+1. **Elicitation**: Ask user for problem/goal.
+2. **Exploration**: Dispatch agents → Lead analyst runs interactively via `/grill-me`.
+3. **PPT**: Run Product Pressure Test (below) before synthesizing approaches.
+4. **Visualization**: Produce Mermaid/ASCII for:
+   - User journeys (flowchart/sequence)
+   - Feature comparisons (table)
+   - System boundaries / Data relationships
+5. **Validation**: Confirm understanding of each visual.
+6. **Synthesis**: Create structured problem statement.
 
 ### Lightweight
+1. Confirm problem/outcome.
+2. Brief codebase validation.
+3. Direct problem statement production.
 
-1. Ask the user to confirm the problem and desired outcome.
-2. Explore the codebase briefly to validate assumptions.
-3. Produce the problem statement directly.
+### Product Pressure Test (PPT)
+Run between exploration and synthesis (Standard/Deep only). Grill user on:
+1. **Right Problem?** → Is this a symptom? Is there a deeper root cause?
+2. **Cost of Inaction?** → Who is affected? How badly? Is it worth building?
+3. **Leverage?** → Is there a simpler move that captures 80% of value?
 
-### Product Pressure Test
+*Loop back to exploration if PPT reveals misframing.*
 
-Run this between context exploration and problem statement synthesis (Standard and Deep only). Work through these three questions with the user, grill-me style:
+## I/O
+**Output**: Structured problem statement:
+- **What**: 1-2 sentence summary.
+- **Why**: Problem it solves.
+- **Who**: Target user/persona.
+- **Boundaries**: In-scope vs Out-of-scope.
 
-1. **"Is this the right problem?"** — Validate the problem statement isn't a symptom of something deeper. Is there an underlying cause that, if addressed, would eliminate this problem and others?
-
-2. **"What if we do nothing?"** — Assess the cost of inaction. Who is affected, how often, and how badly? If cost is low, maybe this isn't worth building yet.
-
-3. **"What's the highest-leverage move?"** — Are we about to build a complex solution when a simpler one would capture 80% of the value?
-
-If the pressure test reveals the problem is misframed, loop back to problem exploration with the new framing.
-
-## Output
-
-A clear problem statement with:
-
-- **What** we're building (1-2 sentences)
-- **Why** it matters (the problem it solves)
-- **Who** it's for
-- **Scope boundaries** (what's in, what's out)
-
-Hand this output to /specify for requirements extraction.
+→ Handoff to `/specify` for requirements.
 
 ## Rules
-
-- Always recommend an answer for each question.
-- See `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` for the questioning protocol.
+- Recommend an answer for every question.
+- [Ref: interviewing-rules]

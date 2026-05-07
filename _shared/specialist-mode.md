@@ -1,79 +1,42 @@
 # Specialist Mode — Shared Protocol
 
-A specialist runs in two modes: **standalone** (user-invoked) or **specialist** (orchestrator-invoked after preflights). Read when detecting invocation mode or documenting skipped prompts when seeded.
+Logic for standalone vs. orchestrator-invoked (seeded) execution.
 
 ## Detection
+`specialist_mode = True` if `<seed-brief>` block exists in prompt.
+- **Seeded**: Verified fields replace preflights.
+- **Standalone**: All prompts active.
 
-Specialist detects specialist mode by checking for `<seed-brief>` block in prompt at startup:
+## Seed-Brief Contract
+**Format**: Raw YAML in XML tag `<seed-brief>`, no inner fence.
 
-```
-if "<seed-brief>" in prompt → specialist_mode = True
-```
+|Field|Type|Req|Notes|
+|:-|:-|:-|:-|
+|`preflight_verified`|bool|Yes|Must be `true`|
+|`scope_class`|string|Yes|`Lightweight`, `Standard`, or `Deep`|
+|`repo`|string|Yes|`owner/repo` (verified vs `git remote -v`)|
+|`branch`|string|Yes|`feat/<slug>` (verified vs `git rev-parse`)|
+|`active_issue`|int|Yes|GitHub issue ID|
+|`payload`|object|Yes|`{ type: fix\|research\|prior-art, ... }` (per `composition.md`)|
+|`autonomous`|bool|No|Default `false`. If `true`, suppresses `/implement` exit prompt|
 
-When brief is present, verified fields replace specialist's preflight checks. When absent, specialist runs standalone with all prompts active.
+**Failure**: Invalid brief → Fallback to standalone + log failure.
 
-## Seed-brief transport format
+## Execution Delta
+Confirmations verifying *state* are skipped; *discovery/rigor* gates remain.
 
-Orchestrators pass briefs as raw YAML in XML tag, no inner fence:
-
-```
-<seed-brief>
-preflight_verified: true
-scope_class: Lightweight|Standard|Deep
-repo: owner/repo
-branch: feat/branch-name
-active_issue: 42
-autonomous: false  # optional
-payload:
-  type: fix|research|prior-art
-  # type-specific fields per composition.md
-</seed-brief>
-```
-
-XML tag marks boundary. `payload` envelope decouples brief metadata from type-specific content.
-
-## Required fields
-
-|Field|Type|Required|Notes|
-|-|-|-|-|
-|`preflight_verified`|boolean|yes|Brief is rejected if `false` or missing|
-|`scope_class`|string|yes|Must be `Lightweight`, `Standard`, or `Deep`|
-|`repo`|string|yes|`owner/repo` — verified against `git remote -v` of the spawning worktree|
-|`branch`|string|yes|`feat/<slug>` — verified against `git rev-parse --abbrev-ref HEAD`|
-|`active_issue`|integer|yes|Ties the brief to its GitHub issue|
-|`payload`|object|yes|`{ type: fix|research|prior-art, ... }` — type-specific fields per `_shared/composition.md`|
-|`autonomous`|boolean|no|Default `false`. When `true`, suppresses `/implement`'s exhausted-exit prompt; only consumed by `/implement`. Do not set from non-autopilot orchestrators — default `false` preserves the rigor gate.|
-
-Verification failure (wrong repo/branch, missing field) → specialist rejects brief, falls back to standalone with full prompts. Log which check failed.
-
-## What gets skipped in specialist mode
-
-Confirmations that verify *state* are skipped when seeded; confirmations that drive *discovery* or *rigor* stay live.
-
-|Specialist|Skipped when seeded|Always kept|
-|-|-|-|
-|`/build`|repo-preflight, scope-preflight, scope-class confirmation|design gate (architecture must be cross-phase verified)|
-|`/review`|repo-preflight|severity/finding-depth gates|
+|Specialist|Skipped when Seeded|Always Kept|
+|:-|:-|:-|
+|`/build`|repo/scope preflights, scope confirmation|design gate|
+|`/review`|repo-preflight|severity/depth gates|
 |`/verify`|repo-preflight|AC verification rigor|
-|`/describe`|internal prior-art search (declared in Input section)|Product Pressure Test, grill-me interactions|
-|`/specify`|scope-class + file-scope confirmation|AC derivation gates|
-|`/architecture`|codebase-research / patterns-research subagent dispatches|architecture session (grill-me + devil's advocate)|
-|`/design`|design-space research subagents|interactive design session|
-|`/implement`|_(orchestrator; preflights at entry)_|exhausted-exit prompt (rigor gate; suppressed only when `autonomous: true`)|
+|`/describe`|internal prior-art search|PPT, grill-me|
+|`/specify`|scope/file confirmation|AC derivation gates|
+|`/architecture`|codebase/pattern research|architecture session (grill-me/devil's advocate)|
+|`/design`|design-space research|interactive session|
+|`/implement`|(handled by orchestrator)|exhausted-exit prompt (unless `autonomous: true`)|
 
-Each specialist documents a "Specialist mode" subsection in its SKILL.md naming skipped prompts.
-
-## Standalone invocation
-
-No seed brief present → specialist runs with all documented prompts. No partial-brief state — either valid `<seed-brief>` block exists or specialist runs standalone.
-
-## Orchestrator responsibilities
-
-When spawning a specialist:
-
-1. Run repo-preflight once at entry, not per specialist.
-2. Run scope-preflight once at entry, not per specialist.
-3. Pass valid seed brief with `preflight_verified: true` to every specialist.
-4. Include verified `repo`, `branch`, `active_issue` in every brief for sanity-checking.
-
-Established patterns: `/implement` → `/build`, `/review`, `/verify`; `/discovery` → `/describe`, `/specify`; `/define` → `/architecture`, `/design`, `/specify`.
+## Orchestrator Duties
+1. Run repo/scope-preflight once at entry.
+2. Pass valid seed-brief (`preflight_verified: true`) to every specialist.
+3. Include `repo`, `branch`, `active_issue` for sanity checks.

@@ -4,7 +4,6 @@ description: Single-lane audit worker for /prune. Runs one of the three audit la
 model: haiku
 user-invocable: false
 ---
-
 You are a single-lane audit worker spawned by `/prune`. Your job: run exactly one audit lane and return a structured findings report. The main `/prune` session aggregates reports from all three lane workers.
 
 ## Input
