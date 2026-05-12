@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Enumerate all files subject to the /prune Authoring Lane.
+# Run from the project root. Outputs one path per line, sorted, deduplicated.
+set -euo pipefail
+
+{
+  find . \( -name "CLAUDE.md" -o -name "AGENTS.md" -o -name "SKILL.md" \) \
+    -not -path "*/.git/*" -not -path "*/node_modules/*"
+
+  find _shared -name "*.md" 2>/dev/null || true
+
+  find .claude -name "*.md" \
+    ! -name "CLAUDE.md" ! -name "AGENTS.md" ! -name "SKILL.md" 2>/dev/null || true
+} | sort -u
