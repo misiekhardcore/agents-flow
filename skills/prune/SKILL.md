@@ -24,10 +24,7 @@ Audit project rules and docs for staleness and authoring quality.
 
 **Vault dependency check**: If Vault is selected, check whether the `claude-obsidian` plugin is installed (look for `claude-obsidian:wiki-lint` skill availability). If not installed, note "claude-obsidian not installed, skipping vault lane" and proceed with the remaining selected lanes only.
 
-**Dispatch**: Enumerate files for each selected lane, then spawn one Task sub-agent per selected lane in parallel:
-- **Rules files**: global `~/.claude/CLAUDE.md`, all `@import`ed files, project `CLAUDE.md`, `MEMORY.md` and topic files.
-- **Authoring files**: all `CLAUDE.md`, `AGENTS.md`, `SKILL.md` files under the project root.
-- **Vault files**: none (vault lane uses claude-obsidian tools directly; pass empty list).
+**Dispatch**: Run `bin/list-prune-files --<lane>` from the project root for each selected lane to get a concrete file list, then spawn one Task sub-agent per selected lane in parallel.
 
 Each spawn prompt must include: `lane` (rules|authoring|vault), `cwd` (absolute project root path), `files` (pre-enumerated list above), `claude_obsidian_installed` (true/false; vault lane only). Each must start with `cd <cwd> && pwd`.
 
@@ -38,7 +35,7 @@ Each spawn prompt must include: `lane` (rules|authoring|vault), `cwd` (absolute 
 
 ### Authoring Lane
 Read each file in `files`. Run 5 checks (Cite Augment Code study):
-1. **Length Triage**: Flag if exceeds cap (Global: 50, Project: 200, Subdir: 50).
+1. **Length Triage**: Flag if exceeds cap (Global: 50, Project: 200, Subdir: 50, Shared: 100, `.claude/` files use Subdir: 50).
 2. **Unpaired "Don't"**: Scan for `Don't`/`Avoid`/`Never` without a paired `Do`/`Always`/`Prefer` within 3 lines.
 3. **Warning-Stack**: Flag if `Don't` lines > 10 (warning) or > 30 (error).
 4. **Architecture Smell**: Headings like `Architecture`/`Overview` exceeding 30 lines → recommend relocation to reference file.

@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Enumerate files for /prune audit lanes.
+# Run from the project root. Outputs one path per line, sorted, deduplicated.
+# Usage: list-prune-files [--rules] [--authoring] [--vault]
+# Defaults to all lanes when no flags are given.
+set -euo pipefail
+
+run_rules=false
+run_authoring=false
+run_vault=false
+
+if [[ $# -eq 0 ]]; then
+  run_rules=true
+  run_authoring=true
+  run_vault=true
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --rules)     run_rules=true ;;
+    --authoring) run_authoring=true ;;
+    --vault)     run_vault=true ;;
+    *) echo "Unknown flag: $1" >&2; exit 1 ;;
+  esac
+  shift
+done
+
+emit_rules() {
+  [[ -f "${HOME}/.claude/CLAUDE.md" ]] && echo "${HOME}/.claude/CLAUDE.md"
+  [[ -f "./CLAUDE.md" ]] && echo "./CLAUDE.md"
+
+  # @import-referenced files from both CLAUDE.md files
+  grep -h '^@' "${HOME}/.claude/CLAUDE.md" "./CLAUDE.md" 2>/dev/null \
+    | sed 's/^@//' || true
+
+  # project-scoped auto-memory files
+  local memory_dir="${HOME}/.claude/projects/$(pwd | tr '/' '-')/memory"
+  if [[ -d "$memory_dir" ]]; then
+    find "$memory_dir" -name "*.md"
+  fi
+}
+
+emit_authoring() {
+  find . \( -name "CLAUDE.md" -o -name "AGENTS.md" -o -name "SKILL.md" \) \
+    -not -path "*/.git/*" -not -path "*/node_modules/*"
+
+  find _shared -name "*.md" 2>/dev/null || true
+
+  find .claude -name "*.md" \
+    ! -name "CLAUDE.md" ! -name "AGENTS.md" ! -name "SKILL.md" 2>/dev/null || true
+}
+
+{
+  if $run_rules;     then emit_rules; fi
+  if $run_authoring; then emit_authoring; fi
+  # --vault: no files (vault lane uses claude-obsidian tools directly)
+} | sort -u
