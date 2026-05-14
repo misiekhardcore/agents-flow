@@ -49,6 +49,7 @@ Group by category → Present triage summary to user.
 **Mutation (main thread)**:
 1. Post each drafted reply via `gh api .../replies` (safe body passing).
 2. Resolve thread if verdict in {`fixed`, `fixed-differently`, `not-addressing`}.
+3. **Verify**: Run `gh pr view <N> --json reviewThreads` and confirm all threads are resolved before declaring work done.
 
 ## Output
 Summary: Total threads → counts per verdict → commits created → threads needing human attention.
