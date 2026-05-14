@@ -15,7 +15,7 @@ A GitHub issue number (with architecture/design decisions from /define) and any 
 
 ## Process Overview
 
-Read `references/steps.md` for scope assessment, spawn justification, specialist mode, step-by-step process, and detailed rules.
+Read `references/scope.md` for scope assessment criteria and specialist mode overrides. When ready to execute, Read `references/process.md` for step-by-step process, TDD, context hygiene, and commit rules.
 
 **Quick summary:**
 1. Run pre-flight (repo/scope confirmation).
