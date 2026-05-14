@@ -1,5 +1,5 @@
 ---
-name: ship
+name: issue-autopilot
 description: Single-issue equivalent of /epic-autopilot. Chains /define → /implement → /resolve-pr-feedback → /compound → /wrap-up for one issue.
 when_to_use: Use when you have a single GitHub issue and want the full lifecycle automated end-to-end with natural pause points for human review and merge.
 argument-hint: "<issue#>"
@@ -20,7 +20,7 @@ A single positive integer — the GitHub issue number to ship.
 
 On every invocation:
 
-1. Run `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md`. Echo resolved `owner/repo` back to the user. Pause for confirmation.
+1. Run [Ref: repo-preflight]. Echo resolved `owner/repo` back to the user. Pause for confirmation.
 2. Detect current state using the commands in **State detection** below.
 3. Consult the **Resume state machine** to determine which stage to enter.
 
@@ -32,7 +32,7 @@ On every invocation:
 2. `/define` pauses for its own user-approval gate — do not add a second gate.
 3. After `/define` exits, print:
 
-   > Definition complete. Re-invoke `/ship <N>` to continue to implementation.
+   > Definition complete. Re-invoke `/issue-autopilot <N>` to continue to implementation.
 
 4. **Exit.** User re-invokes after reviewing the plan.
 
@@ -40,11 +40,11 @@ On every invocation:
 
 **Entry condition**: Issue has `## Implementation plan`, branch `feat/issue-<N>` does not exist, no open PR.
 
-1. Pull latest `main` and create worktree for branch `feat/issue-<N>` on base `main`. See `${CLAUDE_PLUGIN_ROOT}/_shared/worktree-protocol.md`.
+1. Pull latest `main` and create worktree for branch `feat/issue-<N>` on base `main`. See [Ref: worktree-protocol].
 
 2. Determine `scope_class` from the plan body (look for size/scope hints; default to `Standard`).
 
-3. Run `/implement <N>` from within the worktree. See `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md#Autonomous Implement Invocation` with overrides:
+3. Run `/implement <N>` from within the worktree. See [Ref: specialist-mode — Autonomous Implement Invocation] with overrides:
    - `scope_class`: determined above
    - `branch`: `feat/issue-<N>`
    - `active_issue`: `<N>`
@@ -55,7 +55,7 @@ On every invocation:
 
 5. After `/implement` exits, print:
 
-   > Draft PR opened. Invite human review, then re-invoke `/ship <N>`.
+   > Draft PR opened. Invite human review, then re-invoke `/issue-autopilot <N>`.
 
 6. **Exit.**
 
@@ -80,8 +80,8 @@ On every invocation:
    | Result | Action |
    |-|-|
    | Final count == 0 | Proceed immediately to Stage 4 in this invocation |
-   | Final count > 0 and decreased | Print "Partial progress: `<before>` → `<after>` unresolved threads. Re-invoke `/ship <N>` after the next review pass." Exit. |
-   | Final count > 0 and unchanged (or `/resolve-pr-feedback` returned `needs-human` verdicts) | Print needs-human summary listing remaining threads. Exit with: "Needs human review — see threads above. Re-invoke `/ship <N>` after addressing them." |
+   | Final count > 0 and decreased | Print "Partial progress: `<before>` → `<after>` unresolved threads. Re-invoke `/issue-autopilot <N>` after the next review pass." Exit. |
+   | Final count > 0 and unchanged (or `/resolve-pr-feedback` returned `needs-human` verdicts) | Print needs-human summary listing remaining threads. Exit with: "Needs human review — see threads above. Re-invoke `/issue-autopilot <N>` after addressing them." |
 
 ### Stage 4 — Zero unresolved, awaiting merge
 
@@ -90,7 +90,7 @@ On every invocation:
 Print:
 
 > PR #`<PR#>` is clean — zero unresolved review threads.
-> Merge the PR on GitHub, then re-invoke `/ship <N>` to capture learnings and clean up.
+> Merge the PR on GitHub, then re-invoke `/issue-autopilot <N>` to capture learnings and clean up.
 
 **Exit.** Merging is a human action; the skill never triggers a merge.
 
@@ -134,9 +134,7 @@ gh pr view <PR#> --json reviewThreads \
 
 ## Rules
 
-- **CWD verification**: Run `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md` at entry, echo `owner/repo`. Before every downstream cross-repo `gh` mutation, re-echo the resolved repo. Pass `preflight_verified: true` in seed briefs so sub-skills skip redundant preflights.
-- **No duplicated logic**: Each stage delegates to the existing skill. No logic from `/implement`, `/resolve-pr-feedback`, `/compound`, or `/wrap-up` is reimplemented here.
-- **No autonomous merge**: Merging is always a human action; exit cleanly at Stage 4.
+See [Ref: orchestrator-rules] for CWD verification, delegation, no-autonomous-merge, and seed-brief contract.
+
 - **Loop-break**: In Stage 3, if the unresolved thread count is non-zero and unchanged after one pass, break immediately with a needs-human summary.
-- **Compound placement**: `/implement` already invokes `/compound` at PR creation (implementation-time pass). `/ship` re-invokes `/compound` in Stage 5 after merge to capture review-time learnings — two passes, no deduplication needed.
-- **Seed-brief contract**: See `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md#Autonomous Implement Invocation`.
+- **Compound placement**: `/implement` already invokes `/compound` at PR creation (implementation-time pass). `/issue-autopilot` re-invokes `/compound` in Stage 5 after merge to capture review-time learnings — two passes, no deduplication needed.

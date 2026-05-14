@@ -43,7 +43,7 @@ flowchart TB
         subgraph Meta["Other tools"]
             direction LR
             EpicAutopilot["/epic-autopilot — autonomous epic→PR"]
-            Ship["/ship — single-issue end-to-end"]
+            IssueAutopilot["/issue-autopilot — single-issue end-to-end"]
             NewSkill["/new-skill"]
             FindSkills["/find-skills"]
             Prune["/prune — audit memory"]
@@ -78,7 +78,7 @@ flowchart TB
     class Canvas canvas
     class Discovery,Define,Implement orch
     class D_Describe,D_Specify,D_Scout,Df_Arch,Df_Design,I_Build,I_Review,I_Verify spec
-    class GrillMe,NewSkill,FindSkills,Prune,AuditIssues,WrapUp,Compound,ResolvePR,EpicAutopilot,Ship,Save,WikiQuery,WikiLint meta
+    class GrillMe,NewSkill,FindSkills,Prune,AuditIssues,WrapUp,Compound,ResolvePR,EpicAutopilot,IssueAutopilot,Save,WikiQuery,WikiLint meta
     class Obsidian ext
 ```
 
@@ -111,6 +111,7 @@ Without this flag, `TeamCreate` is unavailable. Skills detect its absence and fa
 |`/define`|Plan architecture and design; produces the implementation handoff|
 |`/implement`|Full build→review→verify cycle, ends with a draft PR|
 |`/epic-autopilot`|Autonomous epic→PR pipeline; chains `/discovery → /define → /implement` per sub-issue|
+|`/issue-autopilot`|Single-issue end-to-end pipeline: `/define` → `/implement` → `/resolve-pr-feedback` → `/compound` → `/wrap-up`|
 |`/build`|Code against an issue's acceptance criteria using TDD|
 |`/review`|Review an implementation or external PR; correctness, standards, and conditional specialists|
 |`/verify`|QA verification of every acceptance criterion|
@@ -125,7 +126,6 @@ Without this flag, `TeamCreate` is unavailable. Skills detect its absence and fa
 |`/audit-issues`|Drift-check open GitHub issues against the current repo state|
 |`/find-skills`|Discover and install skills from the ecosystem|
 |`/resolve-pr-feedback`|Process PR review feedback in bulk|
-|`/ship`|Single-issue end-to-end pipeline: `/define` → `/implement` → `/resolve-pr-feedback` → `/compound` → `/wrap-up`|
 |`/new-skill`|Scaffold a new skill conforming to this authoring standard|
 
 ## Optional: claude-obsidian integration
@@ -166,11 +166,12 @@ Shared protocols at `_shared/`:
 
 |File|Purpose|
 |-|-|
+|`compaction-protocol.md`|Context editing → delegation → /compact order|
+|`composition.md`|Multi-skill composition patterns and contracts|
 |`handoff-artifact.md`|Five-field GitHub issue handoff structure|
 |`interviewing-rules.md`|One-question-at-a-time interview protocol|
 |`notes-md-protocol.md`|In-phase NOTES.md memory tier|
-|`compaction-protocol.md`|Context editing → delegation → /compact order|
-|`composition.md`|Multi-skill composition patterns and contracts|
+|`orchestrator-rules.md`|Shared rules for pipeline orchestrators: CWD verification, delegation, no-autonomous-merge, seed-brief contract|
 
 ## Releasing
 

@@ -191,9 +191,10 @@ A permanently-FAILED sub-task (branch exists, no PR, two prior retries) will be 
 
 ## Rules
 
+See [Ref: orchestrator-rules] for CWD verification, delegation, no-autonomous-merge, and seed-brief contract.
+
 - Require explicit user approval at each gate (Stage 1, Stage 2, each Stage 3 sub-issue). Silence is not approval.
 - The user must not modify the epic issue body or any sub-issue body during Stage 4. Sub-agents read at spawn time.
 - Sub-issue branch and worktree names follow `feat/epic-<N>-sub-<M>` exactly. M is the globally unique GitHub sub-issue number.
 - `autonomous: true` in the seed brief is reserved for sub-task spawns from this skill. Do not pass from other orchestrators.
 - `/compound` and `/wrap-up` are not run by epic-autopilot — they remain user-invoked utilities.
-- **Seed-brief contract**: See `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md#Autonomous Implement Invocation`.
