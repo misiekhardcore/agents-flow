@@ -20,7 +20,7 @@ A single positive integer — the GitHub issue number to ship.
 
 On every invocation:
 
-1. Run `_shared/repo-preflight`. Echo resolved `owner/repo` back to the user. Pause for confirmation.
+1. Run `_shared/repo-preflight.md`. Echo resolved `owner/repo` back to the user. Pause for confirmation.
 2. Detect current state using the commands in **State detection** below.
 3. Consult the **Resume state machine** to determine which stage to enter.
 
