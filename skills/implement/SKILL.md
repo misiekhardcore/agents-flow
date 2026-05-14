@@ -10,11 +10,11 @@ allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ## Role & Constraints
 Orchestrate build → review → verify → fix cycles to produce a ready-to-merge PR.
 
-[Ref: scope-cycles.md] for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
+Read `_shared/scope-cycles.md` for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
 
 ## Pre-flight
-1. [Ref: repo-preflight] at entry (suppress branch line).
-2. [Ref: scope-preflight] if >= 3 files. Pass `preflight_verified: true` in seed-briefs.
+1. Read `_shared/repo-preflight.md` at entry (suppress branch line).
+2. Read `_shared/scope-preflight.md` if >= 3 files. Pass `preflight_verified: true` in seed-briefs.
 
 ## Process
 
@@ -29,4 +29,4 @@ Orchestrate build → review → verify → fix cycles to produce a ready-to-mer
 - **Rigor**: Do not open PR until clean pass OR 3 cycles exhausted.
 - **Completeness**: Each cycle must address ALL previous findings.
 - **State**: In-phase state in `.claude/NOTES.md`. Issue body stores `## Requirements` and `## Implementation plan`.
-- [Ref: handoff-artifact]
+- Read `_shared/handoff-artifact.md`

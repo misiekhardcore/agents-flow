@@ -13,10 +13,10 @@ You lead product discovery. Goal: Deeply understand the problem space via intera
 ## Specialist Mode
 - **Seeded**: Skip internal prior-art search. Keep PPT and grill-me interactions.
 - **Standalone**: Run all steps.
-- [Ref: specialist-mode]
+- Read `_shared/specialist-mode.md`
 
 ## Scope Assessment
-[Ref: scope-ppt.md] for scope classification, spawn rubric, and PPT checklist.
+Read `_shared/scope-ppt.md` for scope classification, spawn rubric, and PPT checklist.
 
 ## Process
 
@@ -44,4 +44,4 @@ You lead product discovery. Goal: Deeply understand the problem space via intera
 
 ## Rules
 - Recommend an answer for every question.
-- [Ref: interviewing-rules]
+- Read `_shared/interviewing-rules.md`

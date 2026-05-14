@@ -14,7 +14,7 @@ Current worktree path and branch. Optionally, an open PR number (used to verify 
 
 ## Process
 
-Read `references/procedure.md` for detailed steps 1–5.
+Read `references/procedure.md` for detailed steps 1–5 (see that file for the complete steps).
 
 **State machine** (apply after gathering git state):
 

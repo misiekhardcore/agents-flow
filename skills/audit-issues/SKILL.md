@@ -26,7 +26,7 @@ Audit open issues for drift. Product: Updated issues themselves (mutate on confi
 - Abort if issue is `closed`.
 
 ### Phase 2 — Per-Issue Audit (Subagent Fan-out)
-[Ref: detectors.md] for detector logic, verdict ranking, and JSON schema.
+Read `_shared/detectors.md` for detector logic, verdict ranking, and JSON schema.
 
 ### Phase 3 — Aggregate & Print
 Concatenate JSON reports. Per-issue block: `─── #NN — <title> — verdict: <v> ───` → URL → findings → proposed edit.
@@ -43,7 +43,7 @@ Walk blocks in order. Prompt based on verdict:
 - `s` → Advance.
 
 ## Rules
-- **Sourcing**: Use [Ref: handoff-artifact] for parse targets.
+- **Sourcing**: Use `_shared/handoff-artifact.md` for parse targets.
 - **Read-Only Default**: Mutate only after explicit per-issue confirmation.
 - **No Auto-Clone**: Do not clone missing repos.
 - **No Invention**: No counter → `unverifiable`.
