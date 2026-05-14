@@ -16,15 +16,15 @@ Orchestrate the single-issue ship pipeline. Take a GitHub issue number and drive
 
 **Output**: 
 - Stage 0: Confirm repo and detect current state.
-- Stages 1–5: Execute per `references/stages.md`, pausing at human decision points (after define, after impl, after review, before merge, complete).
+- Stages 1–5: Read `references/stage-<N>.md` for the active stage logic, pausing at human decision points (after define, after impl, after review, before merge, complete).
 
-**State machine**: Resume state machine in `references/stages.md` determines which stage to enter on each invocation based on issue/PR/branch state.
+**State machine**: Resume state machine in `references/detection.md` determines which stage to enter on each invocation based on issue/PR/branch state.
 
 ## Process Flow
 
 1. Run `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md` and pause for confirmation.
-2. Detect state using commands in `references/stages.md` § State detection.
-3. Consult resume state machine to enter correct stage.
+2. Read `references/detection.md` to detect current state and determine which stage to enter.
+3. Read `references/stage-<N>.md` for the active stage's logic, where N is the determined stage number.
 4. Execute stage logic; print stage-exit message and exit (or proceed to next stage if heuristic allows).
 
 ## Rules
