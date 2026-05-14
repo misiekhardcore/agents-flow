@@ -1,44 +1,27 @@
 #!/usr/bin/env bash
 # Enumerate files for /prune audit lanes.
-# Run from the project root. Outputs one path per line, sorted, deduplicated.
-# Usage: list-prune-files [--rules] [--authoring] [--vault]
-# Defaults to all lanes when no flags are given.
+# Usage: list-prune-files [--authoring] [--dead-state]
+# Defaults to --authoring and --dead-state when no flags are given.
 set -euo pipefail
 
-run_rules=false
+CLAUDE_DIR="${HOME}/.claude"
 run_authoring=false
-run_vault=false
+run_dead_state=false
 
 if [[ $# -eq 0 ]]; then
-  run_rules=true
   run_authoring=true
-  run_vault=true
+  run_dead_state=true
 fi
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --rules)     run_rules=true ;;
-    --authoring) run_authoring=true ;;
-    --vault)     run_vault=true ;;
-    *) echo "Unknown flag: $1" >&2; exit 1 ;;
+    --authoring)     run_authoring=true ;;
+    --dead-state)    run_dead_state=true ;;
+    --rules|--vault) echo "Unknown flag: $1" >&2; exit 1 ;;
+    *)               echo "Unknown flag: $1" >&2; exit 1 ;;
   esac
   shift
 done
-
-emit_rules() {
-  [[ -f "${HOME}/.claude/CLAUDE.md" ]] && echo "${HOME}/.claude/CLAUDE.md"
-  [[ -f "./CLAUDE.md" ]] && echo "./CLAUDE.md"
-
-  # @import-referenced files from both CLAUDE.md files
-  grep -h '^@' "${HOME}/.claude/CLAUDE.md" "./CLAUDE.md" 2>/dev/null \
-    | sed 's/^@//' || true
-
-  # project-scoped auto-memory files
-  local memory_dir="${HOME}/.claude/projects/$(pwd | tr '/' '-')/memory"
-  if [[ -d "$memory_dir" ]]; then
-    find "$memory_dir" -name "*.md"
-  fi
-}
 
 emit_authoring() {
   find . \( -name "CLAUDE.md" -o -name "AGENTS.md" -o -name "SKILL.md" \) \
@@ -50,8 +33,115 @@ emit_authoring() {
     ! -name "CLAUDE.md" ! -name "AGENTS.md" ! -name "SKILL.md" 2>/dev/null || true
 }
 
+_emit_dead_projects() {
+  local projects_dir="${CLAUDE_DIR}/projects"
+  [[ -d "$projects_dir" ]] || return 0
+  for proj_dir in "${projects_dir}"/*/; do
+    [[ -d "$proj_dir" ]] || continue
+    local encoded
+    encoded=$(basename "$proj_dir")
+    local decoded
+    decoded=$(printf '%s' "$encoded" | tr '-' '/')
+    if [[ ! -d "$decoded" ]]; then
+      echo "$proj_dir"
+      find "$proj_dir" -name "*.jsonl" 2>/dev/null || true
+    fi
+  done
+}
+
+_emit_orphan_agents() {
+  local agents_dir="${CLAUDE_DIR}/agents"
+  [[ -d "$agents_dir" ]] || return 0
+  for agent_file in "${agents_dir}"/*.md; do
+    [[ -f "$agent_file" ]] || continue
+    local stem found
+    stem=$(basename "$agent_file" .md)
+    found=0
+
+    # Check installed SKILL.md files in plugin cache
+    if [[ -d "${CLAUDE_DIR}/plugins/cache" ]]; then
+      if grep -qr -- "$stem" "${CLAUDE_DIR}/plugins/cache/" \
+          --include="SKILL.md" 2>/dev/null; then
+        found=1
+      fi
+    fi
+
+    # Check settings*.json under ~/.claude/ (maxdepth 3, exclude archive/)
+    if [[ $found -eq 0 ]]; then
+      while IFS= read -r -d $'\0' f; do
+        if grep -q -- "$stem" "$f" 2>/dev/null; then
+          found=1; break
+        fi
+      done < <(find "${CLAUDE_DIR}" -maxdepth 3 -name "settings*.json" \
+          ! -path "${CLAUDE_DIR}/archive/*" -print0 2>/dev/null)
+    fi
+
+    # Check .jsonl transcripts
+    if [[ $found -eq 0 ]] && [[ -d "${CLAUDE_DIR}/projects" ]]; then
+      if grep -qr -- "$stem" "${CLAUDE_DIR}/projects/" \
+          --include="*.jsonl" 2>/dev/null; then
+        found=1
+      fi
+    fi
+
+    if [[ $found -eq 0 ]]; then echo "$agent_file"; fi
+  done
+}
+
+_emit_stale_plugin_caches() {
+  local cache_dir="${CLAUDE_DIR}/plugins/cache"
+  local installed_json="${CLAUDE_DIR}/plugins/installed_plugins.json"
+  [[ -d "$cache_dir" && -f "$installed_json" ]] || return 0
+  command -v jq &>/dev/null || return 0
+
+  local installed_paths
+  installed_paths=$(jq -r '.plugins | to_entries[] | .value[] | .installPath // empty' \
+    "$installed_json" 2>/dev/null | sed "s|^~/|${HOME}/|" | sed 's|/*$||' | sort -u) || true
+  [[ -n "$installed_paths" ]] || return 0
+
+  while IFS= read -r vdir; do
+    local norm="${vdir%/}"
+    if ! grep -qxF "$norm" <<< "$installed_paths"; then
+      echo "$norm"
+    fi
+  done < <(find "$cache_dir" -mindepth 3 -maxdepth 3 -type d \
+      ! -path "${CLAUDE_DIR}/archive/*" 2>/dev/null)
+}
+
+_emit_stale_schedules() {
+  local scheduled_json="${CLAUDE_DIR}/scheduled_tasks.json"
+  [[ -f "$scheduled_json" ]] || return 0
+  command -v jq &>/dev/null || return 0
+  jq -r '.[] | select(.cwd != null) | .cwd' "$scheduled_json" 2>/dev/null \
+    | while IFS= read -r cwd; do
+        [[ -d "$cwd" ]] || echo "scheduled_task:${cwd}"
+      done
+}
+
+_emit_plan_artifacts() {
+  local plans_dir="${CLAUDE_DIR}/plans"
+  [[ -d "$plans_dir" ]] || return 0
+  for plan_file in "${plans_dir}"/*.md; do
+    [[ -f "$plan_file" ]] || continue
+    local bname
+    bname=$(basename "$plan_file")
+    if [[ "$bname" =~ -agent-[0-9a-f]+\.md$ ]]; then
+      echo "$plan_file"
+    else
+      echo "unflagged:${plan_file}"
+    fi
+  done
+}
+
+emit_dead_state() {
+  _emit_dead_projects
+  _emit_orphan_agents
+  _emit_stale_plugin_caches
+  _emit_stale_schedules
+  _emit_plan_artifacts
+}
+
 {
-  if $run_rules;     then emit_rules; fi
-  if $run_authoring; then emit_authoring; fi
-  # --vault: no files (vault lane uses claude-obsidian tools directly)
+  if $run_authoring;  then emit_authoring;  fi
+  if $run_dead_state; then emit_dead_state; fi
 } | sort -u
