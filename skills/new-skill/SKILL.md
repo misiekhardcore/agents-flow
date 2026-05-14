@@ -16,7 +16,7 @@ A brief statement from the author of what the skill should do — or nothing, in
 
 1. Read `${CLAUDE_PLUGIN_ROOT}/_templates/AUTHORING.md` — skill-types table, `_shared/` files decision table, frontmatter guide.
 
-2. **Interview the author** — ask ONE question at a time. See `references/interview-steps.md` for the question sequence.
+2. **Interview the author** — ask ONE question at a time. See `skills/new-skill/references/interview-steps.md` for the question sequence.
 
    Use `AskUserQuestion` for bounded option sets (c–k); plain prompt for free-text (a, b). Place recommended option first with ` (Recommended)` — derive from step (b).
 

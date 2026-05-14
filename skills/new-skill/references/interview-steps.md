@@ -19,7 +19,7 @@ This file details the 11-step interview sequence that new-skill conducts with th
 
 ## Step (c): Mis-routing
 
-**`AskUserQuestion`** with `header: "Mis-routing"`, question: "Could another skill be invoked instead of this one?".
+**`AskUserQuestion`** with `header: "Mis-routing"`, question: "Could another skill be invoked instead of this one?"
 
 **Options:**
 - **Yes** — mis-routing is plausible; follow up with a free-text prompt: "Describe what this skill does NOT do and which skill handles it instead (e.g. 'Does NOT audit plugin files — use /prune for that'), and any sequence precondition (e.g. 'Use after /discovery'). This becomes the `when_to_use` frontmatter."
@@ -29,7 +29,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 
 ## Step (d): Role
 
-**`AskUserQuestion`** with `header: "Role"`, question: "Which role does this skill fill?".
+**`AskUserQuestion`** with `header: "Role"`, question: "Which role does this skill fill?"
 
 **Options** (4-option limit — if the author is unsure between the two orchestrator variants, pick **Orchestrator** here and clarify in the follow-up):
 - **Orchestrator** — leads a phase; spawns sub-skills or specialists; may write a handoff artifact (e.g. `/discovery`, `/define`, `/implement`)
@@ -37,7 +37,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 - **Interactive primitive** — reusable inline behavior; invoked by specialists; no team, no handoff (e.g. `/grill-me`)
 - **Utility** — user-invocable maintenance/post-work skill; no seed brief, no handoff artifact (e.g. `/compound`, `/prune`, `/resolve-pr-feedback`)
 
-**If Orchestrator:** Ask one follow-up `AskUserQuestion` with `header: "Orchestrator type"`, question: "Does this orchestrator do its own deep reasoning, or sequence already-designed sub-skills?".
+**If Orchestrator:** Ask one follow-up `AskUserQuestion` with `header: "Orchestrator type"`, question: "Does this orchestrator do its own deep reasoning, or sequence already-designed sub-skills?"
 
 **Options:**
 - **Research-leading** — spawns a research team before the main team; deep reasoning at the orchestrator tier (e.g. `/discovery`, `/define`). Defaults model to `opus` and `effort: high`.
@@ -45,7 +45,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 
 This answer determines which template to use in step 3 and pre-fills the model/effort defaults (which the author can still override in steps e/f).
 
-**If Specialist or Primitive:** Ask one follow-up `AskUserQuestion` with `header: "Visibility"`, question: "Should this skill be hidden from the slash-command menu?".
+**If Specialist or Primitive:** Ask one follow-up `AskUserQuestion` with `header: "Visibility"`, question: "Should this skill be hidden from the slash-command menu?"
 
 **Options:**
 - **No (Recommended)** — omit `user-invocable` (skill appears in menu; default)
@@ -53,7 +53,7 @@ This answer determines which template to use in step 3 and pre-fills the model/e
 
 ## Step (e): Model
 
-**`AskUserQuestion`** with `header: "Model"`, question: "Which model fits?".
+**`AskUserQuestion`** with `header: "Model"`, question: "Which model fits?"
 
 **Options:**
 - **sonnet** — standard multi-step workflows, implementation, review
@@ -62,7 +62,7 @@ This answer determines which template to use in step 3 and pre-fills the model/e
 
 ## Step (f): Effort
 
-**`AskUserQuestion`** with `header: "Effort"`, question: "Does this skill run long-form multi-turn research or decision-making?".
+**`AskUserQuestion`** with `header: "Effort"`, question: "Does this skill run long-form multi-turn research or decision-making?"
 
 **Options:**
 - **Standard** — omit `effort` (default)
@@ -103,7 +103,7 @@ If the author picks **Parallel subagents** or **TeamCreate**, ask a follow-up fr
 
 ## Step (j): Shared protocols
 
-**`AskUserQuestion`** with `header: "Protocols"`, `multiSelect: true`, question: "Which shared protocols does this skill need?".
+**`AskUserQuestion`** with `header: "Protocols"`, `multiSelect: true`, question: "Which shared protocols does this skill need?"
 
 - Walk through the AUTHORING.md decision table.
 
@@ -113,7 +113,7 @@ If the author picks **Parallel subagents** or **TeamCreate**, ask a follow-up fr
 - **NOTES.md protocol** — creates or reads `.claude/NOTES.md` → include `notes-md-protocol.md`
 - **Compaction protocol** — manages in-phase context (clearing stale results, delegating, `/compact`) → include `compaction-protocol.md`
 
-Then a second `AskUserQuestion` call: `header: "Composition"`, question: "Does this skill author an orchestrator or design a multi-skill workflow?".
+Then a second `AskUserQuestion` call: `header: "Composition"`, question: "Does this skill author an orchestrator or design a multi-skill workflow?"
 
 **Options:**
 - **No** — skip `composition.md`
@@ -121,7 +121,7 @@ Then a second `AskUserQuestion` call: `header: "Composition"`, question: "Does t
 
 ## Step (k): Target location
 
-**`AskUserQuestion`** with `header: "Target"`, question: "Where should the skill be written?".
+**`AskUserQuestion`** with `header: "Target"`, question: "Where should the skill be written?"
 
 **Options:**
 - **Personal (Recommended)** — `~/.claude/skills/<name>/SKILL.md` (individual use)
