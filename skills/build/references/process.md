@@ -54,7 +54,7 @@ Keep context focused. Trigger on **concept shifts**, not percentages:
 - Stale tool results after work has moved on → clear with context editing.
 - About to read a large file or grep wide → delegate to sub-agent that returns focused report.
 - About to start a new sub-issue or just spawned a sub-agent → natural reset.
-- If `/compact` is unavoidable: flush working set into `./.claude/NOTES.md`, emit `Keep: / Drop:` note, run `/compact`, diff post-compaction summary against Keep list in `./.claude/NOTES.md` before next tool call.
+- At concept shifts, prefer context editing (remove resolved threads, trim exploration). Fall back to `/compact` only when bulk conversation is the pressure: flush working set into `./.claude/NOTES.md`, emit `Keep: / Drop:` note, run `/compact`, diff post-compaction summary against Keep list in `./.claude/NOTES.md` before next tool call.
 
 Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/compaction-protocol.md`. Context editing first, sub-agents second, `/compact` last.
 
@@ -75,5 +75,5 @@ A feature branch in a worktree with all acceptance criteria implemented, tests p
 - Do not open a PR — that happens after /implement completes the full cycle.
 - Always run the 5-question verification check before marking a task done.
 - Consolidation scans are lightweight — spend seconds, not minutes.
-- Context hygiene is a build-time responsibility — trigger on concept shifts, not percentages. Trigger `/compact` automatically at concept shifts; delegate bulk I/O to sub-agents before context overruns.
+- Context hygiene is a build-time responsibility — trigger on concept shifts, not percentages. At concept shifts, prefer context editing; delegate bulk I/O to sub-agents; fall back to `/compact` only when conversation bulk is the pressure.
 - `./.claude/NOTES.md` is authoritative for in-flight state; if your recall disagrees, trust the file.
