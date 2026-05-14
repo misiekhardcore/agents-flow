@@ -94,6 +94,7 @@ Before declaring any compaction (density pass, context-hygiene trim) complete:
 - **Naming**: `skills/<name>/SKILL.md` (lowercase kebab-case for dir, uppercase for file).
 
 ## Writing Style
+- **External audience**: Write for external users — no personal paths, internal vault refs, or assumed local plugins. Link official Anthropic docs; one sentence plus a link is enough context.
 - **Imperative**: "Read issue", not "You should read".
 - **Surgical**: One short comment line max.
 - **Dense**: No filler, no preamble, no "The skill does X".
