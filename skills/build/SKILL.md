@@ -13,17 +13,16 @@ You are leading the build phase. Your goal is to take a fully specified GitHub i
 
 A GitHub issue number (with architecture/design decisions from /define) and any additional resources.
 
+## Scope Assessment
+
+Read `references/scope.md` for scope classification criteria and specialist mode overrides.
+
 ## Process Overview
 
-Read `references/scope.md` for scope assessment criteria and specialist mode overrides. When ready to execute, read `references/process.md` for step-by-step process, TDD, context hygiene, and commit rules.
-
-**Quick summary:**
 1. Run pre-flight (repo/scope confirmation).
 2. Read the issue and linked sub-issues.
 3. Create worktree, init `./.claude/NOTES.md` with task list.
-4. For Standard builds: spawn workers as parallel subagents (2 splits) or TeamCreate (≥3 splits). For Lightweight: code inline. For Deep: TeamCreate.
-5. Workers follow TDD, verify before marking done, simplify as they go.
-6. Coordinate via shared task list; commit incrementally.
+4. Read `references/process.md` for step-by-step TDD flow, context hygiene, and commit rules.
 
 ## Output
 

@@ -20,9 +20,10 @@ Always **Deep** — fanout orchestrator with sub-agent delegation. See `${CLAUDE
 
 ## Process
 
-Read `references/gates.md` for resume detection, stage gates (Stages 1–3), exit (Stage 5), and resume logic. When entering Stage 4, Read `references/autonomous-phase.md` for branch creation, dependency-tier computation, parallel dispatch, settlement, and epic PR creation.
-
-Stage 0 detects resume point. Stages 1–3 require explicit user approval at gates. Stage 4 autonomous (no prompts). Stage 5 exits.
+1. **Stage 0 — Resume detection**: Read `references/detection.md` to detect prior state and determine entry stage.
+2. **Stages 1–3 — Interactive gates**: Read `references/gates.md` for stage gate procedures. Require explicit user approval at each gate; silence is not approval.
+3. **Stage 4 — Autonomous phase**: Read `references/autonomous-phase.md` for branch creation, dependency-tier computation, parallel dispatch, settlement, and epic PR creation. No human prompts.
+4. **Stage 5 — Exit**: Print exit summary to stdout. Run is complete when all sub-PRs are open and epic PR is open. Merging is left to humans.
 
 **Key behaviors:**
 - Skip /discovery if epic has ≥3 acceptance criteria

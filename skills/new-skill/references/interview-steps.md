@@ -127,3 +127,11 @@ Then a second `AskUserQuestion` call: `header: "Composition"`, question: "Does t
 - **Personal (Recommended)** — `~/.claude/skills/<name>/SKILL.md` (individual use)
 - **Project** — `<cwd>/.claude/skills/<name>/SKILL.md` (committed to the current repo)
 - **Plugin** — `${CLAUDE_PLUGIN_ROOT}/skills/<name>/SKILL.md` (contributing to this plugin; dogfooding)
+
+## Step (l): Reference file loading phases
+
+**Plain prompt**: "Does this skill load reference files at different execution points? If yes, describe the natural phases (e.g. 'pre-flight assesses scope, then execution begins'). Type 'no' or 'single phase' to skip."
+
+- If the author describes **2+ distinct phases**: scaffold one reference file stub per phase under `skills/<name>/references/`. Name each stub after the phase or topic (e.g. `scope.md`, `process.md`).
+- If the author describes **1 phase** (or says "no"): scaffold a single reference file stub if the entry-point would exceed 150 lines; otherwise skip reference scaffolding entirely.
+- Do **not** force per-phase stubs on simple skills — if the skill body fits ≤150 lines without references, skip entirely.

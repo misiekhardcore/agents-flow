@@ -13,13 +13,57 @@ All skills map to one of these five roles (extending the team-composition model;
 |**Interactive Primitive**|Inline behavior; no team or handoff.|`/grill-me`|`sonnet`|`SKILL.primitive`|
 |**Utility**|Maintenance/post-work. No seed-brief or handoff.|`/compound`, `/prune`|`sonnet`/`haiku`|`SKILL.specialist`|
 
+## File architecture
+
+### File type hierarchy
+
+| File type | Location | Line cap | Notes |
+|-|-|-|-|
+| Entry-point | `skills/<name>/SKILL.md` | ≤150 lines | Cap applies here only |
+| Reference | `skills/<name>/references/<concern>.md` | No limit | Single concern; named after phase or topic |
+| Shared protocol | `_shared/<concern>.md` | No limit | Promote when ≥3 skills reference it |
+
+### Design principles
+
+1. **Single responsibility**: One concern per reference file. Name reflects the phase or topic (e.g. `scope.md`, `process.md`, `gates.md`).
+2. **Lazy loading**: Each `Read` instruction appears at the point of need in `SKILL.md` — not unconditionally at the top. A skill with two phases loads each reference file when entering that phase.
+3. **DRY**: Promote a protocol to `_shared/` when ≥3 skills reference it. Keep under `skills/<name>/references/` below that threshold.
+4. **Composition**: Reference `_shared/` files on-demand via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\`` within skill bodies — never preload.
+
+### Split heuristics
+
+Split a reference file when two sections are loaded at different execution points (e.g. pre-flight vs. execution start) or one section runs on every invocation while another runs only in specific stages.
+
+Do **not** split when all steps always run in linear order (one concern, no branching) or the file is already under ~50 lines.
+
+### Example — two-phase skill
+
+```
+## Scope Assessment
+Read `references/scope.md` for scope classification criteria.
+...
+
+## Process Overview
+...
+Step 4: Read `references/process.md` for step-by-step TDD flow and commit rules.
+```
+
+`scope.md` loads only during scope assessment. `process.md` loads only when execution begins.
+
+### `_shared/` file catalogue
+
+Reference on-demand via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\``:
+- `compaction-protocol.md`: In-phase context management.
+- `composition.md`: Team/sub-agent cost and shape.
+- `handoff-artifact.md`: Issue body state.
+- `interviewing-rules.md`: User interaction.
+- `notes-md-protocol.md`: `.claude/NOTES.md` state.
+- `specialist-mode.md`: Seed-brief logic.
+
+Use explicit read instructions inline: `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/composition.md\`` instead of shorthand `[Ref: composition]`.
+
 ## Structure & Density
 **Goal**: Maximize info-density. Replace narrative with constraints.
-
-### Modularity
-- **Entry-point cap**: Keep skill bodies ≤150 lines. Push stable reference material (schemas, syntax tables, field lists) into `skills/<name>/references/<file>.md`.
-- **`_shared/` promotion**: Promote a doc to `_shared/` when ≥3 skills reference it. Otherwise keep under `skills/<name>/references/`.
-- **On-demand loading**: Never preload `_shared/` files at skill start. Reference via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\`` only where needed in the Process steps. Use inline read instructions: `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/composition.md\`` not `[Ref: composition]`.
 
 ### Frontmatter
 Order: `name` → `description` → `when_to_use` → `argument-hint` → `model` → `effort` → `allowed-tools` → `user-invocable` → `disable-model-invocation`.
@@ -63,17 +107,6 @@ Agents dispatched inside a plugin context run with constrained tool access by de
 5. **Spawn Justification**: Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for team-composition rubric (Pivot, Disjoint, Parallel, Payoff).
 6. **Process**: Step-by-step imperative flow.
 7. **Rules**: Hard constraints plus interaction rules (read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md`).
-
-## `_shared/` Integration
-Do not preload. Reference on-demand via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\`` within skill bodies:
-- `handoff-artifact.md`: Issue body state.
-- `interviewing-rules.md`: User interaction.
-- `notes-md-protocol.md`: `.claude/NOTES.md` state.
-- `specialist-mode.md`: Seed-brief logic.
-- `compaction-protocol.md`: In-phase context management.
-- `composition.md`: Team/sub-agent cost and shape.
-
-Use explicit read instructions inline: `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/composition.md\`` instead of shorthand `[Ref: composition]`.
 
 ## Compaction Checklist
 Before declaring any compaction (density pass, context-hygiene trim) complete:

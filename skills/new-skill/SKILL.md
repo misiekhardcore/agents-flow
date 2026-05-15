@@ -18,7 +18,7 @@ A brief statement from the author of what the skill should do — or nothing, in
 
 2. **Interview the author** — ask ONE question at a time. See `skills/new-skill/references/interview-steps.md` for the question sequence.
 
-   Use `AskUserQuestion` for bounded option sets (c–k); plain prompt for free-text (a, b). Place recommended option first with ` (Recommended)` — derive from step (b).
+   Use `AskUserQuestion` for bounded option sets (c–k); plain prompt for free-text (a, b, l). Place recommended option first with ` (Recommended)` — derive from step (b).
 
 3. **Select template** based on role: Orchestrator → `SKILL.orchestrator.template.md`; Specialist/Utility → `SKILL.specialist.template.md`; Primitive → `SKILL.primitive.template.md`.
 

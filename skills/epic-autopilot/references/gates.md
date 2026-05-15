@@ -1,8 +1,4 @@
-# Epic-Autopilot: Stage Gates and Resume Logic
-
-## Stage 0 — Resume detection
-
-On every invocation, read the epic issue body and any sub-issue bodies first; consult the **Resume logic** table at the bottom to decide which stage to enter.
+# Epic-Autopilot: Stage Gates (Stages 1–3)
 
 ## Stage 1 — Discovery gate
 
@@ -34,23 +30,3 @@ For each sub-issue in order (ascending issue number):
 4. Wait for explicit approval before moving to next sub-issue.
 
 Once every sub-issue has an approved `## Implementation plan`, proceed to **Stage 4 — Autonomous phase**. No further human prompts until exit.
-
-## Stage 5 — Exit
-
-Print exit summary to stdout and exit. The run is complete when all sub-PRs have been opened and the epic PR is open. Merging is left to humans.
-
-## Resume logic
-
-On re-invocation with the same epic issue number, epic-autopilot detects prior state and skips completed phases:
-
-|State detected|Action|
-|-|-|
-|No `## Requirements` in epic body|Re-run from Stage 1|
-|`## Requirements` but no `## Implementation plan`|Re-run from Stage 2|
-|`## Implementation plan` present|Skip Stages 1–2; check sub-issues|
-|Sub-issue has `## Implementation plan`|Skip per-sub-issue /define for that sub-issue|
-|Sub-issue has open PR on its branch|Sub-task settled; skip|
-|Sub-issue has branch but no PR|Re-run `/implement` in existing worktree|
-|Sub-issue has neither branch nor PR|Fresh sub-task spawn|
-
-A permanently-FAILED sub-task (branch exists, no PR, two prior retries) will be re-attempted on every resume. To skip it permanently, delete the branch and mark the sub-issue with a `skip` label before re-invoking.
