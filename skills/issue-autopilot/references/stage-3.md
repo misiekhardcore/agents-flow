@@ -21,6 +21,6 @@
    | Result | Action |
    |-|-|
    | `/resolve-pr-feedback` returned any `needs-human` verdicts | Print needs-human summary listing remaining threads and verdicts. Exit with: "Needs human review — see threads above. Re-invoke `/issue-autopilot <N>` after addressing them." |
-   | Final count == 0 | Proceed immediately to Stage 4 in this invocation |
+   | Final count == 0 | Run `/compound` (review-time learnings pass; context is warm). Then proceed immediately to Stage 4 in this invocation. |
    | Final count > 0 and decreased | Print "Partial progress: `<before>` → `<after>` unresolved threads. Re-invoke `/issue-autopilot <N>` after the next review pass." Exit. |
    | Final count > 0 and unchanged | Print needs-human summary listing remaining threads. Exit with: "Needs human review — see threads above. Re-invoke `/issue-autopilot <N>` after addressing them." |
