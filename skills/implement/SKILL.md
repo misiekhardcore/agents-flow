@@ -20,7 +20,7 @@ Read `_shared/scope-cycles.md` for scope assessment table, autonomous cycle deta
 
 **Autonomy Contract**: Run cycles back-to-back without prompting. Only interrupt after PR is open if (a) clean, (b) 3 cycles exhausted, or (c) blocker hit.
 
-**Lightweight** (≤ 50 lines + no logic change): `/build` (inline) → inline AC check → PR. Skip `/review` and `/verify` teams.
+**Lightweight** (≤ 50 lines + no logic change): `/build` (single-agent, no team) → inline AC check → PR. Skip `/review` and `/verify` teams. A worktree is still created.
 
 **Standard / Deep**: Full Build → Review → Verify cycle. Repeat up to 3 times until clean or exhausted, then PR creation.
 

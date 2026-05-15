@@ -28,3 +28,7 @@ Read `references/scope.md` for scope assessment criteria and specialist mode ove
 ## Output
 
 A feature branch in a worktree with all acceptance criteria implemented, tests passing, and clean incremental commits. Ready for /review.
+
+## Rules
+
+- **Always create a worktree** with `wt switch --create <branch>` before writing any code — including Lightweight builds. Never code in the main repo directory.

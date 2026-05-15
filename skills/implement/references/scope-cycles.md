@@ -4,7 +4,7 @@
 
 |Scope|Criteria|Action|
 |-|-|-|
-|**Lightweight**|≤ 50 lines, no logic change, 1-2 AC|`/build` (inline) → inline AC check → PR. Skip `/review` and `/verify` teams.|
+|**Lightweight**|≤ 50 lines, no logic change, 1-2 AC|`/build` (single-agent, no team) → inline AC check → PR. Skip `/review` and `/verify` teams. Worktree is still created.|
 |**Standard**|Typical multi-file, AC in one module|Full Build → Review → Verify cycle.|
 |**Deep**|Cross-module, security, migration, breaking|Full cycle + Deep review + extra critique iterations.|
 
