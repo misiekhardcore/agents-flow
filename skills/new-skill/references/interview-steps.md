@@ -1,6 +1,6 @@
 # Interview steps for new-skill
 
-This file details the 11-step interview sequence that new-skill conducts with the author, one question at a time.
+This file details the 12-step interview sequence that new-skill conducts with the author, one question at a time.
 
 ## Step (a): Name
 
