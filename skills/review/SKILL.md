@@ -12,7 +12,7 @@ Lead review phase. Goal: Thoroughly review implementation and produce actionable
 ## Specialist Mode
 - **Seeded**: Skip repo-preflight.
 - **Keep**: Severity/finding-depth gates (rigor is not delegated).
-- Read `_shared/specialist-mode.md`
+- Invoke `Skill("specialist-mode")`
 
 ## I/O
 - **Input**: Branch (+ seed brief), Branch (standalone + issue#), or PR argument (PR# or URL).
@@ -30,4 +30,4 @@ Read `references/dispatch-process.md` for dispatch modes, scope assessment, spaw
 - **Consensus**: All reviewers must agree before finalizing.
 - **Blocking**: Critical findings block. Deep mode: High-severity blocks for Security/Perf.
 - **Scope**: Flag changes outside issue scope.
-- Read `_shared/interviewing-rules.md`
+- Invoke `Skill("interviewing-rules")`

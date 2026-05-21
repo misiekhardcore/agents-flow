@@ -26,7 +26,7 @@ Verify `## Implementation plan` in issue body. If absent:
 3. **`/verify`**: QA team → verifies every AC.
 4. **Evaluation**:
    - **Clean pass** → PR creation.
-   - **Findings present & cycles < 3** → Package **fix brief** (failing AC + `file:line` findings) in `./.claude/NOTES.md`. Follow `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/compaction-protocol.md\`` to format concisely. Resume `/build` → `/review` → `/verify`.
+   - **Findings present & cycles < 3** → Package **fix brief** (failing AC + `file:line` findings) in `./.claude/NOTES.md`. Invoke `Skill("compaction-protocol")` to format concisely. Resume `/build` → `/review` → `/verify`.
    - **Cycles = 3** → PR creation → surface remaining findings in Finalize.
 
 **Reporting**: Emit one status line per cycle: `Cycle N/3 — /build <state>, /review <n findings>, /verify <n failures>`.

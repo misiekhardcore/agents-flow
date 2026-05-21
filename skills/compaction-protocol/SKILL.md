@@ -1,11 +1,16 @@
-# In-Phase Compaction Protocol — Shared
+---
+name: compaction-protocol
+description: Context management protocol for rot reduction using editing, delegation, and summarization.
+user-invocable: false
+tier: 3
+---
 
 Used by `/build` to manage context rot. Read on-demand at compaction steps; do not preload.
 
 ## Tool order
 
 1. **Context editing first.** Clear stale tool results verbatim. This is rot-immune because nothing is paraphrased.
-2. **Sub-agent delegation second.** If the next bulk read can be delegated, the lead never accumulates the rot in the first place. See `${CLAUDE_PLUGIN_ROOT}/docs/context-hygiene.md` (rule 3).
+2. **Sub-agent delegation second.** If the next bulk read can be delegated, the lead never accumulates the rot in the first place.
 3. **Summarization-based `/compact` last.** Re-summarization compresses, but it also creates a new lower-fidelity anchor the model will over-attend to. Use only when conversation bulk (not tool output) is the source of pressure.
 
 ## When to trigger
@@ -20,7 +25,7 @@ Trigger on concept shifts, not percentages:
 
 ## Context editing — the default
 
-Use [context editing](https://platform.claude.com/docs/en/build-with-claude/context-editing) to clear superseded tool outputs (reads after edits, old test runs, stale doc lookups). Reports 84% reduction vs. summarization; no paraphrase artifacts. Default tool — reach for `/compact` only when context editing can't fix the root pressure.
+Use context editing to clear superseded tool outputs (reads after edits, old test runs, stale doc lookups). Reports 84% reduction vs. summarization; no paraphrase artifacts. Default tool — reach for `/compact` only when context editing can't fix the root pressure.
 
 ## Summarization-based `/compact` — last resort
 

@@ -12,7 +12,7 @@ Systematically process PR feedback: Triage → Fix → Reply.
 
 ## I/O
 - **Input**: No arg (all unresolved threads on branch's PR) or thread URL.
-- **Pre-flight**: Read `_shared/repo-preflight.md`. If >= 3 files, run `_shared/scope-preflight.md`.
+- **Pre-flight**: Invoke `Skill("preflight")`. If >= 3 files, run `Skill("preflight")`.
 
 ## Process
 

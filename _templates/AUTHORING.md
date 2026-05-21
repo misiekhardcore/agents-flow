@@ -18,6 +18,43 @@ Skills are organized into three tiers based on their role and visibility.
 
 ---
 
+## Tier 3: Behavioral Convention Skills
+
+Tier-3 skills encode internal protocols, rules, and behavioral constraints that sub-agents adopt when invoked via `Skill("<name>")`. They do not perform domain work themselves; instead, they communicate behavioral expectations to the calling agent.
+
+### When to Create a Tier-3 Skill
+
+Create a tier-3 skill when you have:
+1. **Structured behavioral protocol** — A protocol or set of rules that must be adopted by agents during their task (e.g., how to handle seed-briefs, CWD verification, orchestration rules).
+2. **Cross-skill reuse** — The protocol is referenced by 3+ other skills or sub-agents.
+3. **Conditional invocation** — The protocol is invoked based on conditions detected at runtime (e.g., checking for a seed-brief in the input).
+
+### Tier-3 Skill Design
+
+**Frontmatter:**
+```yaml
+user-invocable: false
+tier: 3
+```
+
+**Content Structure:**
+- Open with a 1-2 sentence summary of the protocol.
+- Divide into sections: **Contract**, **Behavior**, **Verification** (as appropriate).
+- Document entry conditions, exit behaviors, and any state mutations.
+- Link to related tier-1/2 skills via `Invoke Skill("<name>")`.
+
+**Invocation Pattern:**
+Other skills invoke tier-3 skills via `Invoke Skill("<name>")`. Example:
+```
+Invoke `Skill("specialist-mode")` with `payload.prior_art: <...>`.
+```
+
+### Tier-3 Skills in `claude-workflow`
+
+The current tier-3 skill catalog lives in `skills/`. Consult `ls skills/` for a list of available protocols. Each skill directory contains a `SKILL.md` with the authoritative protocol definition.
+
+---
+
 ## Tier 1: Orchestrator Constraints
 
 Orchestrators must remain "thin" to avoid context bloat and logic drift.
@@ -107,13 +144,5 @@ Document the orchestrator's specific definition of "work unit" (what counts as a
 
 Reference on-demand via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\``:
 
-- `compaction-protocol.md` — in-phase context management
 - `composition.md` — team/sub-agent cost and shape
-- `handoff-artifact.md` — issue body state
-- `interviewing-rules.md` — user interaction
-- `notes-md-protocol.md` — `.claude/NOTES.md` state
-- `orchestrator-rules.md` — pipeline orchestrator rules (CWD verification, delegation, no-merge contract)
-- `repo-preflight.md` — repo/branch confirmation before `gh` or `git push`
-- `scope-preflight.md` — file-list confirmation before bulk edits (≥3 files)
-- `specialist-mode.md` — seed-brief logic
-- `worktree-protocol.md` — worktree creation, CWD verification, and cleanup
+- `prune-lane.md` — (reference file for pruning logic)

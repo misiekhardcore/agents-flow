@@ -19,7 +19,7 @@ Phase Lead. Goal: Transform an approved issue into a concrete implementation pla
 
 **Decision**: 1 module + pattern match → Lightweight; Security/Payments/Arch-change → Deep; else → Standard.
 
-### Spawn Rubric (see `_shared/composition.md`)
+### Spawn Rubric (see `Invoke Skill("composition")`)
 - **Research Team**: 2 parallel `sonnet` agents (Codebase + Patterns).
 - **Standard Team**: Sequential specialists (Architecture → Design).
 - **Deep Team**: Standard + `TeamCreate` critique team (only for high-risk plans).
@@ -32,7 +32,7 @@ Phase Lead. Goal: Transform an approved issue into a concrete implementation pla
    - **Standard**: Architecture → Design (if visual).
    - **Deep**: Architecture → Design → Critique Team.
 4. **Sourcing**: Respect sequence: Architecture decisions first → Design works within those constraints.
-5. **Handoff**: Update GitHub issue body (single source of truth) per `_shared/handoff-artifact.md`.
+5. **Handoff**: Update GitHub issue body (single source of truth) per `Invoke Skill("handoff-artifact")`.
    - Edit/Append `## Implementation plan` section.
    - Record decisions, visuals, and sub-issues with relationships.
    - Define dependency graph for parallelization.
@@ -43,5 +43,5 @@ Phase Lead. Goal: Transform an approved issue into a concrete implementation pla
 ## Rules
 - **Explicit Approval**: Partial feedback ≠ approval.
 - **Exploration**: Time-box codebase reading to 3–5 tool calls, then ask the user a focused question.
-- **Sourcing**: Use `_shared/repo-preflight.md` before updating issue.
-- Read `_shared/interviewing-rules.md`
+- **Sourcing**: Use `Invoke Skill("preflight")` before updating issue.
+- Invoke `Skill("interviewing-rules")`

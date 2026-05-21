@@ -1,4 +1,9 @@
-# NOTES.md — In-Phase Memory Tier
+---
+name: notes-md
+description: In-phase memory tier protocol for `.claude/NOTES.md` lifecycle and structure.
+user-invocable: false
+tier: 3
+---
 
 `.claude/NOTES.md` is rot-immune external memory for in-phase state. Read on-demand when creating, updating, or harvesting; do not preload.
 

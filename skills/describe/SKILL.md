@@ -13,10 +13,10 @@ You lead product discovery. Goal: Deeply understand the problem space via intera
 ## Specialist Mode
 - **Seeded**: Skip internal prior-art search. Keep PPT and grill-me interactions.
 - **Standalone**: Run all steps.
-- Read `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md`
+- Invoke `Skill("specialist-mode")`
 
 ## Scope Assessment
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/scope-ppt.md` for scope classification, spawn rubric, and PPT checklist.
+Reference `_shared/scope-ppt.md` for scope classification, spawn rubric, and PPT checklist.
 
 ## Process
 
@@ -44,4 +44,4 @@ Read `${CLAUDE_PLUGIN_ROOT}/_shared/scope-ppt.md` for scope classification, spaw
 
 ## Rules
 - Recommend an answer for every question.
-- Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md`
+- Invoke `Skill("interviewing-rules")`

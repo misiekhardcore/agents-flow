@@ -1,13 +1,20 @@
-# Specialist Mode — Shared Protocol
+---
+name: specialist-mode
+description: Logic for standalone vs. orchestrator-invoked (seeded) execution and seed-brief contract.
+user-invocable: false
+tier: 3
+---
 
 Logic for standalone vs. orchestrator-invoked (seeded) execution.
 
 ## Detection
+
 `specialist_mode = True` if `<seed-brief>` block exists in prompt.
 - **Seeded**: Verified fields replace preflights.
 - **Standalone**: All prompts active.
 
 ## Seed-Brief Contract
+
 **Format**: Raw YAML in XML tag `<seed-brief>`, no inner fence.
 
 |Field|Type|Req|Notes|
@@ -17,12 +24,13 @@ Logic for standalone vs. orchestrator-invoked (seeded) execution.
 |`repo`|string|Yes|`owner/repo` (verified vs `git remote -v`)|
 |`branch`|string|Yes|`feat/<slug>` (verified vs `git rev-parse`)|
 |`active_issue`|int|Yes|GitHub issue ID|
-|`payload`|object|Yes|`{ type: fix\|research\|prior-art, ... }` (per `composition.md`)|
+|`payload`|object|Yes|`{ type: fix\|research\|prior-art, ... }` (per composition rules)|
 |`autonomous`|bool|No|Default `false`. If `true`, suppresses `/implement` exit prompt|
 
 **Failure**: Invalid brief → Fallback to standalone + log failure.
 
 ## Execution Delta
+
 Confirmations verifying *state* are skipped; *discovery/rigor* gates remain.
 
 |Specialist|Skipped when Seeded|Always Kept|
@@ -58,6 +66,7 @@ payload:
 Override only the fields that differ per invocation; all other fields are required as-is.
 
 ## Orchestrator Duties
+
 1. Run repo/scope-preflight once at entry.
 2. Pass valid seed-brief (`preflight_verified: true`) to every specialist.
 3. Include `repo`, `branch`, `active_issue` for sanity checks.

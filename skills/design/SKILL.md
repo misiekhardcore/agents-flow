@@ -11,7 +11,7 @@ Lead design team. Goal: Converge on visual and interaction design that fits exis
 ## Specialist Mode
 - **Seeded**: Skip design-space research subagent.
 - **Keep**: Interactive session (grill-me + a11y review).
-- Read `_shared/specialist-mode.md`
+- Invoke `Skill("specialist-mode")`
 
 ## I/O
 - **Input**: GitHub issue with architecture decisions (from /define).
@@ -41,4 +41,4 @@ Lead design team. Goal: Converge on visual and interaction design that fits exis
 
 ## Rules
 - **Consistency**: Follow existing design system/component patterns unless diverging.
-- Read `_shared/interviewing-rules.md`
+- Invoke `Skill("interviewing-rules")`

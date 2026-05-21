@@ -27,7 +27,7 @@ Orchestrate the single-issue ship pipeline. Take a GitHub issue number and drive
 
 ## Rules
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/orchestrator-rules.md` for CWD verification, delegation, no-autonomous-merge, and seed-brief contract.
+See `Invoke Skill("orchestrator-rules")` for CWD verification, delegation, no-autonomous-merge, and seed-brief contract.
 
 - **Loop-break**: In Stage 3, break if unresolved thread count non-zero and unchanged after one pass.
 - **Compound**: `/implement` invokes `/compound` at PR creation (implementation-time pass). Stage 3 re-invokes when all threads resolve for review-time learnings — two passes, no dedup needed.

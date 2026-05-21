@@ -1,0 +1,58 @@
+---
+name: preflight
+description: Repository and scope verification protocol before mutations or bulk file edits.
+user-invocable: false
+tier: 3
+---
+
+## Repository Pre-flight
+
+Used for skills that create/edit issues, comments, PRs, or push code. Read before `gh` or `git push` operations.
+
+### Steps
+
+1. Run `git remote -v`, `pwd`, and `git branch --show-current` to detect repo, working directory, and branch.
+2. Display detected repo (owner/repo), branch (omit if caller set `Suppress branch line: true`), and working directory.
+3. Confirm with user. Default: "Does this match the repo and branch you intend to operate on?" (drop "and branch" if branch was suppressed). Callers may override via `Confirmation prompt:` line.
+4. Do not proceed with `gh` or `git push` until user explicitly confirms.
+
+`gh` mutations are public and cross-repo (the `--repo` flag routes silently). Wrong-repo mutations have high blast radius.
+
+### Orchestrator pattern
+
+Orchestrators (e.g., `/implement`) run this at entry and pass `preflight_verified: true` in seed briefs to specialists. Specialists skip this when valid brief is present.
+
+## Scope Pre-flight
+
+Used by skills performing bulk file edits. Read before modifying 3+ files or actions with unclear blast radius.
+
+### Trigger
+
+Run when either condition holds:
+- Proposed change touches **3+ files**.
+- User request matches: `audit`, `refactor`, `normalize`, `sweep`, `propagate`, `extract`, `rename`.
+
+### File-list confirmation
+
+Before editing, present the proposed file list:
+
+> I'm about to modify N files:
+> - `<path 1>`
+> - `<path 2>`
+> - ...
+>
+> Proceed?
+
+Wait for explicit user confirmation. Partial feedback or silence is not approval.
+
+### Refusal
+
+If the user does not confirm, do not edit any of the listed files. Reply:
+
+> Holding off — please clarify which files are in scope.
+
+Re-prompt with a narrowed list when the user provides scope.
+
+### Orchestrator pattern
+
+Orchestrators run this at entry and pass `scope_class` in seed briefs. Specialists skip their own scope confirmations when brief is present.

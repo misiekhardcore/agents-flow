@@ -41,4 +41,4 @@ A single file at the chosen target location, conforming to the authoring standar
 - Defaults (if skipped): model: sonnet; effort, argument-hint, allowed-tools, user-invocable: omit; target: personal.
 - Include `when_to_use` only if author identified mis-routing risk (step c); omit otherwise.
 - If target `SKILL.md` exists, ask whether to overwrite.
-- Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md`
+- Invoke `Skill("interviewing-rules")`

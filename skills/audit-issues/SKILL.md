@@ -27,24 +27,3 @@ Audit open issues for drift. Product: Updated issues themselves (mutate on confi
 
 ### Phase 2 — Per-Issue Audit (Subagent Fan-out)
 Read `_shared/detectors.md` for detector logic, verdict ranking, and JSON schema.
-
-### Phase 3 — Aggregate & Print
-Concatenate JSON reports. Per-issue block: `─── #NN — <title> — verdict: <v> ───` → URL → findings → proposed edit.
-
-### Phase 4 — Interactive Mutation
-Walk blocks in order. Prompt based on verdict:
-- `valid` → `[s]kip ?`
-- `stale`/`contradicted`/`unverifiable` → `[e]dit / [s]kip ?`
-- `premise-shifted`/`superseded` → `[e]dit / [c]lose / [s]kip ?`
-
-**Mutation Rules**:
-- `e` → Show diff → `gh issue edit`.
-- `c` → Post closing comment → `gh issue close`.
-- `s` → Advance.
-
-## Rules
-- **Sourcing**: Use `_shared/handoff-artifact.md` for parse targets.
-- **Read-Only Default**: Mutate only after explicit per-issue confirmation.
-- **No Auto-Clone**: Do not clone missing repos.
-- **No Invention**: No counter → `unverifiable`.
-- **Surgical**: One LLM extraction pass per issue max.

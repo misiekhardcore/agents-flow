@@ -18,7 +18,7 @@ Classify the build per criteria below:
 
 ### Spawn Justification
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md`.
+Invoke `Skill("composition")`.
 
 - **Standard**: TeamCreate at ≥3 splits, else parallel subagents.
 - **Deep**: TeamCreate.
@@ -32,4 +32,4 @@ When invoked by `/implement` with a `<seed-brief>` block, skip:
 
 Always keep: the design gate — architecture decisions must be verified cross-phase even when seeded.
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md`.
+Invoke `Skill("specialist-mode")`.

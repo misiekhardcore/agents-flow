@@ -4,7 +4,7 @@
 
 On every invocation:
 
-1. Run `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md`. Echo resolved `owner/repo` back to the user. Pause for confirmation.
+1. Run `Invoke Skill("preflight")`. Echo resolved `owner/repo` back to the user. Pause for confirmation.
 2. Detect current state using the commands in **State detection** below.
 3. Consult the **Resume state machine** to determine which stage to enter.
 

@@ -18,7 +18,7 @@ Classify the build per criteria below:
 
 ### Spawn Justification
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md`.
+Invoke `Skill("composition")`.
 
 - **Standard**: TeamCreate at ≥3 splits, else parallel subagents.
 - **Deep**: TeamCreate.
@@ -32,16 +32,14 @@ When invoked by `/implement` with a `<seed-brief>` block, skip:
 
 Always keep: the design gate — architecture decisions must be verified cross-phase even when seeded.
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/specialist-mode.md`.
+Invoke `Skill("specialist-mode")`.
 
 ## Process Steps
 
 ### Step 0 — Pre-flight
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/repo-preflight.md`.
+Invoke `Skill("preflight")`.
 Confirmation prompt: "Does this match the repo and branch you intend to work on?"
-
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/scope-preflight.md` — run when Trigger conditions apply.
 
 ### Step 1 — Issue Review
 
@@ -53,9 +51,7 @@ Create a git worktree (`wt switch --create`). Worktrees keep the main workspace 
 
 Before creating `./.claude/NOTES.md`, verify `/.claude/NOTES.md` is listed in `.gitignore` at repo root; add if missing. Create `./.claude/NOTES.md` with the initial task list harvested from the issue. This is the living worklog — it survives unexpected session close.
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/notes-md-protocol.md`.
-
-**On resume in an existing worktree**, read `./.claude/NOTES.md` _before_ re-reading the issue. Resume from its **Next action on resume** field.
+Reference: Invoke `Skill("notes-md")`.
 
 ### Step 3 — Spawn Workers
 
@@ -90,7 +86,7 @@ Keep context focused. Trigger on **concept shifts**, not percentages:
 - About to start a new sub-issue or just spawned a sub-agent → natural reset.
 - If `/compact` is unavoidable: flush working set into `./.claude/NOTES.md`, emit `Keep: / Drop:` note, run `/compact`, diff post-compaction summary against Keep list in `./.claude/NOTES.md` before next tool call.
 
-Reference: `${CLAUDE_PLUGIN_ROOT}/_shared/compaction-protocol.md`. Context editing first, sub-agents second, `/compact` last.
+Invoke `Skill("compaction-protocol")`. Context editing first, sub-agents second, `/compact` last.
 
 ### Step 8 — Incremental Commits & Notes
 

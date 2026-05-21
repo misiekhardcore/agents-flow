@@ -1,4 +1,9 @@
-# Handoff Artifact — Shared Template
+---
+name: handoff-artifact
+description: Protocol for hand-off state in GitHub issue bodies across phase boundaries.
+user-invocable: false
+tier: 3
+---
 
 Phase-boundary skills (`/discovery`, `/define`) hand off state by updating the GitHub issue body. Read on-demand at handoff steps; do not preload.
 

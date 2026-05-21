@@ -13,11 +13,11 @@ model: <haiku | sonnet | opus>
 
 <!-- What specialist receives — issue, problem statement, diff, etc. -->
 
-Optional: <research | prior-art | fix> brief from <source skill>. When present, skip research; use brief as context. See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for field list.
+Optional: <research | prior-art | fix> brief from <source skill>. When present, skip research; use brief as context. See `Invoke Skill("composition")` for field list.
 
 ### Spawn justification
 
-If specialist spawns sub-agents/teams, state choice explicitly: inline, parallel subagents, or TeamCreate. Document gates from `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` — include cost-based payoff AND inline overrun triggers (multi-file sweep, N-way fan-out, verbose I/O). See AUTHORING.md § "Inline-overrun smell checklist" and `/resolve-pr-feedback`, `/compound`, `/prune` examples.
+If specialist spawns sub-agents/teams, state choice explicitly: inline, parallel subagents, or TeamCreate. Document gates from `Invoke Skill("composition")` — include cost-based payoff AND inline overrun triggers (multi-file sweep, N-way fan-out, verbose I/O). See AUTHORING.md § "Inline-overrun smell checklist" and `/resolve-pr-feedback`, `/compound`, `/prune` examples.
 
 ## Process
 
@@ -34,4 +34,4 @@ If specialist spawns sub-agents/teams, state choice explicitly: inline, parallel
 
 - <Rule 1 — non-negotiable constraint>
 - <Rule 2>
-- See `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` for questioning protocol (when interviewing user).
+- See `Invoke Skill("interviewing-rules")` for questioning protocol (when interviewing user).

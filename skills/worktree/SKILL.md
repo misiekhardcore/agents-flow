@@ -1,4 +1,9 @@
-# Worktree Protocol — Shared Reference
+---
+name: worktree
+description: Standard command protocol for creating and managing feature worktrees using `wt` CLI.
+user-invocable: false
+tier: 3
+---
 
 Standard commands for creating and managing feature worktrees using the `wt` CLI.
 
