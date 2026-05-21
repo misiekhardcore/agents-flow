@@ -5,14 +5,14 @@
     "url": "https://github.com/misiekhardcore"
   },
   "metadata": {
-    "description": "claude-workflow: standardized /discovery → /define → /implement lifecycle for Claude Code",
+    "description": "Workflow skills for Claude Code — standardized feature lifecycle.",
     "version": "1.6.2"
   },
   "plugins": [
     {
       "name": "claude-workflow",
       "source": "./",
-      "description": "Workflow skills for Claude Code — standardized feature lifecycle: /discovery → /define → /implement. 17 skills, shared protocols, authoring standard, /new-skill scaffolder.",
+      "description": "Workflow skills for Claude Code — standardized feature lifecycle.",
       "version": "1.6.2",
       "author": {
         "name": "Michal Konopski",

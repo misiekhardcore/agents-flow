@@ -128,9 +128,6 @@ def minify(content: str) -> str:
 
         line = line.rstrip()
 
-        if re.fullmatch(r'\s*([*\-_])(\s*\1){2,}\s*', line):
-            continue
-
         if re.match(r'\s*\|', line):
             line = _compress_table_row(line)
 
