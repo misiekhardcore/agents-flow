@@ -2,19 +2,18 @@
 name: issue-autopilot
 description: Single-issue equivalent of /epic-autopilot. Chains /define → /implement → /resolve-pr-feedback → /compound → /wrap-up for one issue.
 when_to_use: Use when you have a single GitHub issue and want the full lifecycle automated end-to-end with natural pause points for human review and merge.
-argument-hint: "<issue#>"
+argument-hint: <issue#>
 model: opus
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
-
 Orchestrate the single-issue ship pipeline. Take a GitHub issue number and drive it to a merged PR with clean local state — pausing only where human action is required (review, merge).
 
 ## Overview
 
 **Input**: A single positive integer — the GitHub issue number to ship.
 
-**Output**: 
+**Output**:
 - Stage 0: Confirm repo and detect current state.
 - Stages 1–5: Read `references/stage-<stage>.md` for the active stage logic, pausing at human decision points (after define, after impl, after review, before merge, complete).
 

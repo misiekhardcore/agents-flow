@@ -26,11 +26,11 @@ Tally total token usage as ~N × single-session baseline.
 ### Decision Ladder
 Escalate only when the lower tier is insufficient:
 
-| Tier | When | Example |
+|Tier|When|Example|
 |-|-|-|
-| **Inline** | 1-4 items, fit in lead context | Audit 2 open issues |
-| **Sub-agent** | >= 5 items or verbose I/O (overrun boundary) | Fan-out across 8 issues |
-| **`TeamCreate`** | >= 3 disjoint file groups + mid-task comm needed | 3 reviewers with cross-thread findings |
+|**Inline**|1-4 items, fit in lead context|Audit 2 open issues|
+|**Sub-agent**|>= 5 items or verbose I/O (overrun boundary)|Fan-out across 8 issues|
+|**`TeamCreate`**|>= 3 disjoint file groups + mid-task comm needed|3 reviewers with cross-thread findings|
 
 ### `TeamCreate` Rubric (All 4 must hold)
 1. **Communication Pivot**: Workers must share findings mid-task.

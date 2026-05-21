@@ -14,6 +14,10 @@ GitHub Releases (with auto-generated notes and source tarballs) remain the canon
 
 - **`agents/` directory** — new top-level directory for reusable agent definitions, mirroring the claude-obsidian pattern. Seeded with `agents/prune-lane.md`: a single-lane audit worker for `/prune` that documents the spawn-prompt contract (CWD verification, pre-enumerated file list, structured report output). (#76)
 
+### Renamed
+
+- **`/discovery` → `/discover`** — **breaking change**: existing `CLAUDE.md` references to `/discovery` will stop working. Update all occurrences manually; no compatibility shim is provided.
+
 ### Changed
 
 - **`/prune` dispatches one Task sub-agent per lane** — rules, authoring, and vault lanes now run as parallel Task sub-agents. The main thread enumerates files and dispatches once, then aggregates the three lane reports. Prevents inline overrun on large skill plugin directories. Every spawn prompt includes `cd <abs-path> && pwd` CWD verification. (#76)
