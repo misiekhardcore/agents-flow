@@ -39,11 +39,11 @@ agents:
 - One entry per disjoint group.
 - `scope` is a single sentence; no bullet lists or sub-items.
 - `resources` is a flat, deduplicated, sorted list.
-- No Lightweight / Standard / Deep labels — output is agent-consumable only.
+- No sizing or complexity labels — output is agent-consumable only.
 
 ## Rules
 
-- Never produce complexity labels (Lightweight, Standard, Deep, or equivalents).
+- Never produce sizing or complexity labels of any kind.
 - Never infer resources not explicitly listed in the input — callers own resource enumeration.
 - When all work units are disjoint, output N agents (one per unit).
 - When all work units overlap, output 1 agent covering the full resource union.

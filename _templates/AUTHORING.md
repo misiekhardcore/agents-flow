@@ -99,7 +99,7 @@ When an orchestrator must decide how to fan out work across agents, use `/scope-
 2. Invoke `/scope-assessment`; receive back an agent plan where each entry covers a set of work units that share no resources with any other entry.
 3. Dispatch one agent per entry in the plan.
 
-Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in the orchestrator's own `references/scope.md`. The tier-3 skill encodes the algorithm only; per-caller variation lives at the call site.
+Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in the orchestrator's own `references/scope.md`. That file must also cite `/scope-assessment` as the canonical decomposition algorithm. The tier-3 skill encodes the algorithm only; per-caller variation lives at the call site.
 
 ---
 
