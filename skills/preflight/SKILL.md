@@ -54,4 +54,4 @@ Re-prompt with a narrowed list when the user provides scope.
 
 ### Orchestrator pattern
 
-Orchestrators run this at entry and pass `scope_class` in seed briefs. Specialists skip their own scope confirmations when brief is present.
+Orchestrators run this at entry and pass `preflight_verified: true` in seed briefs. Specialists skip scope confirmation when a valid brief is present.
