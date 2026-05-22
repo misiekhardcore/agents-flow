@@ -34,7 +34,7 @@ Always **Deep** — fanout orchestrator with sub-agent delegation. See `_shared/
 
 ## Rules
 
-See `Invoke Skill("orchestrator-rules")` for CWD, delegation, and seed-brief contract.
+Invoke `Skill("orchestrator-rules")` for CWD, delegation, and seed-brief contract.
 
 - Require explicit approval at each gate; silence is not approval
 - User must not modify epic/sub-issue bodies during Stage 4

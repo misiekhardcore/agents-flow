@@ -4,10 +4,9 @@ description: Repository and scope verification protocol before mutations or bulk
 user-invocable: false
 tier: 3
 ---
-
 ## Repository Pre-flight
 
-Used for skills that create/edit issues, comments, PRs, or push code. Read before `gh` or `git push` operations.
+Used for skills that create/edit issues, comments, PRs, or push code. Invoke before `gh` or `git push` operations.
 
 ### Steps
 
@@ -24,7 +23,7 @@ Orchestrators (e.g., `/implement`) run this at entry and pass `preflight_verifie
 
 ## Scope Pre-flight
 
-Used by skills performing bulk file edits. Read before modifying 3+ files or actions with unclear blast radius.
+Used by skills performing bulk file edits. Apply when modifying 3+ files or actions with unclear blast radius.
 
 ### Trigger
 

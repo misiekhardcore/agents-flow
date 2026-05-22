@@ -13,14 +13,22 @@ Skills are organized into three tiers based on their role and visibility.
 |**Tier 3**|Behavioral Convention|`false`|Internal rules, protocols, and constraints that govern how agents behave during a task.|
 
 ### Tier vs. Reference File
-- **Tier 3 Skill**: Use when the behavior is a structured "protocol" that requires a formal `SKILL.md` and is invoked via `Skill()` to ensure the agent adopts the persona/constraints.
-- **Reference File (`_shared/*.md`)**: Use for raw documentation, static lists, or context that is read via `Read()` without changing the agent's behavioral mode.
+
+Skills and reference files serve different purposes and require different access patterns. Use this table to choose the right artifact and syntax.
+
+|What you're accessing|When to use|How to access|
+|-|-|-|
+|Tier-3 behavioral skill|Runtime protocol agents must adopt|`Invoke \`Skill("<name>")\``|
+|Per-skill reference doc|Static tables, checklists, or context scoped to one skill|`Read \`references/<file>.md\``|
+|Shared reference doc|Static tables, checklists, or context shared across skills|`Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\``|
+
+**Decision rule**: If the file encodes a protocol agents must adopt at runtime → tier-3 skill. If the file contains static tables, checklists, or read-only context → reference file.
 
 ---
 
 ## Tier 3: Behavioral Convention Skills
 
-Tier-3 skills encode internal protocols, rules, and behavioral constraints that sub-agents adopt when invoked via `Skill("<name>")`. They do not perform domain work themselves; instead, they communicate behavioral expectations to the calling agent.
+Tier-3 skills encode internal protocols, rules, and behavioral constraints. They do not perform domain work themselves; instead, they communicate behavioral expectations to the calling agent.
 
 ### When to Create a Tier-3 Skill
 
@@ -41,13 +49,6 @@ tier: 3
 - Open with a 1-2 sentence summary of the protocol.
 - Divide into sections: **Contract**, **Behavior**, **Verification** (as appropriate).
 - Document entry conditions, exit behaviors, and any state mutations.
-- Link to related tier-1/2 skills via `Invoke Skill("<name>")`.
-
-**Invocation Pattern:**
-Other skills invoke tier-3 skills via `Invoke Skill("<name>")`. Example:
-```
-Invoke `Skill("specialist-mode")` with `payload.prior_art: <...>`.
-```
 
 ### Tier-3 Skills in `claude-workflow`
 

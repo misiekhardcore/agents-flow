@@ -6,7 +6,7 @@
 
 1. Determine `scope_class` from the plan body (look for size/scope hints; default to `Standard`).
 
-2. Run `/implement <N>` from current directory. See `Invoke Skill("specialist-mode")` § Autonomous Implement Invocation with overrides:
+2. Run `/implement <N>` from current directory. Invoke `Skill("specialist-mode")` § Autonomous Implement Invocation with overrides:
    - `scope_class`: determined above
    - `branch`: `feat/issue-<N>`
    - `active_issue`: `<N>`

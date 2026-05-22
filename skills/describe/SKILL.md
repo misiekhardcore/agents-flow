@@ -16,14 +16,14 @@ You lead product discovery. Goal: Deeply understand the problem space via intera
 - Invoke `Skill("specialist-mode")`
 
 ## Scope Assessment
-Reference `_shared/scope-ppt.md` for scope classification, spawn rubric, and PPT checklist.
+Read `/references/scope-ppt.md` for scope classification, spawn rubric, and PPT checklist.
 
 ## Process
 
 ### Standard / Deep
 1. **Elicitation**: Ask user for problem/goal.
 2. **Exploration**: Dispatch agents → Lead analyst runs interactively via `/grill-me`.
-3. **PPT**: Run Product Pressure Test (see reference) before synthesizing.
+3. **PPT**: Run Product Pressure Test (see `/references/scope-ppt.md`) before synthesizing.
 4. **Visualization**: Produce Mermaid/ASCII for user journeys, feature comparisons, system boundaries.
 5. **Validation**: Confirm understanding of each visual.
 6. **Synthesis**: Create structured problem statement.

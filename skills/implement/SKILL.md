@@ -13,7 +13,7 @@ Orchestrate build → review → verify → fix cycles to produce a ready-to-mer
 See `skills/implement/references/scope-cycles.md` for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
 
 ## Pre-flight
-1. Invoke `Skill("preflight")` at entry (suppress branch line).
+1. Invoke `Skill("preflight")` at entry (pass `suppress branch line: true`).
 2. If >= 3 files changed, run the scope checks within `preflight` again. Pass `preflight_verified: true` in seed-briefs.
 
 ## Process
