@@ -13,9 +13,9 @@ You are leading the build phase. Your goal is to take a fully specified GitHub i
 
 A GitHub issue number (with architecture/design decisions from /define) and any additional resources.
 
-## Scope Assessment
+## Specialist Assessment
 
-Read `references/scope.md` for scope classification criteria and specialist mode overrides.
+Invoke `Skill("build-specialist-assessment")` at entry (before spawning workers). It reads plan/AC from context and emits a `specialists:` list.
 
 ## Process Overview
 
@@ -24,7 +24,7 @@ Read `references/process.md` for step-by-step process, TDD, context hygiene, and
 1. Run pre-flight (repo/scope confirmation).
 2. Read the issue and linked sub-issues.
 3. Create worktree, init `./.claude/NOTES.md` with task list.
-4. Spawn workers per scope assessment (Lightweight: inline; Standard: subagents; Deep: TeamCreate).
+4. Invoke `Skill("scope-assessment")` with work units derived from sub-issues and file groups → receive agent plan → spawn one agent per entry.
 
 ## Output
 
@@ -32,4 +32,4 @@ A feature branch in a worktree with all acceptance criteria implemented, tests p
 
 ## Rules
 
-- **Always create a worktree** with `wt switch --create <branch>` before writing any code — including Lightweight builds. Never code in the main repo directory.
+- **Always create a worktree** with `wt switch --create <branch>` before writing any code. Never code in the main repo directory.
