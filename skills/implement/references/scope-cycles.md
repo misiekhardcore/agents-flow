@@ -6,19 +6,19 @@ Invoke `Skill("scope-assessment")` with work units (one per sub-issue or distinc
 
 For trivial changes (≤ 50 lines, no logic change): pass a single work unit → 1 `/build` agent → inline AC check → PR (no `/review`/`/verify` teams needed).
 
-### Design Gate (Standard/Deep only)
+### Design Gate (Multi-unit only)
 
 Verify `## Implementation plan` in issue body. If absent:
 - **Pause** → Prompt: "Run `/define` first, or confirm this is trivial."
-- If trivial → Downgrade to Lightweight.
+- If trivial → proceed as single-unit.
 - Otherwise → Wait for `/define`.
 
-## Autonomous Cycle (Standard / Deep)
+## Autonomous Cycle (Multi-unit)
 
 **Seed Brief**: Raw YAML in `<seed-brief>` tag per specialist-mode. `payload: { type: research, ... }`.
 
 1. **`/build`**: Implementation team → codes against issue.
-2. **`/review`**: Review team → Deep scope triggers Deep mode.
+2. **`/review`**: Review team → multi-unit scope triggers detailed review.
 3. **`/verify`**: QA team → verifies every AC.
 4. **Evaluation**:
    - **Clean pass** → PR creation.
