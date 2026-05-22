@@ -20,9 +20,9 @@ See `skills/implement/references/scope-cycles.md` for scope assessment table, au
 
 **Autonomy Contract**: Run cycles back-to-back without prompting. Only interrupt after PR is open if (a) clean, (b) 3 cycles exhausted, or (c) blocker hit.
 
-**Lightweight** (≤ 50 lines + no logic change): `/build` (single-agent, no team) → inline AC check → PR. Skip `/review` and `/verify` teams. A worktree is still created.
+**Trivial** (single work unit, ≤ 50 lines, no logic change): `/build` → inline AC check → PR. Skip `/review` and `/verify` teams. A worktree is still created.
 
-**Standard / Deep**: Full Build → Review → Verify cycle. Repeat up to 3 times until clean or exhausted, then PR creation.
+**Multi-unit**: Full Build → Review → Verify cycle per `scope-assessment` output. Repeat up to 3 times until clean or exhausted, then PR creation.
 
 ## Rules
 - **Zero Prompts**: No prompting between sub-skills.

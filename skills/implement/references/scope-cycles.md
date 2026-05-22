@@ -1,14 +1,10 @@
 # Scope Assessment and Cycle Details for implement
 
-## Scope Assessment
+## Team Shape
 
-|Scope|Criteria|Action|
-|-|-|-|
-|**Lightweight**|≤ 50 lines, no logic change, 1-2 AC|`/build` (single-agent, no team) → inline AC check → PR. Skip `/review` and `/verify` teams. Worktree is still created.|
-|**Standard**|Typical multi-file, AC in one module|Full Build → Review → Verify cycle.|
-|**Deep**|Cross-module, security, migration, breaking|Full cycle + Deep review + extra critique iterations.|
+Invoke `Skill("scope-assessment")` with work units (one per sub-issue or distinct file group from `## Implementation plan`). Receive agent plan; spawn one `/build` invocation per disjoint group.
 
-**Decision**: ≤ 50 lines + no logic change → Lightweight; Auth/Security/Migrations/Perf → Deep; else → Standard.
+For trivial changes (≤ 50 lines, no logic change): pass a single work unit → 1 `/build` agent → inline AC check → PR (no `/review`/`/verify` teams needed).
 
 ### Design Gate (Standard/Deep only)
 
