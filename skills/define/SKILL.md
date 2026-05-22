@@ -10,27 +10,21 @@ allowed-tools: Agent Bash Read
 ## Role & Constraints
 Phase Lead. Goal: Transform an approved issue into a concrete implementation plan (architecture + design).
 
-## Scope Assessment
-|Scope|Criteria|Action|
-|-|-|-|
-|**Lightweight**|<= 1 module, pattern exists, no visuals, no unknowns|Inline architecture summary (3-5 bullets). Skip research and `/architecture`.|
-|**Standard**|Typical feature, some unknowns, may have visuals|Research team → `/architecture` → `/design` (if visual).|
-|**Deep**|Cross-module, security/payments, arch-changing, migration|Research team → `/architecture` → `/design` → critique team.|
+## Team Shape
 
-**Decision**: 1 module + pattern match → Lightweight; Security/Payments/Arch-change → Deep; else → Standard.
+Invoke `Skill("scope-assessment")` with work units — one per distinct module or sub-issue in the issue body. Receive agent plan; dispatch one research/architecture agent per disjoint group.
 
-### Spawn Rubric (see `_shared/composition.md`)
-- **Research Team**: 2 parallel `sonnet` agents (Codebase + Patterns).
-- **Standard Team**: Sequential specialists (Architecture → Design).
-- **Deep Team**: Standard + `TeamCreate` critique team (only for high-risk plans).
+For high-risk plans (security, payments, arch-changing scope): add a critique pass after `/architecture` → `/design` using a `TeamCreate` critique team. Determine risk from issue AC and scope — not from a label.
+
+See `_shared/composition.md` for spawn cost models.
 
 ## Process
 1. **Ingestion**: Read issue (problem statement + AC).
-2. **Research** (Standard/Deep only): Dispatch parallel agents to produce a research brief (seeds specialists).
+2. **Research** (multi-area only): Dispatch parallel agents to produce a research brief (seeds specialists).
 3. **Execution**:
-   - **Lightweight**: Write summary inline.
-   - **Standard**: Architecture → Design (if visual).
-   - **Deep**: Architecture → Design → Critique Team.
+   - **Narrow scope**: Write architecture summary inline.
+   - **Multi-area**: Architecture → Design (if visual).
+   - **High-risk domain**: Architecture → Design → Critique Team.
 4. **Sourcing**: Respect sequence: Architecture decisions first → Design works within those constraints.
 5. **Handoff**: Update GitHub issue body (single source of truth). Invoke `Skill("handoff-artifact")` for field list.
    - Edit/Append `## Implementation plan` section.
