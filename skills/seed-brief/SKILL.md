@@ -29,7 +29,6 @@ The seed-brief is raw YAML nested inside an XML tag. The orchestrator embeds it 
 ```
 <seed-brief>
 preflight_verified: true
-scope_class: Standard
 repo: owner/repo
 branch: feat/my-feature
 active_issue: 123
@@ -50,7 +49,6 @@ payload:
 |Field|Type|Notes|
 |-|-|-|
 |`preflight_verified`|bool|Must be `true`. Orchestrator runs preflights once and verifies repo/branch against `git` before constructing the brief.|
-|`scope_class`|string|One of: `Lightweight`, `Standard`, or `Deep`. Determines team shape and specialist behavior.|
 |`repo`|string|Format: `owner/repo`. Verified against `git remote -v` by orchestrator before spawning.|
 |`branch`|string|Format: `feat/<slug>`. Verified against `git rev-parse --abbrev-ref HEAD` by orchestrator.|
 |`active_issue`|int|GitHub issue ID (positive integer). Used for sanity checks and issue-link context.|
@@ -97,7 +95,6 @@ An orchestrator (`/implement`) spawning `/build` with an autonomous cycle:
 ```
 <seed-brief>
 preflight_verified: true
-scope_class: Standard
 repo: misiekhardcore/my-app
 branch: feat/csv-export
 active_issue: 42
@@ -126,7 +123,6 @@ Specialist behavior when receiving this brief:
 1. **Run preflights once at entry:**
    - Verify repo: `git remote -v` matches `owner/repo`
    - Verify branch: `git rev-parse --abbrev-ref HEAD` matches expected branch
-   - Run scope assessment (file count, sub-issues, etc.) → determine `scope_class`
 
 2. **Construct seed-brief** with `preflight_verified: true`:
    - Include repo, branch, active_issue for sanity checks in spawned agents
