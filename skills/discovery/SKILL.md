@@ -10,25 +10,21 @@ allowed-tools: Agent Bash Read
 ## Role & Constraints
 Lead discovery phase. Goal: Transform vague ideas into well-specified GitHub issues ready for architecture and implementation.
 
-## Scope Assessment
+## Team Shape
 
-|Scope|Criteria|Action|
-|-|-|-|
-|**Lightweight**|Clear repro, single area|/describe (Lightweight) → issue|
-|**Standard**|Typical feature, some unknowns|Team: /describe + /specify + Prior-Art Scout|
-|**Deep**|Cross-module, auth/security/payments, arch|Full team + flow analyst + adversarial questioner|
+Invoke `Skill("scope-assessment")` with work units derived from the problem statement. Dispatch agents based on the result:
+- **1-agent result**: `/describe` only.
+- **Multi-agent result**: Prior-Art Scout (parallel) + `/describe` (with scout brief) + `/specify`.
+- **High-risk domain** (auth/security/payments/arch): `TeamCreate` with flow analyst and adversarial questioner roles.
 
-**Decision**: 1-sentence fix + clear repro → Lightweight; Auth/Security/Payments/Arch → Deep; else → Standard.
-
-Spawn: Standard = describe + scout + specify; Deep = TeamCreate with all roles.
+Determine scope from the problem domain and complexity — not a label.
 
 ## Process
 
-**Lightweight**: `/describe` → quick confirmation → extract AC → issue.
-
-**Standard**: Prior-Art Scout (parallel) → `/describe` (with scout brief) → `/specify` → issue.
-
-**Deep**: TeamCreate (all roles) → Describe/Flow-Analyst/Scout in parallel → Adversarial Questioner challenges → Specify last → issue.
+Per scope-assessment output:
+- **1-agent**: `/describe` → extract AC → issue.
+- **Multi-agent**: Prior-Art Scout (parallel) → `/describe` (with scout brief) → `/specify` → issue.
+- **High-risk domain**: `TeamCreate` (Describe + Flow-Analyst + Scout in parallel → Adversarial Questioner → Specify last) → issue.
 
 ## Issue Creation
 
