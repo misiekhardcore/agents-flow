@@ -19,7 +19,7 @@ Phase Lead. Goal: Transform an approved issue into a concrete implementation pla
 
 **Decision**: 1 module + pattern match → Lightweight; Security/Payments/Arch-change → Deep; else → Standard.
 
-### Spawn Rubric (see `Invoke Skill("composition")`)
+### Spawn Rubric (see `_shared/composition.md`)
 - **Research Team**: 2 parallel `sonnet` agents (Codebase + Patterns).
 - **Standard Team**: Sequential specialists (Architecture → Design).
 - **Deep Team**: Standard + `TeamCreate` critique team (only for high-risk plans).

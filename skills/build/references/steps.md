@@ -18,7 +18,7 @@ Classify the build per criteria below:
 
 ### Spawn Justification
 
-Invoke `Skill("composition")`.
+See `_shared/composition.md` for spawn cost models.
 
 - **Standard**: TeamCreate at ≥3 splits, else parallel subagents.
 - **Deep**: TeamCreate.

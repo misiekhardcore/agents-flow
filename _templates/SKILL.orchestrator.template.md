@@ -19,7 +19,7 @@ You are leading the <phase name> phase. Your goal is to <objective>.
 
 ## Scope Assessment
 
-Classify before dispatching per `Invoke Skill("composition")` (cost models).
+Classify before dispatching per `_shared/composition.md` (cost models).
 
 - **Lightweight** — <heuristic>. Lead inline; no team; skip step 2.
 - **Standard** — <heuristic>. Core specialists; optional dormant.

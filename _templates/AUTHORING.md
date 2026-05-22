@@ -145,4 +145,7 @@ Document the orchestrator's specific definition of "work unit" (what counts as a
 Reference on-demand via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\``:
 
 - `composition.md` — team/sub-agent cost and shape
-- `prune-lane.md` — (reference file for pruning logic)
+
+## Agent Catalogue
+
+- `agents/prune-lane.md` — pruning logic (dispatched by `/prune`)

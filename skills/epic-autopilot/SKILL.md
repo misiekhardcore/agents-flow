@@ -16,7 +16,7 @@ Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produ
 
 ## Scope Assessment
 
-Always **Deep** — fanout orchestrator with sub-agent delegation. See `Invoke Skill("composition")` for spawn justification.
+Always **Deep** — fanout orchestrator with sub-agent delegation. See `_shared/composition.md` for spawn justification.
 
 ## Process
 

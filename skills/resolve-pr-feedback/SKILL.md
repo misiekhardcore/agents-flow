@@ -12,7 +12,7 @@ Systematically process PR feedback: Triage → Fix → Reply.
 
 ## I/O
 - **Input**: No arg (all unresolved threads on branch's PR) or thread URL.
-- **Pre-flight**: Invoke `Skill("preflight")`. If >= 3 files, run `Skill("preflight")`.
+- **Pre-flight**: Invoke `Skill("preflight")`. If >= 3 files changed, run the scope checks within `preflight` again.
 
 ## Process
 
