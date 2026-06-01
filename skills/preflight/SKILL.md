@@ -1,6 +1,7 @@
 ---
 name: preflight
 description: Repository and scope verification protocol before mutations or bulk file edits.
+when_to_use: "Invoke before `gh` or `git push` operations. Apply scope checks when modifying 3+ files or request matches: audit, refactor, normalize, sweep, propagate, extract, rename."
 user-invocable: false
 layer: 3
 ---
@@ -24,12 +25,6 @@ Orchestrators (e.g., `/implement`) run this at entry and pass `preflight_verifie
 ## Scope Pre-flight
 
 Used by skills performing bulk file edits. Apply when modifying 3+ files or actions with unclear blast radius.
-
-### Trigger
-
-Run when either condition holds:
-- Proposed change touches **3+ files**.
-- User request matches: `audit`, `refactor`, `normalize`, `sweep`, `propagate`, `extract`, `rename`.
 
 ### File-list confirmation
 
