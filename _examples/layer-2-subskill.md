@@ -1,4 +1,4 @@
-# Tier 2: Sub-skill Pattern
+# Layer 2: Sub-skill Pattern
 
 Sub-skills are specialized, reusable functional blocks. They are `user-invocable: true` and designed to be either called by a user or delegated to by an orchestrator.
 
@@ -14,7 +14,7 @@ Sub-skills are specialized, reusable functional blocks. They are `user-invocable
     - Returns a high-level summary report to the caller.
 
 ## Example: A "Verification" Specialist
-A Tier 2 verification skill doesn't just "test"; it follows a rigorous protocol:
+A Layer 2 verification skill doesn't just "test"; it follows a rigorous protocol:
 
 1. **Input Analysis**: Read the AC from the issue and the implementation plan from `NOTES.md`.
 2. **Test Generation**: Create a matrix of "Given/When/Then" scenarios for every AC.
@@ -24,7 +24,7 @@ A Tier 2 verification skill doesn't just "test"; it follows a rigorous protocol:
     - **To `NOTES.md`**: Detailed logs of what was tested, which inputs were used, and exactly why a test failed.
     - **To Caller**: A concise punch-list of passed/failed ACs.
 
-## Key Differences from Tier 1
-- **Tier 1 asks "What is next?"** $\rightarrow$ **Tier 2 asks "How do I solve this specific part?"**
-- Tier 1 manages the loop; Tier 2 manages the domain logic.
-- Tier 1 is a conductor; Tier 2 is the musician.
+## Key Differences from Layer 1
+- **Layer 1 asks "What is next?"** $\rightarrow$ **Layer 2 asks "How do I solve this specific part?"**
+- Layer 1 manages the loop; Layer 2 manages the domain logic.
+- Layer 1 is a conductor; Layer 2 is the musician.

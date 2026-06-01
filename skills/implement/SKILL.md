@@ -29,4 +29,4 @@ Read `references/scope-cycles.md` for scope assessment table, autonomous cycle d
 - **Rigor**: Do not open PR until clean pass OR 3 cycles exhausted.
 - **Completeness**: Each cycle must address ALL previous findings.
 - **State**: In-phase state in `.claude/NOTES.md`. Issue body stores `## Requirements` and `## Implementation plan`.
-- Invoke `Skill("handoff-artifact")`
+- Read `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md`

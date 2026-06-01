@@ -51,4 +51,4 @@ Document choice explicitly. State which rubric factors apply (comm pivot, disjoi
 - Require explicit approval. Silence is NOT approval.
 - Research team before main team in Standard/Deep. Never skip seed-brief gate.
 - Lightweight inline. Never pay overhead for <1 min work.
-- See `Invoke Skill("handoff-artifact")` and `Invoke Skill("interviewing-rules")`.
+- See `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` and `Invoke Skill("interviewing-rules")`.

@@ -2,9 +2,8 @@
 name: seed-brief
 description: Spawn-time context packaging pattern for fan-out to sub-skills and worker agents.
 user-invocable: false
-tier: 3
+layer: 3
 ---
-
 ## Purpose
 
 A **seed-brief** is a payload format that orchestrators use to hand off context to spawned agents or sub-skills at spawn time. It solves the **zero context inheritance** problem: when you spawn a new Claude session with `Agent()` or call a sub-skill, the spawned agent arrives with no knowledge of prior work, decisions, or findings.
@@ -106,7 +105,7 @@ payload:
   type: research
   prior_art: |
     Issue #42 ## Implementation plan
-    
+
     ### Architecture Decision
     - CSV export routes through existing ReportExporter service
     - New ExportFormatter module handles CSV serialization

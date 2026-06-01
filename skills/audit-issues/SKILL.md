@@ -43,7 +43,7 @@ Walk blocks in order. Prompt based on verdict:
 - `s` → Advance.
 
 ## Rules
-- **Sourcing**: Use `Skill("handoff-artifact")` for parse targets.
+- **Sourcing**: Read `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` for parse targets.
 - **Read-Only Default**: Mutate only after explicit per-issue confirmation.
 - **No Auto-Clone**: Do not clone missing repos.
 - **No Invention**: No counter → `unverifiable`.

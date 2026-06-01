@@ -2,9 +2,8 @@
 name: specialist-mode
 description: Logic for standalone vs. orchestrator-invoked (seeded) execution and seed-brief contract.
 user-invocable: false
-tier: 3
+layer: 3
 ---
-
 Logic for standalone vs. orchestrator-invoked (seeded) execution.
 
 ## Detection

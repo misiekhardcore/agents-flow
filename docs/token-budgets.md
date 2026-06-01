@@ -17,7 +17,7 @@ The lifecycle moves state between three artifact tiers. Each has a hard cap:
 |Artifact|Cap|Why|
 |-|-|-|
 |`.claude/NOTES.md` (per session)|**<1k tokens**|Re-read on every resume and before every `/compact`; must fit on one screen|
-|GitHub issue body (handoff)|**<2k tokens**|Loaded fully at phase start; the five-field shape in `Skill("handoff-artifact")` targets this|
+|GitHub issue body (handoff)|**<2k tokens**|Loaded fully at phase start; the five-field shape in `_shared/handoff-artifact.md` targets this|
 |Seed brief to sub-agent|**<500 tokens**|Brief is objective + constraint + report contract — not session history|
 |Sub-agent report to lead|1–2k tokens|Anthropic's reference figure for the isolation pattern|
 
@@ -115,8 +115,8 @@ Fix: read the issue body or NOTES.md instead. The skill body has nothing to add 
 
 - [`context-hygiene.md`](context-hygiene.md) — *why* phases reset and how the four hygiene rules interact.
 - [`cross-plugin.md`](cross-plugin.md) — MCP-server sizing.
-- Invoke `Skill("notes-md")` — `.claude/NOTES.md` shape and update cadence.
-- Invoke `Skill("handoff-artifact")` — five-field issue-body structure.
+- Read `${CLAUDE_PLUGIN_ROOT}/_shared/notes-md-protocol.md` — `.claude/NOTES.md` shape and update cadence.
+- Read `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` — five-field issue-body structure.
 - `_shared/composition.md` — sub-agent vs `TeamCreate` cost rubric.
 
 ## Sources

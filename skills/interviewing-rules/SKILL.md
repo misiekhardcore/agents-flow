@@ -2,9 +2,8 @@
 name: interviewing-rules
 description: Directives for rigorous user-interactive discovery and approval.
 user-invocable: false
-tier: 3
+layer: 3
 ---
-
 Directives for user-interactive discovery and approval.
 
 ## Constraints

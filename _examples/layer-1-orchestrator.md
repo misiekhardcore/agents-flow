@@ -1,4 +1,4 @@
-# Tier 1: Orchestrator Pattern
+# Layer 1: Orchestrator Pattern
 
 Orchestrators are high-level coordinators. They do not perform domain work; they manage the process and delegate execution.
 
@@ -10,7 +10,7 @@ Orchestrators are high-level coordinators. They do not perform domain work; they
 - **Key Components**:
     - High-level phase definitions (e.g., Discovery → Define → Implement).
     - Loop conditions and exit criteria.
-    - Mapping of phases to Tier 2 skills or Worker Agents.
+    - Mapping of phases to Layer 2 skills or Worker Agents.
 
 ### Execution Logic (The Coordination)
 An orchestrator's main loop typically looks like this:
@@ -18,14 +18,14 @@ An orchestrator's main loop typically looks like this:
 2. **Loop**:
     - Increment `cycle`.
     - Check `cycle > max_cycles` → hard stop.
-    - **Delegate**: Call `Skill("tier-2-skill")` or `Agent(general-purpose)` with a **Seed-Brief**.
+    - **Delegate**: Call `Skill("layer-2-skill")` or `Agent(general-purpose)` with a **Seed-Brief**.
     - **Synthesize**: Aggregate the report from the worker.
     - **Update State**: Record progress in `NOTES.md`.
     - **Verify**: Determine if the cycle is complete or if another iteration is needed.
 
 ## Example Delegation (Seed-Brief)
 
-Instead of "Fix the bug in X," a Tier 1 orchestrator provides a structured brief:
+Instead of "Fix the bug in X," a Layer 1 orchestrator provides a structured brief:
 
 ```typescript
 Agent({

@@ -2,9 +2,8 @@
 name: orchestrator-rules
 description: Standard directives for pipeline orchestrators coordinating specialist sub-skills.
 user-invocable: false
-tier: 3
+layer: 3
 ---
-
 Rules that apply to all pipeline orchestrators (`/issue-autopilot`, `/epic-autopilot`).
 
 ## CWD verification

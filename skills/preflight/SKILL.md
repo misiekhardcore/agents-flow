@@ -2,7 +2,7 @@
 name: preflight
 description: Repository and scope verification protocol before mutations or bulk file edits.
 user-invocable: false
-tier: 3
+layer: 3
 ---
 ## Repository Pre-flight
 

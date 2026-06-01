@@ -17,7 +17,7 @@ Logic for treating phase boundaries as context resets to prevent reasoning rot.
   - Verbose-I/O (large output → small field set).
 
 ## Handoff Artifact
-Fixed shape per `Skill("handoff-artifact")`:
+Fixed shape per `_shared/handoff-artifact.md`:
 - Acceptance criteria, Constraints, Prior decisions (opt), Evidence (opt), Open questions (opt).
 
 ## See also
