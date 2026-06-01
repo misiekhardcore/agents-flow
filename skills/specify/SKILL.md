@@ -10,7 +10,7 @@ model: sonnet
 Lead requirements team. Goal: Transform problem statements into testable, non-vague AC.
 
 ## Specialist Mode
-- **Seeded**: Skip scope-class and file-scope confirmations.
+- **Seeded**: Skip file-scope confirmations.
 - **Keep**: AC derivation gates (quality is not delegated).
 - Invoke `Skill("specialist-mode")`
 

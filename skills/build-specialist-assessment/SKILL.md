@@ -2,7 +2,7 @@
 name: build-specialist-assessment
 description: Assess which specialist agents to activate for a /build invocation.
 user-invocable: false
-tier: 3
+layer: 3
 ---
 Assess which specialist agents are needed for the current build task. Called by `/build` at entry, whether seeded or standalone.
 

@@ -26,7 +26,6 @@ See `_shared/composition.md` for spawn cost models.
 When invoked by `/implement` with a `<seed-brief>` block, skip:
 - repo-preflight (already run; `preflight_verified: true` in brief)
 - scope-preflight
-- scope-class confirmation
 
 Always keep: the design gate — architecture decisions must be verified cross-phase even when seeded.
 

@@ -2,7 +2,7 @@
 name: verify-specialist-assessment
 description: Assess which specialist agents to activate for a /verify invocation.
 user-invocable: false
-tier: 3
+layer: 3
 ---
 Assess which specialist agents are needed for the current verification task. Called by `/verify` at entry, whether seeded or standalone.
 

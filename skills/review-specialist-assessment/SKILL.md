@@ -2,7 +2,7 @@
 name: review-specialist-assessment
 description: Assess which specialist agents to activate for a /review invocation.
 user-invocable: false
-tier: 3
+layer: 3
 ---
 Assess which specialist agents are needed for the current review task. Called by `/review` at entry, whether seeded or standalone.
 
