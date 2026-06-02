@@ -181,4 +181,4 @@ Per-release notes with full diffs: [GitHub Releases](https://github.com/misiekha
 
 ## License
 
-MIT
+[PolyForm Noncommercial License 1.0.0](LICENSE) — free for personal and open-source use; commercial use requires a separate agreement.
