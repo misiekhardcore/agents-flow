@@ -17,11 +17,11 @@ Framework for orchestrating specialists and managing token/context budgets.
 ## Team Sizing & Cost
 Tally total token usage as ~N × single-session baseline.
 
-|Scope|Heuristic|Team Shape|Approx Cost|
-|-|-|-|-|
-|**Lightweight**|Single file, no unknowns|Inline single agent|~1×|
-|**Standard**|Multi-file, typical feature|2-3 sequential subagents|2–4×|
-|**Deep**|Cross-module, security, arch|All specialists (parallel subagents)|Up to ~7×|
+|Team Shape|When|Approx Cost|
+|-|-|-|
+|Inline single agent|Single file, no unknowns|~1×|
+|2–3 sequential subagents|Multi-file, typical feature|2–4×|
+|All specialists (parallel subagents)|Cross-module, security, arch|Up to ~7×|
 
 ### Decision Ladder
 Escalate only when the lower tier is insufficient:
