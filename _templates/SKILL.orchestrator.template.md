@@ -23,7 +23,7 @@ Invoke `Skill("scope-assessment")` with work units (one per sub-issue, module, o
 
 For high-risk domains (auth/security/payments/arch-changing): add a critique pass after the main team. Determine risk from AC — not from a label.
 
-See `_shared/composition.md` for spawn cost models.
+See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 
 ## Process
 
@@ -47,4 +47,4 @@ See `_shared/composition.md` for spawn cost models.
 - Require explicit approval. Silence is NOT approval.
 - Research team before main team for multi-area work. Never skip seed-brief gate.
 - Single work unit: code inline. Never pay overhead for <1 min work.
-- See `Invoke Skill("handoff-artifact")` and `Invoke Skill("interviewing-rules")`.
+- Invoke `Skill("handoff-artifact")` and `Skill("interviewing-rules")`.

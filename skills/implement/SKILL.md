@@ -10,7 +10,7 @@ allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ## Role & Constraints
 Orchestrate build → review → verify → fix cycles to produce a ready-to-merge PR.
 
-See `skills/implement/references/scope-cycles.md` for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
+See `references/scope-cycles.md` for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
 
 ## Pre-flight
 1. Invoke `Skill("preflight")` at entry (pass `suppress branch line: true`).

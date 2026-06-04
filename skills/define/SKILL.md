@@ -16,7 +16,7 @@ Invoke `Skill("scope-assessment")` with work units — one per distinct module o
 
 For high-risk plans (security, payments, arch-changing scope): add a critique pass after `/architecture` → `/design` using a `TeamCreate` critique team. Determine risk from issue AC and scope — not from a label.
 
-See `_shared/composition.md` for spawn cost models.
+See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 
 ## Process
 1. **Ingestion**: Read issue (problem statement + AC).

@@ -139,7 +139,7 @@ When an orchestrator must decide how to fan out work across agents, use `/scope-
 2. Invoke `/scope-assessment`; receive back an agent plan where each entry covers a set of work units that share no resources with any other entry.
 3. Dispatch one agent per entry in the plan.
 
-Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in the orchestrator's own `references/scope.md`. That file must also cite `/scope-assessment` as the canonical decomposition algorithm. The layer-3 skill encodes the algorithm only; per-caller variation lives at the call site.
+Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in a dedicated `references/` doc. That doc must also cite `/scope-assessment` as the canonical decomposition algorithm. The layer-3 skill encodes the algorithm only; per-caller variation lives at the call site.
 
 ---
 
@@ -149,12 +149,12 @@ When an orchestrator or sub-skill needs to invoke domain experts, use the two-me
 
 |Concern|Mechanism|
 |-|-|
-|**Team shape** — how many agents, which spawn primitive|`scope-assessment` (shared layer-3); define work units in caller's `references/scope.md`|
+|**Team shape** — how many agents, which spawn primitive|`scope-assessment` (shared layer-3); define work units in a caller `references/` doc|
 |**Specialist activation** — which domain experts join|Per-skill `*-specialist-assessment` (layer-3, new) — one per sub-skill|
 
 ### `scope-assessment` (team shape)
 
-Shared layer-3 skill. Takes `work_units` (each with `id` and `resources`), groups by shared resources, outputs one agent entry per conflict-free group. Per-caller variation is only the work-unit definition — document it in the caller's `references/scope.md`.
+Shared layer-3 skill. Takes `work_units` (each with `id` and `resources`), groups by shared resources, outputs one agent entry per conflict-free group. Per-caller variation is only the work-unit definition — document it in a caller `references/` doc.
 
 ### `*-specialist-assessment` (specialist activation)
 
