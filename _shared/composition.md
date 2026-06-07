@@ -24,9 +24,9 @@ Tally total token usage as ~N × single-session baseline.
 |All specialists (parallel subagents)|Cross-module, security, arch|~(N+1)× where N = activated specialists|
 
 ### Decision Ladder
-Escalate only when the lower tier is insufficient:
+Escalate only when the lower level is insufficient:
 
-|Tier|When|Example|
+|Level|When|Example|
 |-|-|-|
 |**Inline**|1-4 items, fit in lead context|Audit 2 open issues|
 |**Sub-agent**|>= 5 items or verbose I/O (overrun boundary)|Fan-out across 8 issues|

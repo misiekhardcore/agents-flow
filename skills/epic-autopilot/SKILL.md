@@ -16,7 +16,7 @@ Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produ
 
 ## Team Shape
 
-Always multi-tier fan-out — dispatches one sub-agent per topological tier of sub-issues. See `_shared/composition.md` for spawn justification.
+Always multi-layer fan-out — dispatches one sub-agent per topological layer of sub-issues. See `_shared/composition.md` for spawn justification.
 
 ## Process
 

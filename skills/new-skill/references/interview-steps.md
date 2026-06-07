@@ -40,7 +40,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 **If Orchestrator:** Ask one follow-up `AskUserQuestion` with `header: "Orchestrator type"`, question: "Does this orchestrator do its own deep reasoning, or sequence already-designed sub-skills?"
 
 **Options:**
-- **Research-leading** — spawns a research team before the main team; deep reasoning at the orchestrator tier (e.g. `/discovery`, `/define`). Defaults model to `opus` and `effort: high`.
+- **Research-leading** — spawns a research team before the main team; deep reasoning at the orchestrator layer (e.g. `/discovery`, `/define`). Defaults model to `opus` and `effort: high`.
 - **Coordinator** — sequences sub-skills in a loop; research happens upstream or in the sub-skills (e.g. `/implement`). Defaults model to `sonnet`, no `effort`.
 
 This answer determines which template to use in step 3 and pre-fills the model/effort defaults (which the author can still override in steps e/f).
