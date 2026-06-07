@@ -34,9 +34,9 @@ Do not mirror `TodoWrite` and `.claude/NOTES.md` — they serve different roles.
 ## Location and lifecycle
 
 - **Path:** `<worktree-root>/.claude/NOTES.md`.
-- **Created by the agent that starts the phase** — either an orchestrator (L1) or a standalone skill (L2 like `/build`). The creator owns the file.
-- **Updated by the owning agent** after each completed task, significant decision, returned sub-agent result, or before spawning a sub-agent (checkpoint).
-- **NOT managed by spawned sub-agents** — when an L2 skill is called by an orchestrator, it receives a NOTES.md slice via seed-brief `progress:` field but does **not** write to NOTES.md (the orchestrator owns it). Spawned skills use `TodoWrite` for their ephemeral scratchpad.
+- **Created by the agent that starts the phase** — either an orchestrator (L1) or a standalone skill (L2 like `/build`).
+- **Ownership transfers with execution.** The running agent always owns NOTES.md. An orchestrator owns it before spawn and after return; the spawned sub-skill owns it during execution. Since execution is sequential (spawn → wait → return), there is no concurrent write conflict.
+- **Updated by the currently running agent** after each completed task, significant decision, or before spawning a further sub-agent (checkpoint). This applies equally to orchestrators and spawned sub-skills.
 - **Read on resume** — before re-reading the issue, reconstruct state from NOTES.md.
 - **Harvested by `/implement`** at PR-creation time. `## Decisions made this session` and `## Open questions` flow into PR body's `## Notes` section.
 - **Deleted by `/implement`** after `/compound` runs. If `/implement` exits abnormally, NOTES.md persists; `/wrap-up` cleans it up with worktree removal.
@@ -105,7 +105,7 @@ Orchestrators use NOTES.md as the progress ledger for multi-step pipelines that 
 
 1. **Create** — On entry (after preflight), create NOTES.md with the full task list derived from work units.
 2. **Checkpoint before sub-agent spawn** — Write `## Current task` (what the sub-agent will do) and `## Next action on resume` (how to reconstruct if session dies) before every `Skill()` or `Agent()` call. This ensures crash-safe resume.
-3. **Update after sub-agent returns** — Flip checkboxes, log results and decisions from the agent's findings report.
+3. **Update after sub-agent returns** — The sub-skill may have written its own progress, decisions, and task updates to NOTES.md while it ran. Read the file, integrate its results, flip checkboxes, and log any new decisions. The orchestrator's view is authoritative for the overall pipeline; the sub-skill's entries are intermediate working state.
 4. **Wrap-up** — On clean exit, leave NOTES.md in place for `/implement` to harvest. On abnormal exit, NOTES.md serves as the resume point.
 
 ### Seed-brief slice
@@ -139,7 +139,7 @@ Slice rules:
 
 - **NOTES.md is authoritative for in-flight state.** Trust the file; in-context recall is rot-degraded.
 - **Issue is authoritative for cross-phase state.** Acceptance criteria, locked decisions, prior-phase handoff live in issue, not file.
-- **The agent that creates NOTES.md owns it.** Standalone L2 skills own their own NOTES.md. Orchestrators own the NOTES.md their sub-agents receive slices of.
-- **Spawned sub-agents do not write to NOTES.md.** They receive context via the seed-brief `progress:` field and use `TodoWrite` for ephemeral state.
+- **Ownership transfers with the running agent.** The agent currently executing owns NOTES.md — whether that's the orchestrator or a spawned sub-skill. On return, ownership passes back to the caller.
+- **Orchestrator checkpoints before every spawn** so NOTES.md contains enough state to reconstruct if the session dies mid-spawn (sub-skill never started or partially executed).
+- **Sub-skills use NOTES.md for their own multi-step tracking** while they run (same sections, same conventions). This is safe because execution is sequential — no concurrent writers.
 - **Deletion is `/implement`'s responsibility.** It deletes after `/compound` runs. Standalone skills leave in place.
-- **Orchestrator checkpoints before every sub-agent spawn.** If the session dies mid-spawn, NOTES.md must contain enough state to reconstruct.
