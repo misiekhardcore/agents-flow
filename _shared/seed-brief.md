@@ -59,9 +59,10 @@ The `payload` field is a dict with a required `type` key and type-specific conte
 payload:
   type: research
   prior_art: "<Issue #N ## Implementation plan (architecture and design from /define)>"
+  progress: "<NOTES.md slice — task list subset + decisions; see notes-md-protocol.md § Seed-brief slice>"
   open_questions: "<Unresolved constraints or empty string>"
 ```
-Used by `/implement` to spawn `/build`, `/review`, `/verify`. Contains high-level architecture decisions and known constraints.
+Used by `/implement` to spawn `/build`, `/review`, `/verify`. Contains high-level architecture decisions and known constraints. The optional `progress` field carries intra-orchestrator state from NOTES.md so the sub-agent arrives with task context.
 
 ### `type: fix`
 ```yaml
@@ -70,8 +71,9 @@ payload:
   failing_ac: "<Failed acceptance criterion(s)>"
   findings: "file.js:42 — function does not handle edge case\nfile.ts:15 — type mismatch"
   prior_decisions: "<Prior architectural decisions or design constraints>"
+  progress: "<NOTES.md slice — task list subset + decisions; see notes-md-protocol.md § Seed-brief slice>"
 ```
-Used when spawning a specialist to fix a specific failure. Contains line-specific findings and the AC to address.
+Used when spawning a specialist to fix a specific failure. Contains line-specific findings and the AC to address. The optional `progress` field carries intra-orchestrator state from NOTES.md.
 
 ### `type: prior-art`
 ```yaml
@@ -122,9 +124,13 @@ Specialist behavior when receiving this brief:
 2. **Construct seed-brief** with `preflight_verified: true`:
    - Include repo, branch, active_issue for sanity checks in spawned agents
    - Build `payload` from prior research, failing AC, or architectural decisions
+   - Include a `progress` slice from NOTES.md (task list subset + decisions) for intra-orchestrator context — see notes-md-protocol.md § Seed-brief slice
    - Set `autonomous: true` only if orchestrator will handle next stage (no user prompt)
 
-3. **Pass to every specialist spawn:**
+3. **Checkpoint NOTES.md before constructing the brief:**
+   Write `## Current task` and `## Next action on resume` before every `Skill()` or `Agent()` call so NOTES.md contains enough state to reconstruct if the session dies mid-spawn.
+
+4. **Pass to every specialist spawn:**
    - Orchestrator always passes the brief to every sub-skill or worker invocation
    - Specialists detect it and skip redundant research
 

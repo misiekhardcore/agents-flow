@@ -9,7 +9,7 @@ Four tiers:
 |Tier|Where|Lifetime|Authoritative for|
 |-|-|-|-|
 |`TodoWrite`|In-context|This session|Throwaway scratchpad|
-|`.claude/NOTES.md`|Worktree-local, gitignored|This phase, across sessions|In-flight decisions, current task, open questions|
+|`.claude/NOTES.md`|Worktree-local, gitignored|This phase, across sessions|In-flight decisions, task progress, current task, open questions|
 |GitHub issue|Remote|Cross-phase|Acceptance criteria, prior-phase decisions, handoff state|
 |Durable vault|claude-obsidian vault (git-tracked)|Durable, cross-feature|Patterns, bug-fix history, architectural insights|
 
@@ -34,12 +34,12 @@ Do not mirror `TodoWrite` and `.claude/NOTES.md` — they serve different roles.
 ## Location and lifecycle
 
 - **Path:** `<worktree-root>/.claude/NOTES.md`.
-- **Created by `/build`** at phase start, immediately after `wt switch --create`, with initial task list from issue.
-- **Updated by `/build`** after each completed task, significant decision, and before `/compact`.
-- **Read on resume by `/build`** — before re-reading the issue.
+- **Created by orchestrator or sub-skill** at phase start, with initial task list derived from the issue or work units.
+- **Updated by orchestrator** after each completed task, returned agent result, significant decision, and before spawning a sub-agent (checkpoint).
+- **Read on resume** — before re-reading the issue, reconstruct state from NOTES.md.
 - **Harvested by `/implement`** at PR-creation time. `## Decisions made this session` and `## Open questions` flow into PR body's `## Notes` section.
 - **Deleted by `/implement`** after `/compound` runs. If `/implement` exits abnormally, NOTES.md persists; `/wrap-up` cleans it up with worktree removal.
-- **Left in place** by standalone `/build`, `/review`, `/verify` — cleanup happens when worktree is removed.
+- **Left in place** by standalone skills — cleanup happens when worktree is removed.
 - **Not committed to git.** Ensure `/.claude/NOTES.md` is gitignored; add entry if missing.
 
 ## Required sections
@@ -88,8 +88,45 @@ When `.claude/NOTES.md` exists in worktree, it's a resume:
 3. Resume from **Next action on resume**, or from first unchecked item in Task list if stale.
 4. Update **Current task** and **Next action on resume** before first real action.
 
+## Orchestrator checkpoint pattern
+
+Orchestrators use NOTES.md as the progress ledger for multi-step pipelines. The pattern:
+
+1. **Create** — On entry (after preflight), create NOTES.md with the full task list derived from work units.
+2. **Checkpoint before sub-agent spawn** — Write `## Current task` (what the sub-agent will do) and `## Next action on resume` (how to reconstruct if session dies) before every `Skill()` or `Agent()` call. This ensures crash-safe resume.
+3. **Update after sub-agent returns** — Flip checkboxes, log results and decisions from the agent's findings report.
+4. **Wrap-up** — On clean exit, leave NOTES.md in place for `/implement` to harvest. On abnormal exit, NOTES.md serves as the resume point.
+
+### Seed-brief slice
+
+When spawning a sub-agent, include a relevant slice of NOTES.md in the seed-brief payload so the agent arrives with progress context:
+
+```
+<seed-brief>
+...
+payload:
+  type: research
+  progress: |
+    ## Task list (relevant)
+    - [x] Scope assessment → 3 work units
+    - [ ] Build specialist (current)
+    - [ ] Review specialist
+
+    ## Decisions made this session
+    - Split auth into own work unit (why: security isolation)
+  open_questions: ""
+</seed-brief>
+```
+
+Slice rules:
+- Include only the subset of `## Task list` relevant to the spawned agent's scope.
+- Include `## Decisions made this session` in full (decisions are global to the phase).
+- Omit `## Current task` (the agent will set its own).
+- Cap at 15 lines — the brief is not a state dump.
+
 ## Rules
 
 - **NOTES.md is authoritative for in-flight state.** Trust the file; in-context recall is rot-degraded.
 - **Issue is authoritative for cross-phase state.** Acceptance criteria, locked decisions, prior-phase handoff live in issue, not file.
-- **Deletion is `/implement`'s responsibility.** It deletes after `/compound` runs. Standalone `/build` leaves in place.
+- **Deletion is `/implement`'s responsibility.** It deletes after `/compound` runs. Standalone skills leave in place.
+- **Orchestrator checkpoints before every sub-agent spawn.** If the session dies mid-spawn, NOTES.md must contain enough state to reconstruct.

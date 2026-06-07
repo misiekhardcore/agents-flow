@@ -28,15 +28,18 @@ See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 ## Process
 
 1. Read input; build work-unit list for `scope-assessment`.
-2. **Research** (parallel subagents; multi-area only):
+2. **Init NOTES.md** — create `.claude/NOTES.md` with task list (one checkbox per work unit or step) and `## Decisions made this session`, `## Next action on resume`. See `Skill("orchestrator-rules")` § Progress tracking via NOTES.md.
+3. **Research** (parallel subagents; multi-area only):
    - **Codebase research** — tech stack, modules, patterns. Outputs research brief.
    - **Prior art** — vault, project docs, external sources.
-3. **Specialists** (parallel subagents), seeded with research. Width = scope. Include only needed specialists:
+   - Checkpoint NOTES.md before each spawn; update on return.
+4. **Specialists** (parallel subagents), seeded with research. Width = scope. Include only needed specialists:
    - **Specialist A** — `/<skill>` to <do thing>. Seeded; skips research.
    - **Specialist B** — `/<skill>` to <do thing>.
-4. <Serialization rule — which specialist first and why.>
-5. **Handoff artifact** — update GitHub issue body in place with decisions and five-field block.
-6. Present output; require explicit approval. After sign-off, tell user to start next phase fresh.
+   - Checkpoint NOTES.md before each spawn (write `## Current task`, `## Next action on resume`); include NOTES.md slice in seed-brief payload. Update on return.
+5. <Serialization rule — which specialist first and why.>
+6. **Handoff artifact** — update GitHub issue body in place with decisions and five-field block.
+7. Present output; require explicit approval. After sign-off, tell user to start next phase fresh.
 
 ## Output
 
