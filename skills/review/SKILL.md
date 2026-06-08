@@ -2,6 +2,7 @@
 name: review
 description: Review implementation against requirements or PR. Posts inline GitHub review comments.
 argument-hint: "[PR# or URL]"
+when_to_use: Use after /build to review implementation quality. Invoked by /implement; can run standalone against a PR.
 model: sonnet
 effort: high
 layer: 2

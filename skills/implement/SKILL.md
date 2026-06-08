@@ -8,9 +8,7 @@ effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
 ## Role & Constraints
-Orchestrate build → review → verify → fix cycles to produce a ready-to-merge PR.
-
-Read `references/scope-cycles.md` for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
+Phase lead. Goal: Orchestrate build → review → verify → fix cycles to produce a ready-to-merge PR.
 
 ## Pre-flight
 Invoke `Skill("specialist-mode")` at entry.
@@ -19,13 +17,29 @@ Invoke `Skill("specialist-mode")` at entry.
 1. Invoke `Skill("preflight")` at entry (pass `suppress branch line: true`).
 2. If >= 3 files changed, run the scope checks within `preflight` again. Pass `preflight_verified: true` in seed-briefs.
 
+## Team Shape
+
+Invoke `Skill("scope-assessment")` with work units — one per sub-issue or distinct file group from `## Implementation plan`. Receive agent plan; spawn one `/build` invocation per disjoint group.
+
+**Trivial** (≤ 50 lines, no logic change): pass a single work unit → 1 `/build` agent → inline AC check → PR (no `/review`/`/verify` teams needed).
+
+**Design Gate** (multi-unit only): Verify `## Implementation plan` in issue body. If absent:
+- **Pause** → Prompt: "Run `/define` first, or confirm this is trivial."
+- If trivial → proceed as single-unit.
+- Otherwise → Wait for `/define`.
+
+See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
+
 ## Process
 
 **Autonomy Contract**: Run cycles back-to-back without prompting. Only interrupt after PR is open if (a) clean, (b) 3 cycles exhausted, or (c) blocker hit.
 
-**Trivial** (single work unit, ≤ 50 lines, no logic change): `/build` → inline AC check → PR. Skip `/review` and `/verify` teams. A worktree is still created.
-
-**Multi-unit**: Full Build → Review → Verify cycle per `scope-assessment` output. Repeat up to 3 times until clean or exhausted, then PR creation.
+1. **Ingestion**: Read issue (problem statement, AC, and `## Implementation plan`).
+2. **Scoping**: Invoke `Skill("scope-assessment")` → determine trivial vs. multi-unit.
+3. **Delegation** (per scope):
+   - **Trivial**: Dispatch `/build` → inline AC check → PR. Skip `/review` and `/verify` teams. A worktree is still created.
+   - **Multi-unit**: Full cycle — invoke `/build` → `/review` → `/verify`. Repeat up to 3 times until clean or exhausted. See `references/scope-cycles.md` for cycle mechanics and reporting.
+4. **PR Creation & Closure**: See `references/scope-cycles.md § PR Creation & Finalize`.
 
 ## Rules
 - **Zero Prompts**: No prompting between sub-skills.

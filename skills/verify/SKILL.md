@@ -2,6 +2,7 @@
 name: verify
 description: QA verification of implementation against AC. Reports pass/fail per criterion.
 argument-hint: "[issue#]"
+when_to_use: Use after /build to verify all acceptance criteria are met. Invoked by /implement; can run standalone.
 model: haiku
 effort: low
 layer: 2
@@ -26,7 +27,7 @@ Invoke `Skill("verify-specialist-assessment")` at entry. It reads AC and diff fr
 
 ## Process
 1. Invoke `Skill("scope-assessment")` with work units — one per AC group. Receive agent plan; spawn one QA agent per disjoint group. Add any activated specialists to their relevant groups.
-2. Split AC across QA agents per `scope-assessment` output → each verifies independently → converge on unified report. Any activated specialists verify their domain-specific AC alongside the QA agents.
+2. Split AC across parallel QA sub-agents per `scope-assessment` output → each verifies independently → converge on unified report. Any activated specialists verify their domain-specific AC alongside the QA agents.
 
 ## Rules
 - **Separation**: Never fix issues during verification. Report failures in the verify output; fixes are a `/build` responsibility.

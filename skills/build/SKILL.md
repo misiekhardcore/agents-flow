@@ -1,7 +1,7 @@
 ---
 name: build
 description: Build a feature from a GitHub issue. Creates a git worktree and codes against acceptance criteria using TDD.
-when_to_use: Use to implement approved architecture decisions.
+when_to_use: Use after /define produces an approved implementation plan. Invoked by /implement; can run standalone.
 argument-hint: "[issue#]"
 model: sonnet
 effort: high
@@ -18,6 +18,16 @@ Lead build phase. Goal: Take a fully specified GitHub issue and produce working 
 
 ## Specialist Assessment
 Invoke `Skill("build-specialist-assessment")` at entry (before spawning workers). It reads plan/AC from context and emits a `specialists:` list.
+
+## Scope Assessment
+
+|Scope|Criteria|Team|
+|-|-|-|
+|Single work unit|Single-file or tightly scoped; AC fits one module; no sub-issues|Code inline, no team|
+|Few work units|2–3 natural work splits (sub-issues or distinct file groups)|Implementation team, one agent per split|
+|Many work units|Many sub-issues, cross-module work, or architecture-changing scope|Parallel subagents; lead coordinates and merges results|
+
+See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 
 ## Process
 Read `references/process.md` for step-by-step process, TDD, context hygiene, and commit rules.

@@ -1,17 +1,4 @@
-# Scope Assessment and Cycle Details for implement
-
-## Team Shape
-
-Invoke `Skill("scope-assessment")` with work units (one per sub-issue or distinct file group from `## Implementation plan`). Receive agent plan; spawn one `/build` invocation per disjoint group.
-
-For trivial changes (≤ 50 lines, no logic change): pass a single work unit → 1 `/build` agent → inline AC check → PR (no `/review`/`/verify` teams needed).
-
-### Design Gate (Multi-unit only)
-
-Verify `## Implementation plan` in issue body. If absent:
-- **Pause** → Prompt: "Run `/define` first, or confirm this is trivial."
-- If trivial → proceed as single-unit.
-- Otherwise → Wait for `/define`.
+# Cycle Details for implement
 
 ## Autonomous Cycle (Multi-unit)
 
