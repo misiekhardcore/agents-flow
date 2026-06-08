@@ -158,10 +158,11 @@ Shared protocols at `_shared/`:
 |-|-|
 |`compaction-protocol.md`|Context editing → delegation → /compact order|
 |`composition.md`|Multi-skill composition patterns and contracts|
-|`handoff-artifact.md`|Five-field GitHub issue handoff structure|
+|`handoff-artifact.md`|Five-field GitHub issue handoff protocol; per-skill section headings defined in each producing skill|
 |`interviewing-rules.md`|One-question-at-a-time interview protocol|
 |`notes-md-protocol.md`|In-phase NOTES.md memory layer|
 |`orchestrator-rules.md`|Shared rules for pipeline orchestrators: CWD verification, delegation, no-autonomous-merge, seed-brief contract|
+|`seed-brief.md`|Spawn-time context packaging (YAML-in-XML) for orchestrator→specialist handoff; payload types defined in `specialist-mode`|
 
 ## Releasing
 

@@ -1,16 +1,16 @@
-# Handoff Artifact — Shared Template
+# Handoff Artifact — Protocol
 
 Phase-boundary skills hand off state by updating the GitHub issue body. Read on-demand at handoff steps; do not preload.
 
-The terminal phase-ending skill outputs the PR, not an issue body update.
+Each skill that produces a handoff artifact documents its own section heading and field requirements in its own file.
 
 ## The five fields
 
-1. **Acceptance criteria** — testable scenarios from the discovery phase, unchanged. One line each. **Mandatory.**
-2. **Constraints** — files in scope/out of scope, non-negotiable decisions from the definition phase. **Mandatory.**
-3. **Prior decisions** — "chose X over Y because Z" entries with links to conversation/code. One line each. *(Optional — omit when empty.)*
-4. **Evidence** — links to commits, PRs, benchmarks, reviews, or approvals justifying decisions. *(Optional — omit when empty.)*
-5. **Open questions** — things next phase must resolve. Explicit, no "obviously will figure out later". *(Optional — omit when empty.)*
+1. **Acceptance criteria** — testable scenarios, unchanged from prior phase. One line each. **Mandatory.**
+2. **Constraints** — files in scope/out of scope, non-negotiable decisions. **Mandatory.**
+3. **Prior decisions** — "chose X over Y because Z" entries with links to conversation/code. *(Optional — omit when empty.)*
+4. **Evidence** — links to commits, PRs, benchmarks, reviews, or approvals. *(Optional — omit when empty.)*
+5. **Open questions** — things next phase must resolve. *(Optional — omit when empty.)*
 
 ## Shape
 
@@ -23,7 +23,7 @@ Section heading is phase-specific — each skill specifies it (e.g. `## Requirem
 ```markdown
 ## <section heading>
 
-**Acceptance criteria** (from discovery, unchanged)
+**Acceptance criteria** (from prior phase, unchanged)
 - AC1: ...
 - AC2: ...
 

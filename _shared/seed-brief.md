@@ -47,43 +47,10 @@ payload:
 |`repo`|string|Format: `owner/repo`. Verified against `git remote -v` by orchestrator before spawning.|
 |`branch`|string|Format: `feat/<slug>`. Verified against `git rev-parse --abbrev-ref HEAD` by orchestrator.|
 |`active_issue`|int|GitHub issue ID (positive integer). Used for sanity checks and issue-link context.|
-|`payload`|object|Research, prior art, findings, or constraints. Shape depends on `payload.type` (see § Payload Types).|
+|`payload`|object|Research, prior art, findings, or constraints. Shape depends on `payload.type` (see `Skill("specialist-mode")` § Payload Types).|
 |`autonomous`|bool|Optional; default `false`. If `true`, suppresses exit/continuation prompts in the phase-ending skill.|
 
-## Payload Types
-
-The `payload` field is a dict with a required `type` key and type-specific contents:
-
-### `type: research`
-```yaml
-payload:
-  type: research
-  prior_art: "<Issue implementation plan, architecture, and design decisions>"
-  progress: "<NOTES.md slice — task list subset + decisions; see notes-md-protocol.md § Seed-brief slice>"
-  open_questions: "<Unresolved constraints or empty string>"
-```
-Used to spawn a build or implementation sub-skill. Contains high-level architecture decisions and known constraints. The optional `progress` field carries intra-orchestrator state from NOTES.md so the sub-agent arrives with task context.
-
-### `type: fix`
-```yaml
-payload:
-  type: fix
-  failing_ac: "<Failed acceptance criterion(s)>"
-  findings: "file.js:42 — function does not handle edge case\nfile.ts:15 — type mismatch"
-  prior_decisions: "<Prior architectural decisions or design constraints>"
-  progress: "<NOTES.md slice — task list subset + decisions; see notes-md-protocol.md § Seed-brief slice>"
-```
-Used when spawning a specialist to fix a specific failure. Contains line-specific findings and the AC to address. The optional `progress` field carries intra-orchestrator state from NOTES.md.
-
-### `type: prior-art`
-```yaml
-payload:
-  type: prior-art
-  problem_domain: "<Brief problem statement>"
-  existing_patterns: "<Codebase patterns, libraries, or conventions relevant to this task>"
-  constraints: "<Non-negotiable constraints from requirements or architecture>"
-```
-Used for research or exploration tasks where codebase patterns are critical context.
+Each skill documents its own payload types and usage in its own file. See `Skill("specialist-mode")` for the canonical contract and payload type definitions.
 
 ## Orchestrator Duties
 

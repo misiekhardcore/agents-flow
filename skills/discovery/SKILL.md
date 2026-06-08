@@ -31,7 +31,7 @@ Per scope-assessment output:
 Invoke `Skill("preflight")` before `gh issue`.
 Suppress branch line: true
 
-**Structure** — invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` for field list:
+**Structure** — use the `## Requirements` section heading. Invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` for field list:
 - **Preamble**: What, Why, Who (from `/describe`).
 - Section heading: `## Requirements` — Acceptance criteria → Constraints → Prior decisions (optional) → Evidence (optional) → Open questions (optional).
 
