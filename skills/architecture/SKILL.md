@@ -14,10 +14,10 @@ Lead architecture team. Goal: Converge on a technical approach via research, ite
 ## Specialist Mode
 Invoke `Skill("specialist-mode")` at entry.
 - **Seeded**: Issue + AC from seed-brief. Run research, architecture session, and deepening.
-- **Keep**: Prompt user for issue. Run research, architecture session, and deepening.
+- **Keep**: Prompt user for issue. Run research, architecture session, and deepening (grill-me + devil's advocate).
 
 ## I/O
-- **Input**: GitHub issue with problem statement and AC (from /discovery).
+- **Input**: GitHub issue with problem statement and AC(s).
 - **Output**: Decisions as issue comments:
   - Component diagram (Mermaid).
   - Key interfaces and data flow.
