@@ -11,8 +11,8 @@ Lead review phase. Goal: Thoroughly review implementation and produce actionable
 
 ## Specialist Mode
 - **Seeded**: Skip repo-preflight.
-- **Keep**: Severity/finding-depth gates (rigor is not delegated).
-- Invoke `Skill("specialist-mode")`
+- **Keep**: Severity/depth gates (rigor not delegated).
+Invoke `Skill("specialist-mode")` at entry.
 
 ## Specialist Assessment
 

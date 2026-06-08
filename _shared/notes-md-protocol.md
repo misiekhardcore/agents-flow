@@ -99,42 +99,6 @@ A standalone L2 skill (invoked directly by the user, not by an orchestrator) use
 
 No checkpoint-before-spawn is needed — standalone skills do not spawn sub-agents. The pattern is create → update → leave.
 
-## Orchestrator checkpoint pattern
-
-Orchestrators use NOTES.md as the progress ledger for multi-step pipelines that delegate to sub-agents. The pattern:
-
-1. **Create** — On entry (after preflight), create NOTES.md with the full task list derived from work units.
-2. **Checkpoint before sub-agent spawn** — Write `## Current task` (what the sub-agent will do) and `## Next action on resume` (how to reconstruct if session dies) before every `Skill()` or `Agent()` call. This ensures crash-safe resume.
-3. **Update after sub-agent returns** — The sub-skill may have written its own progress, decisions, and task updates to NOTES.md while it ran. Read the file, integrate its results, flip checkboxes, and log any new decisions. The orchestrator's view is authoritative for the overall pipeline; the sub-skill's entries are intermediate working state.
-4. **Wrap-up** — On clean exit, leave NOTES.md in place for the phase-ending skill to harvest. On abnormal exit, NOTES.md serves as the resume point.
-
-### Seed-brief slice
-
-When spawning a sub-agent, include a relevant slice of NOTES.md in the seed-brief payload so the agent arrives with progress context:
-
-```
-<seed-brief>
-...
-payload:
-  type: research
-  progress: |
-    ## Task list (relevant)
-    - [x] Scope assessment → 3 work units
-    - [ ] Build specialist (current)
-    - [ ] Review specialist
-
-    ## Decisions made this session
-    - Split auth into own work unit (why: security isolation)
-  open_questions: ""
-</seed-brief>
-```
-
-Slice rules:
-- Include only the subset of `## Task list` relevant to the spawned agent's scope.
-- Include `## Decisions made this session` in full (decisions are global to the phase).
-- Omit `## Current task` (the agent will set its own).
-- Cap at 15 lines — the brief is not a state dump.
-
 ## Rules
 
 - **NOTES.md is authoritative for in-flight state.** Trust the file; in-context recall is rot-degraded.

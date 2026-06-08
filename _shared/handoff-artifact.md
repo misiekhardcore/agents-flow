@@ -18,8 +18,10 @@ Always update the **issue body** in place. Comments are for discussion only — 
 
 Fields in order: Acceptance criteria, Constraints, Prior decisions, Evidence, Open questions. Omit optional fields when empty — never write placeholder text ("None", "No open questions").
 
+Section heading is phase-specific — each skill specifies it (e.g. `## Requirements` for discovery, `## Implementation plan` for define).
+
 ```markdown
-## Implementation plan
+## <section heading>
 
 **Acceptance criteria** (from discovery, unchanged)
 - AC1: ...
@@ -49,11 +51,7 @@ When a phase ends, in-flight state from NOTES.md that the next phase needs is pr
 
 ## Rules
 
-Name the section heading by phase content, not by command name:
-- **Discovery phase** → `## Requirements`
-- **Definition phase** → `## Implementation plan`
 - Update the body in place, not a comment.
-- After updating, tell user to start next phase in fresh session. Do not call next skill from within.
 - Issue body wins over in-context recall.
 - Never include secrets in Evidence links.
 - Never drop prior decisions to save space.

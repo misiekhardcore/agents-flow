@@ -21,20 +21,13 @@ Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 - **Few work units** (2–3): parallel subagents, one per unit.
 - **Many work units** (4+): parallel subagents; lead coordinates and merges results.
 
-## Specialist Mode
-
-When invoked by `/implement` with a `<seed-brief>` block, skip:
-- repo-preflight (already run; `preflight_verified: true` in brief)
-- scope-preflight
-
-Always keep: the design gate — architecture decisions must be verified cross-phase even when seeded.
-
-Invoke `Skill("specialist-mode")`.
-
 ## Process Steps
 
 ### Step 0 — Pre-flight
 
+Invoke `Skill("specialist-mode")` at entry.
+- **Seeded**: Skip repo/scope preflights, scope confirmation.
+- **Keep**: Design gate (architecture decisions verified cross-phase even when seeded).
 Invoke `Skill("preflight")`.
 Confirmation prompt: "Does this match the repo and branch you intend to work on?"
 

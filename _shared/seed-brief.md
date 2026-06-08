@@ -85,36 +85,6 @@ payload:
 ```
 Used for research or exploration tasks where codebase patterns are critical context.
 
-## Canonical Example
-
-An orchestrator spawning a build sub-skill with an autonomous cycle:
-
-```
-<seed-brief>
-preflight_verified: true
-repo: misiekhardcore/my-app
-branch: feat/csv-export
-active_issue: 42
-autonomous: true
-payload:
-  type: research
-  prior_art: |
-    Issue #42 ## Implementation plan
-
-    ### Architecture Decision
-    - CSV export routes through existing ReportExporter service
-    - New ExportFormatter module handles CSV serialization
-    - UI button added to reports/page.tsx
-  open_questions: ""
-</seed-brief>
-```
-
-Specialist behavior when receiving this brief:
-- Skip repo/branch verification (already done; `preflight_verified: true`)
-- Skip redundant codebase scan for architecture patterns (prior art provided)
-- Proceed directly to implementation
-- On exit (if AC met): auto-advance to the next stage without prompting (because `autonomous: true`)
-
 ## Orchestrator Duties
 
 1. **Run preflights once at entry:**
@@ -144,15 +114,7 @@ When a specialist detects `<seed-brief>` in its prompt:
 4. **Keep gates:** Do NOT skip discovery, design rigor, or AC verification — these remain required
 5. **Handle `autonomous: true`:** If present, auto-advance to next stage on clean pass; suppress exit prompt
 
-**Execution delta when seeded:**
-
-|What's Skipped|Always Kept|
-|-|-|
-|Repo/scope preflights, scope confirmation|Design gate (for build/implementation skills)|
-|Repo-preflight|Severity/depth gates (for review skills)|
-|Internal prior-art search|Rigor gates (for verification skills)|
-
-Each sub-skill documents its own seed-brief-aware behavior in its own file, including what it skips and what it always keeps when seeded.
+Per-specialist skip/keep details live in each skill's own reference file. See `Skill("specialist-mode")` → Execution Delta for the full table.
 
 ## Failure Mode
 

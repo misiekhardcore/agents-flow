@@ -24,7 +24,7 @@ Audit skill authoring quality and dead state in `~/.claude/`. Archive approved c
 
 Each spawn prompt must include: `lane` (authoring|dead-state), `cwd` (absolute project root path), `files` (pre-enumerated list above). Each must start with `cd <cwd> && pwd`.
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/audit-checks.md` for Authoring Lane checks and Dead-state Lane classes.
+Read `references/audit-checks.md` for Authoring Lane checks and Dead-state Lane classes.
 
 ## Aggregation & Archive
 

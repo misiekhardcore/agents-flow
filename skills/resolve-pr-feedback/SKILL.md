@@ -37,7 +37,7 @@ Group by category → Present triage summary to user.
 
 ### Phase 4 — Reply
 **Delegate reply drafting**: One sub-agent per thread (reply text only). Prompt: `cd <abs-path> && pwd`.
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/verdicts.md` for verdict/reply mapping and mutation logic.
+Read `references/verdicts.md` for verdict/reply mapping and mutation logic.
 
 ## Output
 Summary: Total threads → counts per verdict → commits created → threads needing human attention.

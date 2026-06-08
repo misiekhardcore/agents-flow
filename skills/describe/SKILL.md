@@ -11,9 +11,9 @@ allowed-tools: Agent Bash Read
 You lead product discovery. Goal: Deeply understand the problem space via interactive exploration and validation.
 
 ## Specialist Mode
-- **Seeded**: Skip internal prior-art search. Keep PPT and grill-me interactions.
-- **Standalone**: Run all steps.
-- Invoke `Skill("specialist-mode")`
+- **Seeded**: Skip internal prior-art search.
+- **Keep**: PPT and grill-me interactions.
+Invoke `Skill("specialist-mode")` at entry.
 
 ## Scope Assessment
 Read `references/scope-ppt.md` for scope classification, spawn rubric, and PPT checklist.
