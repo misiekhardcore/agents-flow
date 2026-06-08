@@ -12,12 +12,11 @@ Lead design team. Goal: Converge on visual and interaction design that fits exis
 
 ## Specialist Mode
 Invoke `Skill("specialist-mode")` at entry.
-- **Seeded**: Skip design-space research subagent. Proceed directly to design session.
-- **Keep**: Interactive session (grill-me + a11y review). Run research, design session, and proposal refinement.
+- **Seeded**: Architecture decisions + AC from seed-brief. Run research, design session, and proposal refinement.
+- **Keep**: Prompt user for context. Run research, design session, and proposal refinement.
 
 ## I/O
 - **Input**: GitHub issue with architecture decisions (from /define).
-- **Optional**: Research brief (`tech_stack`, `module_map`, `patterns`, etc.). UX researcher skips patterns already covered.
 - **Output**: Decisions as issue comments:
   - Visual mockups/prototypes.
   - Component hierarchy.

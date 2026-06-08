@@ -13,8 +13,8 @@ Lead architecture team. Goal: Converge on a technical approach via research, ite
 
 ## Specialist Mode
 Invoke `Skill("specialist-mode")` at entry.
-- **Seeded**: Skip codebase and patterns research subagent dispatches. Proceed directly to architecture session.
-- **Keep**: Full architecture session (grill-me + devil's advocate). Run research, architecture session, and deepening.
+- **Seeded**: Issue + AC from seed-brief. Run research, architecture session, and deepening.
+- **Keep**: Prompt user for issue. Run research, architecture session, and deepening.
 
 ## I/O
 - **Input**: GitHub issue with problem statement and AC (from /discovery).
