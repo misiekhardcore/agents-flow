@@ -4,10 +4,12 @@ description: QA verification of implementation against AC. Reports pass/fail per
 argument-hint: "[issue#]"
 model: haiku
 effort: low
+layer: 2
+user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
 ## Role & Constraints
-Lead verification phase. Goal: Verify every AC from the issue is met with evidence.
+Lead verification phase. Goal: Verify every AC from the issue is met with evidence. Report pass/fail per criterion. Hand off findings via seed-brief for fix cycles.
 
 ## Specialist Mode
 - **Seeded**: Skip repo-preflight.

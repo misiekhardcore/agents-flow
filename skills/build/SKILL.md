@@ -5,9 +5,11 @@ when_to_use: Use after /define has produced approved architecture decisions. Inv
 argument-hint: "[issue#]"
 model: sonnet
 effort: high
+layer: 2
+user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
-You are leading the build phase. Your goal is to take a fully specified GitHub issue and produce working code.
+You are leading the build phase. Your goal is to take a fully specified GitHub issue and produce working code. Builds a feature from a GitHub issue using TDD. Produces implementation code in a worktree. Hands off via the worktree.
 
 ## Input
 
