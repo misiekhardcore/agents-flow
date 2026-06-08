@@ -22,16 +22,11 @@ Invoke `Skill("specialist-mode")` at entry.
 - **Output**: QA report (pass/fail per AC with evidence).
 
 ## Specialist Assessment
-
 Invoke `Skill("verify-specialist-assessment")` at entry. It reads AC and diff from context and emits a `specialists:` list.
 
-## Team Shape
-
-Invoke `Skill("scope-assessment")` with work units — one per AC group. Receive agent plan; spawn one QA agent per disjoint group. Add any activated specialists to their relevant groups.
-
 ## Process
-
-Split AC across QA agents per `scope-assessment` output → each verifies independently → converge on unified report. Any activated specialists verify their domain-specific AC alongside the QA agents.
+1. Invoke `Skill("scope-assessment")` with work units — one per AC group. Receive agent plan; spawn one QA agent per disjoint group. Add any activated specialists to their relevant groups.
+2. Split AC across QA agents per `scope-assessment` output → each verifies independently → converge on unified report. Any activated specialists verify their domain-specific AC alongside the QA agents.
 
 ## Rules
 - **Separation**: Never fix issues during verification. Report failures in the verify output; fixes are a `/build` responsibility.
