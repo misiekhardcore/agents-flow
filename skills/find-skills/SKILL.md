@@ -8,12 +8,10 @@ allowed-tools: Agent Bash WebFetch WebSearch
 layer: 2
 user-invocable: true
 ---
-Discover and install skills from the open agent ecosystem.
+## Role & Constraints
+Lead skill discovery and installation. Goal: Find and install agent skills from the open ecosystem when the user wants to extend capabilities. Discovery sub-agent (haiku) handles search + leaderboard fetch; main thread handles confirmation + install.
 
-Discovery sub-agent (haiku) for search + leaderboard fetch (payoff ≥3×; retrieval-only). Main thread: confirmation + install. Spawn prompt: `cd <cwd> && pwd`.
-
-## When to Use This Skill
-
+## When to Use
 Use this skill when the user:
 - Asks "how do I do X" where X might be a common task with an existing skill
 - Says "find a skill for X" or "is there a skill for X"
@@ -21,17 +19,19 @@ Use this skill when the user:
 - Expresses interest in extending agent capabilities or mentions needing help with a specific domain
 - Searches for tools, templates, workflows, or examples to use
 
-## The Skills CLI
+## I/O
+- **Input**: User query about capabilities or specific skill needs.
+- **Output**: Installed skill(s) or search results with install confirmation.
 
-The Skills CLI (`npx skills`) is the package manager for the open agent skills ecosystem. Key commands:
-- `npx skills find [query]` — search for skills
-- `npx skills add <package>` — install a skill
-- `npx skills check` / `npx skills update` — check/update all skills
+## Process
+1. Read `references/search-guide.md` for search strategy and `references/categories.md` for category guidance and fallback options.
+2. Dispatch a discovery sub-agent (haiku) to check the leaderboard at https://skills.sh/ and run `npx skills find [query]`.
+3. Sub-agent verifies quality — install count, source reputation, and GitHub stars.
+4. Present candidate skills to the user with name, description, install count, and source.
+5. On confirmation, install with `npx skills add <package> -g -y`.
+6. Report what was installed.
 
-Browse at https://skills.sh/
-
-## How to Help Users Find Skills
-
-Read `references/search-guide.md`.
-
-For search strategy tips, skill categories, and fallback guidance (when no skills are found), see `references/categories.md`.
+## Rules
+- Discovery is sub-agent only — never install without user confirmation.
+- Prefer skills from verified sources (official orgs, 1K+ installs, 100+ GitHub stars).
+- When no matching skills are found, offer to help directly or suggest `npx skills init` (see `references/categories.md`).
