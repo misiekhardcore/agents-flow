@@ -26,7 +26,7 @@ Audit open issues for drift. Product: Updated issues themselves (mutate on confi
 - Abort if issue is `closed`.
 
 ### Phase 2 — Per-Issue Audit (Subagent Fan-out)
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/detectors.md` for detector logic, verdict ranking, and JSON schema.
+Read `references/detectors.md` for detector logic, verdict ranking, and JSON schema.
 
 ### Phase 3 — Aggregate & Print
 Concatenate JSON reports. Per-issue block: `─── #NN — <title> — verdict: <v> ───` → URL → findings → proposed edit.

@@ -8,12 +8,18 @@ GitHub Releases (with auto-generated notes and source tarballs) remain the canon
 
 ### Changed
 
+- **NOTES.md protocol broadened** -- ownership model shifted from "orchestrator-only" to ownership-transfer (orchestrator owns before spawn / after return, sub-skill owns during execution). Standalone L2 skills now use NOTES.md for their own multi-step tracking. Adds Orchestrator Checkpoint pattern (create on entry, checkpoint before spawn, update on return) and Seed-brief Slice pattern (progress field in seed-brief payload). (#v2/orchestrator-progress-ledger)
+
+- **Terminology standardized** -- all "tier" references in shared docs renamed to "layer" for consistency with the three-layer taxonomy. Affected files: _shared/notes-md-protocol.md (memory tier -> memory layer), README.md.
+
+- **Shared docs decoupled from skill names** -- removed hardcoded /build, /review, /verify, /implement, etc. references from 7 shared/protocol files. Skills are now referenced generically by role rather than by command name.
+
 - **Layer-3 boundary realignment** - five skills demoted from layer-3 (`Skill()` invocation) to `_shared/` reference docs (`Read`):
   - `seed-brief` -> `_shared/seed-brief.md` - spawn-time context packaging format (data structure spec, not behavioral protocol)
   - `worktree` -> `_shared/worktree-protocol.md` - `wt` CLI command reference (command cheat sheet, not behavioral protocol)
   - `interviewing-rules` -> `_shared/interviewing-rules.md` - one-question-at-a-time user-interaction rules (interaction pattern, not cross-skill behavioral contract)
   - `handoff-artifact` -> `_shared/handoff-artifact.md` - cross-phase handoff protocol for GitHub issue body (reference doc, not invoked skill)
-  - `notes-md` -> `_shared/notes-md-protocol.md` - in-phase memory tier lifecycle and structure (reference doc, not invoked skill)
+  - `notes-md` -> `_shared/notes-md-protocol.md` - in-phase memory layer lifecycle and structure (reference doc, not invoked skill)
   - All callers updated from `Invoke \`Skill("name")\`` to `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<name>.md\``.
   - `_templates/AUTHORING.md` decision rule refined with concrete examples; `_shared/` catalogue expanded.
   - `skills/scope-assessment/SKILL.md` gained missing `layer: 3` frontmatter.

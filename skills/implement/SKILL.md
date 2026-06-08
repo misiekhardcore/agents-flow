@@ -13,6 +13,9 @@ Orchestrate build → review → verify → fix cycles to produce a ready-to-mer
 Read `references/scope-cycles.md` for scope assessment table, autonomous cycle detail, PR creation steps, and finalize logic.
 
 ## Pre-flight
+Invoke `Skill("specialist-mode")` at entry.
+- **Seeded**: Orchestrator drives the pipeline; outer user-facing prompts suppressed.
+- **Keep**: Exhausted-exit prompt (unless `autonomous: true`; see `references/scope-cycles.md § Finalize`).
 1. Invoke `Skill("preflight")` at entry (pass `suppress branch line: true`).
 2. If >= 3 files changed, run the scope checks within `preflight` again. Pass `preflight_verified: true` in seed-briefs.
 

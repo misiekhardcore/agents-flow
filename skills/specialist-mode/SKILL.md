@@ -27,21 +27,6 @@ Logic for standalone vs. orchestrator-invoked (seeded) execution.
 
 **Failure**: Invalid brief → Fallback to standalone + log failure.
 
-## Execution Delta
-
-Confirmations verifying *state* are skipped; *discovery/rigor* gates remain.
-
-|Specialist|Skipped when Seeded|Always Kept|
-|-|-|-|
-|`/build`|repo/scope preflights, scope confirmation|design gate|
-|`/review`|repo-preflight|severity/depth gates|
-|`/verify`|repo-preflight|AC verification rigor|
-|`/describe`|internal prior-art search|PPT, grill-me|
-|`/specify`|scope/file confirmation|AC derivation gates|
-|`/architecture`|codebase/pattern research|architecture session (grill-me/devil's advocate)|
-|`/design`|design-space research|interactive session|
-|`/implement`|(handled by orchestrator)|exhausted-exit prompt (unless `autonomous: true`)|
-
 ## Autonomous Implement Invocation
 
 Canonical seed-brief for orchestrators that spawn `/implement` with `autonomous: true`:

@@ -98,6 +98,21 @@ For tasks requiring iterative refinement (e.g., Build → Review → Verify):
 - **Hard Stop**: Implement a hard stop at N iterations to prevent infinite loops.
 - **Autonomy**: Use an `autonomous` flag in the seed-brief to signal that the agent should proceed through cycles back-to-back without user intervention.
 
+## NOTES.md Progress Ledger
+
+Orchestrators (and standalone L2 skills) use `.claude/NOTES.md` as their in-phase progress tracker:
+
+- **Create on entry**: Write `## Current task` and initial state when the phase starts.
+- **Checkpoint before spawn**: Before every `Skill()` or `Agent()` call, write the current task, next action, and any open questions. This provides crash recovery if the session dies mid-spawn.
+- **Update on return**: After sub-agent completes, append findings, decisions, and updated task state.
+- **Slice in seed-brief**: Include a `progress` field in the seed-brief payload carrying the relevant NOTES.md slice (task list subset + decisions).
+
+**Ownership model**: Ownership transfers with the running agent. The orchestrator owns NOTES.md before spawn and after return. The spawned sub-skill owns it during execution. Since execution is sequential (spawn → wait → return), there are no concurrent writers.
+
+Standalone L2 skills (called directly by the user, not by an orchestrator) follow the same pattern: create on entry, update during work, leave in place for resume.
+
+See `_shared/notes-md-protocol.md` for the full protocol.
+
 ## Rename Migration
 
 The `/discovery` skill has been renamed to `/discover`.

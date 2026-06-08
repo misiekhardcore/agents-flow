@@ -160,7 +160,7 @@ Shared protocols at `_shared/`:
 |`composition.md`|Multi-skill composition patterns and contracts|
 |`handoff-artifact.md`|Five-field GitHub issue handoff structure|
 |`interviewing-rules.md`|One-question-at-a-time interview protocol|
-|`notes-md-protocol.md`|In-phase NOTES.md memory tier|
+|`notes-md-protocol.md`|In-phase NOTES.md memory layer|
 |`orchestrator-rules.md`|Shared rules for pipeline orchestrators: CWD verification, delegation, no-autonomous-merge, seed-brief contract|
 
 ## Releasing

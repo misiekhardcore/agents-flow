@@ -33,7 +33,7 @@ Suppress branch line: true
 
 **Structure** — invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` for field list:
 - **Preamble**: What, Why, Who (from `/describe`).
-- **Requirements**: Acceptance criteria → Constraints → Prior decisions (optional) → Evidence (optional) → Open questions (optional).
+- Section heading: `## Requirements` — Acceptance criteria → Constraints → Prior decisions (optional) → Evidence (optional) → Open questions (optional).
 
 Present for approval → sign-off → instruct: "Start `/define` in a fresh session."
 
