@@ -13,8 +13,8 @@ Lead architecture decisions. Goal: Produce architectural decisions (components, 
 
 ## Specialist Mode
 Invoke `Skill("specialist-mode")` at entry.
-- **Seeded (spawned by orchestrator)**: Fully autonomous. No user interaction. Produce decisions and return.
-- **Keep (standalone)**: Interactive. Prompt user for issue. Run research, architecture session (grill-me + devil's advocate), and decision presentation.
+- **Seeded**: Fully autonomous. No user interaction. Produce decisions and return.
+- **Standalone**: Interactive. Prompt user for issue. Run research, architecture session (grill-me + devil's advocate), and decision presentation.
 
 ## I/O
 - **Input**: GitHub issue with problem statement and AC(s).

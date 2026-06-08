@@ -12,8 +12,8 @@ Lead UI/UX design decisions. Goal: Produce visual and interaction design that fi
 
 ## Specialist Mode
 Invoke `Skill("specialist-mode")` at entry.
-- **Seeded (spawned by orchestrator)**: Fully autonomous. No user interaction. Produce design decisions and return.
-- **Keep (standalone)**: Interactive. Prompt user for context. Run research, design session (grill-me + a11y review), and proposal presentation.
+- **Seeded**: Fully autonomous. No user interaction. Produce design decisions and return.
+- **Standalone**: Interactive. Prompt user for context. Run research, design session (grill-me + a11y review), and proposal presentation.
 
 ## I/O
 - **Input**: GitHub issue with architecture decisions.

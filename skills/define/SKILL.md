@@ -12,7 +12,7 @@ Phase Lead. Goal: Transform an approved issue into a concrete implementation pla
 
 ## Team Shape
 
-Invoke `Skill("scope-assessment")` with work units — one per distinct module or sub-issue in the issue body. Receive agent plan; dispatch one architecture agent per disjoint group (each spawns `/architecture` in autonomous mode, then `/design` if visual in autonomous mode).
+Invoke `Skill("scope-assessment")` with work units — one per distinct module or sub-issue in the issue body. Receive agent plan; dispatch one architecture agent per disjoint group (each spawns `/architecture` as Seeded, then `/design` if visual as Seeded).
 
 For high-risk plans (security, payments, arch-changing scope): add a parallel critique pass after `/architecture` → `/design` using two independent critique subagents whose findings the lead merges. Determine risk from issue AC and scope — not from a label.
 
