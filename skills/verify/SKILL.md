@@ -33,6 +33,10 @@ Invoke `Skill("scope-assessment")` with work units — one per AC group. Receive
 
 Split AC across QA agents per `scope-assessment` output → each verifies independently → converge on unified report. Any activated specialists verify their domain-specific AC alongside the QA agents.
 
+## Caller Contract
+
+Called by `/implement` during the implementation cycle. Can run standalone with an issue number. QA-verifies implementation against acceptance criteria. Reports pass/fail per criterion. Hands off findings to `/implement` via seed-brief for fix cycles.
+
 ## Rules
 - **Separation**: Never fix issues during verification. Report failures in the verify output; fixes are a `/build` responsibility.
 - **Evidence-Based**: No "it works" — every criterion needs evidence.

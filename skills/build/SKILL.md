@@ -11,6 +11,10 @@ allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
 You are leading the build phase. Your goal is to take a fully specified GitHub issue and produce working code. Builds a feature from a GitHub issue using TDD. Produces implementation code in a worktree. Hands off via the worktree.
 
+## Caller Contract
+
+Called by `/implement` during the implementation cycle. Can run standalone with an issue number. Builds a feature from a GitHub issue using TDD. Produces implementation code in a worktree. Hands off to `/review` via the worktree.
+
 ## Input
 
 A GitHub issue number (with architecture/design decisions from /define) and any additional resources.
