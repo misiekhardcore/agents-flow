@@ -14,7 +14,9 @@ Lead discovery phase. Goal: Transform vague ideas into well-specified GitHub iss
 
 Invoke `Skill("scope-assessment")` with work units derived from the problem statement.
 
-For high-risk plans (security, payments, arch-changing scope): parallel subagents — flow analyst and adversarial questioner in parallel.
+For high-risk plans (security, payments, arch-changing scope): spawn in parallel:
+  - `Agent("discovery/agents/flow-analyst.md")` — pass `domain`, `problem_statement`, `ac`, `cwd`
+  - `Agent("discovery/agents/adversarial-questioner.md")` — pass `domain`, `problem_statement`, `ac`
 
 Determine scope from the problem domain and complexity — not a label.
 
@@ -23,8 +25,8 @@ Determine scope from the problem domain and complexity — not a label.
 1. **Ingestion**: Read issue (problem statement + AC). If no issue exists, elicit a problem statement from the user.
 2. **Scoping**: Each work unit from the scope assessment is a candidate (group) for delegation to
 3. **Delegation** (sequentially, per work, group one by one):
-   - **3a**: Dispatch Prior-Art Scout (parallel sub-agents) with work unit context → receive prior art findings. Summarize  findings for next step.
-   - **3b**: Invoke `Skill("describe")` with the research brief in payload. User interaction — PPT, visualization, problem statement validation. Get the response in chat, not in GitHub issue.
+   - **3a**: Dispatch `Agent("discovery/agents/prior-art-scout.md")` (parallel sub-agents if multiple work units) with work unit context and `cwd` -> receive prior art findings. Summarize findings for next step.
+   - **3b**: Invoke `Skill("describe")` with the research brief in payload. User interaction - PPT, visualization, problem statement validation. Get the response in chat, not in GitHub issue.
     - **3c**: For complex work units, invoke `Skill("specify")` to derive acceptance criteria from the problem statement. Get the response in chat, not in GitHub issue.
 4. **Review and decision**: Verify all work units have a problem statement and AC. If multiple approaches exist for a work unit, present them to the user for selection. Re-iterate until you fully understand the problem and receive user approval.
 5. **Synthesize**: Combine all work unit outputs into a cohesive GitHub issue body. Ensure the problem statement is clear and concise, and that AC are specific and testable.

@@ -14,7 +14,10 @@ Phase Lead. Goal: Transform an approved issue into a concrete implementation pla
 
 Invoke `Skill("scope-assessment")` with work units — one per distinct module or sub-issue in the issue body. Receive grouping plan.
 
-For high-risk plans (security, payments, arch-changing scope): add a parallel critique pass after `/architecture` → `/design` using two independent critique subagents whose findings the lead merges. Determine risk from issue AC and scope — not from a label.
+For high-risk plans (security, payments, arch-changing scope): after architecture + design, spawn in parallel:
+  - `Agent("define/agents/critique-agent.md")` — pass `issue`, `architecture_decisions`, `design_decisions`, `scope`
+  - `Agent("define/agents/critique-agent.md")` — second independent pass with same input (two perspectives)
+Merge findings from both critique agents before presenting to user.
 
 See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models and consumption contract rules.
 
@@ -24,7 +27,7 @@ See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models and con
 3. **Delegation** (sequentially, per work, group one by one):
    - **3a**: Invoke `Skill("architecture")` with issue + AC. Get the response in chat, not in GitHub issue.
    - **3b**: If visual work, invoke `Skill("design")` with architecture decisions. Get the response in chat, not in GitHub issue.
-4. **Review & Discuss**: Verify all ACs are covered by the collected decisions. Identify conflicts or gaps between architecture and design outputs. If a gap exists,move back to **Delegation** with updated context. Present architecture and design decisions to the user. Invoke `Skill("grill-me")` to challenge assumptions. Re-iterate until the user approves the plan. For high-risk plans, run parallel critique agents and merge findings.
+4. **Review & Discuss**: Verify all ACs are covered by the collected decisions. Identify conflicts or gaps between architecture and design outputs. If a gap exists, move back to **Delegation** with updated context. Present architecture and design decisions to the user. Invoke `Skill("grill-me")` to challenge assumptions. Re-iterate until the user approves the plan. For high-risk plans, merge findings from parallel critique agents (`Agent("define/agents/critique-agent.md")` × 2).
 5. **Synthesize**: Collect final decisions into a cohesive implementation plan.
 6. **Handoff**: Update GitHub issue body (single source of truth). Invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` for field list.
    - Edit/Append `## Implementation plan` section.
