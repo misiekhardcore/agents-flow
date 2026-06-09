@@ -14,7 +14,6 @@ Lead product discovery. Explores problems interactively, builds shared understan
 ## Role & Constraints
 Lead product discovery. Goal: Deeply understand the problem space via interactive exploration and validation. Produces a shared understanding of the problem (user stories, visualizations). If not specify otherwise, hands off via GitHub issue body under `## Requirements`.
 
-
 ## I/O
 - **Input**: Problem statement or issue description.
 - **Output**: Structured problem statement:
@@ -31,13 +30,13 @@ Read `references/scope-ppt.md` for scope classification and PPT checklist.
 ### Multi-area or complex problem
 1. **Elicitation**: Ask user for problem/goal if not already provided.
 2. **Research** (spawn parallel sub-agents):
-  -  **Domain Researcher** (`sonnet`): Scan codebase for prior art, related features, existing patterns relevant to the problem domain.
+  - **Domain Researcher** (`sonnet`): Scan codebase for prior art, related features, existing patterns relevant to the problem domain.
   - **Gate** (high-risk only): If `high_risk: true`, spawn **Flow-Analyst** (`sonnet`) in parallel to map existing user/data flows in the affected domain.
 3. **PPT**: Run Product Pressure Test (see `references/scope-ppt.md`) — invoke `Skill("grill-me")` with user.
-4. **Visualization and Validation**: Produce Mermaid/ASCII for user journeys, feature comparisons, system boundaries.Confirm understanding of each visual with the user, iterate until alignment is achieved.
+4. **Visualization and Validation**: Produce Mermaid/ASCII for user journeys, feature comparisons, system boundaries.Confirm understanding of each visual with the user, grill the user, until alignment is achieved.
 5. **Synthesis**: Return structured problem statement.
 6. **Output**: Invoke `Skill("preflight")`, read `_shared/handoff-artifact.md`, and write decisions to issue body under `## Requirements` if not specified otherwise.
-7. 
+
 ### Narrow, single-area problem
 1. Confirm problem/outcome with user.
 2. Brief codebase validation.

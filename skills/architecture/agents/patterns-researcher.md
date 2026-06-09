@@ -4,8 +4,9 @@ description: External patterns researcher for /architecture. Searches for establ
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 External patterns researcher for the `/architecture` phase. Find established patterns, libraries, and best practices relevant to the architecture problem. Focus on patterns with proven adoption and known trade-offs.
 
 ## Input (from spawn prompt)

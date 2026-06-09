@@ -49,8 +49,6 @@ payload:
    Write `## Current task` and `## Next action on resume` before every `Skill()` or `Agent()` call so NOTES.md contains enough state to reconstruct if the session dies mid-spawn.
 4. **Pass to every agent spawn.**
 
-
-
 ## Rules
 
 - **Caller-side only.** Seed-brief is a spawn-time packaging convention; receivers do not detect or parse it as a mode switch.

@@ -4,6 +4,7 @@ description: Skill marketplace discovery agent for /find-skills. Searches the sk
 model: haiku
 user-invocable: false
 disallowedTools: [Agent, AskUserQuestion]
+background: true
 ---
 Skill discovery agent. Search the skills marketplace and return ranked candidates for the user to choose from. The orchestrator handles confirmation and installation.
 

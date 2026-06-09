@@ -4,6 +4,7 @@ description: PR feedback reply drafter. Drafts a reply comment for one review th
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent, AskUserQuestion]
+background: true
 ---
 Reply drafter for one review thread. Given the thread context and fix verdict, draft the reply text that the orchestrator will post.
 

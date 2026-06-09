@@ -41,12 +41,12 @@ Escalate only when the lower level is insufficient:
 
 Every skill has a primary consumption contract. Callers must use the correct invocation mechanism.
 
-| Contract | Invocation | Session | User Interaction | Examples |
-|---|---|---|---|---|
-| **Runner (autonomous)** | `Agent("skill/agents/runner.md")` | Isolated | None | `implement-runner`, `review-runner` |
-| **Worker (autonomous)** | `Agent("skill/agents/worker.md")` | Isolated | Parallel | `build-worker`, `reviewer-correctness` |
-| **Shell (interactive)** | `Skill("name")` | Caller's session | Full | `implement`, `build`, `review` |
-| **Forked (autonomous)** | `Skill("name")` + `context: fork` | Isolated | None | `compound`, `audit-issues` |
+|Contract|Invocation|Session|User Interaction|Examples|
+|-|-|-|-|-|
+|**Runner (autonomous)**|`Agent("skill/agents/runner.md")`|Isolated|None|`implement-runner`, `review-runner`|
+|**Worker (autonomous)**|`Agent("skill/agents/worker.md")`|Isolated|Parallel|`build-worker`, `reviewer-correctness`|
+|**Shell (interactive)**|`Skill("name")`|Caller's session|Full|`implement`, `build`, `review`|
+|**Forked (autonomous)**|`Skill("name")` + `context: fork`|Isolated|None|`compound`, `audit-issues`|
 
 > **Layer 3 skills** (`user-invocable: false`) are exclusively Autonomous — never `Skill()`-invoked.
 

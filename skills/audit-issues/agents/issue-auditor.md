@@ -4,6 +4,8 @@ description: Single-issue auditor for /audit-issues. Runs detectors against one 
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent, AskUserQuestion]
+background: true
+memory: project
 ---
 Single-issue auditor. Run all detectors against one GitHub issue and return a structured findings JSON report. Spawned in parallel by `/audit-issues` — one per issue.
 

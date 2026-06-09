@@ -4,8 +4,9 @@ description: Wiki overlap scanner for /compound. Searches for existing notes tha
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 Wiki overlap scanner for the `/compound` phase. Search the wiki for existing notes that overlap with the current session's findings and recommend whether to update an existing note or create a new one.
 
 ## Input (from spawn prompt)

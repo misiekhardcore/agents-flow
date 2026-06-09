@@ -4,8 +4,9 @@ description: Gap-deepening research agent for /architecture. Explores one specif
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 Gap-deepening research agent for the `/architecture` phase. Explore one specific open question or gap that the initial research pass left unresolved. Spawned conditionally by the architecture orchestrator, max 2 rounds.
 
 ## Input (from spawn prompt)

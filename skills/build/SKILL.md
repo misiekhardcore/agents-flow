@@ -1,7 +1,7 @@
 ---
 name: build
 description: Build a feature from a GitHub issue. Creates a git worktree and codes against acceptance criteria using TDD.
-when_to_use: Use after /define produces an approved implementation plan. Invoked by /implement; can run standalone.
+when_to_use: Use to implement approved architecture decisions/implementation plans.
 argument-hint: "[issue#]"
 model: sonnet
 effort: high
@@ -18,11 +18,7 @@ Lead build phase. Goal: Take a fully specified GitHub issue and produce working 
 
 ## Scope Assessment
 
-|Scope|Criteria|Team|
-|-|-|-|
-|Single work unit|Single-file or tightly scoped; AC fits one module; no sub-issues|Code inline, no team|
-|Few work units|2–3 natural work splits (sub-issues or distinct file groups)|Implementation team, one agent per split|
-|Many work units|Many sub-issues, cross-module work, or architecture-changing scope|Parallel subagents; lead coordinates and merges results|
+Divide the issue into work units (sub-issues or file groups) which can be worked on in parallel by multiple build workers. Consider complexity, collision avoidance, dependencies, and risk when defining work units.
 
 See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 
@@ -32,9 +28,7 @@ Read `references/process.md` for step-by-step process, TDD, context hygiene, and
 1. Run pre-flight (repo/scope confirmation).
 2. Read the issue and linked sub-issues.
 3. Create worktree, init `./.claude/NOTES.md` with task list.
-4. Invoke `Skill("scope-assessment")` with work units derived from sub-issues and file groups → receive agent plan:
-   - **Single-unit**: spawn `Agent("build/agents/build-runner.md")` with issue and implementation_plan.
-   - **Multi-unit**: spawn parallel `Agent("build/agents/build-worker.md")` — one per work unit.
+4. Invoke `Skill("scope-assessment")` with work units derived from sub-issues and file groups → receive agent plan: spawn parallel `Agent("build/agents/build-worker.md")` — one per work unit.
 5. Consider invoking `Skill("compaction-protocol")` for context management during long build sessions.
 
 ## Output

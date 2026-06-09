@@ -18,8 +18,6 @@ Phase lead. Goal: Orchestrate build → review → verify → fix cycles to prod
 
 Invoke `Skill("scope-assessment")` with work units — one per sub-issue or distinct file group from `## Implementation plan`. Receive agent plan; spawn one `/build` invocation per disjoint group.
 
-**Trivial** (≤ 50 lines, no logic change): pass a single work unit → 1 `/build` agent → inline AC check → PR (no `/review`/`/verify` teams needed).
-
 **Design Gate** (multi-unit only): Verify `## Implementation plan` in issue body. If absent:
 - **Pause** → Prompt: "Run `/define` first, or confirm this is trivial."
 - If trivial → proceed as single-unit.
@@ -33,9 +31,8 @@ See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 
 1. **Ingestion**: Read issue (problem statement, AC, and `## Implementation plan`).
 2. **Scoping**: Invoke `Skill("scope-assessment")` → determine trivial vs. multi-unit.
-3. **Delegation** (per scope):
-   - **Trivial**: spawn `Agent("implement/agents/implement-runner.md")` with `issue` and trivial flag.
-   - **Multi-unit**: spawn `Agent("implement/agents/implement-runner.md")` with `repo`, `branch`, `issue`, `max_cycles: 3`. Runner handles build → review → verify cycles and PR creation.
+3. **Delegation** (per scope/work unit):
+   - Spawn `Agent("implement/agents/implement-runner.md")` with `repo`, `branch`, `issue`, `max_cycles: 3` one per work unit. Runner handles build → review → verify cycles and PR creation.
 
 ## Rules
 - **Zero Prompts**: No prompting between sub-skills.

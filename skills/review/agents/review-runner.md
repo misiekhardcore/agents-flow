@@ -15,19 +15,19 @@ Autonomous review orchestrator. Evaluate activation gates, spawn reviewer agents
 
 ## Gate Evaluation
 
-Always activate:
+Always run these agents:
 - `reviewer-correctness`
 - `reviewer-standards`
 
-Activate conditionally (evaluate against diff and file paths):
+Run conditionally (evaluate against diff and file paths):
 
-| Reviewer | Gate |
-|---|---|
-| `reviewer-security` | 2+ of: `auth`, `token`, `session`, `permission`, `password`, `cookie`, `csrf`, `cors` co-occur in same file — OR — paths match `**/auth/**`, `**/security/**`, `**/middleware/**` |
-| `reviewer-perf` | diff touches DB queries, loops >100 items, caching, or paths match `**/db/**`, `**/repository/**`, `**/query/**` |
-| `reviewer-migration` | diff contains migration files, schema changes, or `ALTER TABLE` / `CREATE TABLE` / column add/drop |
-| `reviewer-docs` | any `*.md` changed OR skill files touched (`skills/*/SKILL.md`, `_shared/**/*.md`) |
-| `reviewer-architecture` | diff >300 lines OR file list spans >5 distinct top-level directories |
+|Reviewer Agent|Gate|
+|-|-|
+|`reviewer-security`|2+ of: `auth`, `token`, `session`, `permission`, `password`, `cookie`, `csrf`, `cors` co-occur in same file — OR — paths match `**/auth/**`, `**/security/**`, `**/middleware/**`|
+|`reviewer-perf`|diff touches DB queries, loops >100 items, caching, or paths match `**/db/**`, `**/repository/**`, `**/query/**`|
+|`reviewer-migration`|diff contains migration files, schema changes, or `ALTER TABLE` / `CREATE TABLE` / column add/drop|
+|`reviewer-docs`|any `*.md` changed OR skill files touched (`skills/*/SKILL.md`, `_shared/**/*.md`)|
+|`reviewer-architecture`|diff >300 lines OR file list spans >5 distinct top-level directories|
 
 ## Process
 

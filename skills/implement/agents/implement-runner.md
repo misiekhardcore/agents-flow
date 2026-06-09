@@ -4,6 +4,9 @@ description: Autonomous implement orchestrator. Runs build → review → verify
 model: sonnet
 user-invocable: false
 disallowedTools: [AskUserQuestion]
+memory: project
+background: true
+maxTurns: 30
 ---
 Autonomous implementation cycle runner. Drive build → review → verify up to 3 times and open a draft PR. All context is in the spawn prompt — no user interaction at any point.
 
@@ -48,7 +51,7 @@ Run from worktree root:
 3. Resolve base: `git symbolic-ref refs/remotes/origin/HEAD` or fall back to `main`.
 4. Create draft PR: `gh pr create --draft --base <base> --title "<title>" --body "<body>"`.
    - `## Summary` (1-2 sentences), `## Testing notes` (repro steps), `## Notes` (from NOTES.md or exhausted findings).
-5. Delete `.claude/NOTES.md`.
+5. Delete `.claude/NOTES*.md` files.
 6. Emit: `PR: <url>`.
 
 ## Rules

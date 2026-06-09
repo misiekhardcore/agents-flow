@@ -4,6 +4,9 @@ description: PR feedback fix agent. Reads one review thread, applies the fix, ve
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent, AskUserQuestion]
+maxTurns: 15
+background: true
+memory: project
 ---
 PR feedback fix agent. Read and fix all review threads assigned to your file group, then report verdicts. All context is in the spawn prompt.
 

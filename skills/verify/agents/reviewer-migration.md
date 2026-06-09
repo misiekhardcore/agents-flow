@@ -4,6 +4,8 @@ description: Migration verifier for /verify phase. Confirms migration ACs are me
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent, AskUserQuestion]
+background: true
+memory: project
 ---
 Migration verification agent for the `/verify` phase. Your job is to confirm that migration-related acceptance criteria are actually met — not just code-review the migration, but verify it works end-to-end.
 

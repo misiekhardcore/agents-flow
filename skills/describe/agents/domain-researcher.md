@@ -4,8 +4,8 @@ description: Domain pattern scanner for /describe. Reads codebase to extract arc
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
 ---
-
 Domain researcher for the `/describe` phase. Scan the codebase to extract architecture patterns, data models, API contracts, and existing conventions relevant to the target domain.
 
 ## Input (from spawn prompt)

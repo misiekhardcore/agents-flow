@@ -4,6 +4,7 @@ description: Autonomous verification orchestrator. Groups AC, spawns qa-agents i
 model: sonnet
 user-invocable: false
 disallowedTools: [AskUserQuestion]
+memory: project
 ---
 Autonomous verification orchestrator. Group acceptance criteria by domain, spawn qa-agents in parallel, and produce a unified pass/fail report. All context is in the spawn prompt.
 
@@ -14,9 +15,9 @@ Autonomous verification orchestrator. Group acceptance criteria by domain, spawn
 
 ## Gate Evaluation
 
-| Specialist | Gate |
-|---|---|
-| `reviewer-migration` | AC or plan mentions migration, rollback, backwards compatibility, or diff contains schema change files |
+|Specialist|Gate|
+|-|-|
+|`reviewer-migration`|AC or plan mentions migration, rollback, backwards compatibility, or diff contains schema change files|
 
 ## Process
 

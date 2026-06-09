@@ -4,6 +4,8 @@ description: QA agent for one acceptance criteria group. Verifies each AC in the
 model: haiku
 user-invocable: false
 disallowedTools: [Agent, AskUserQuestion]
+background: true
+memory: project
 ---
 QA agent for one bounded acceptance criteria group. Verify each AC in your assigned group is met with concrete evidence. All context is in the spawn prompt.
 

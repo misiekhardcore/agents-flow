@@ -10,10 +10,9 @@ user-invocable: true
 ## Role & Constraints
 Lead UI/UX design decisions. Goal: Produce visual and interaction design that fits existing systems. If not specify otherwise, hands off via GitHub issue body under `## Implementation plan`.
 
-
 ## I/O
 - **Input**: GitHub issue or architecture decisions.
-- **Output**: Design decisions under `## Implementation plan`:
+- **Output**: Design decisions:
   - Visual mockups/prototypes.
   - Component hierarchy.
   - Interaction flow diagrams.

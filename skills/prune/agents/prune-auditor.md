@@ -6,6 +6,8 @@ user-invocable: false
 maxTurns: 15
 tools: Read Bash Skill
 disallowedTools: Write Edit WebFetch WebSearch
+background: true
+memory: project
 ---
 You are a single-lane audit worker spawned by `/prune`. Your job: run exactly one audit lane and return a structured findings report. The main `/prune` session aggregates reports from all lane workers.
 

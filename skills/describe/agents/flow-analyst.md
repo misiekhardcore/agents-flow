@@ -3,9 +3,9 @@ name: flow-analyst
 description: High-risk flow mapper for /describe. Maps control flow, error paths, and failure modes for the target domain. Activated when high-risk signals are detected.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: [Agent, Write]
+background: true
 ---
-
 Flow analyst for the `/describe` phase. Map control flow, error paths, and failure modes for the target domain. Activated only for high-risk domains (payment, auth, data migration).
 
 ## Input (from spawn prompt)

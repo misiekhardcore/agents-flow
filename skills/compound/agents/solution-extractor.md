@@ -4,8 +4,9 @@ description: Solution pattern extractor for /compound. Distills root cause, solu
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 Solution extractor for the `/compound` phase. Distill the session's findings into a reusable pattern — root cause, solution, and how to prevent recurrence.
 
 ## Input (from spawn prompt)

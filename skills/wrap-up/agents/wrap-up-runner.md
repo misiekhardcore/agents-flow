@@ -4,6 +4,8 @@ description: Autonomous cleanup runner. Removes worktree, deletes branch, and cl
 model: haiku
 user-invocable: false
 disallowedTools: [AskUserQuestion]
+background: true
+memory: project
 ---
 Autonomous cleanup agent. Remove the feature worktree, delete the branch, and clear NOTES.md. Called only after the PR is in a terminal state (merged or closed). No user interaction.
 

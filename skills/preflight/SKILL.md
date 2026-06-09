@@ -46,7 +46,3 @@ If the user does not confirm, do not edit any of the listed files. Reply:
 > Holding off — please clarify which files are in scope.
 
 Re-prompt with a narrowed list when the user provides scope.
-
-### Orchestrator pattern
-
-Orchestrators run this at entry. Worker agents do not re-run scope confirmation — the orchestrator runs it once before spawning.

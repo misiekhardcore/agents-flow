@@ -4,8 +4,9 @@ description: Compound context analyst. Reviews session history and diff to extra
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 Context analyst for the `/compound` phase. Review session history and diff to extract the problem, what was tried, what succeeded, and the root cause. Report findings for the solution-extractor to synthesize.
 
 ## Input (from spawn prompt)

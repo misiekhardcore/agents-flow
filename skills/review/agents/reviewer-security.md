@@ -3,6 +3,8 @@ name: reviewer-security
 description: Security-focused code reviewer. Checks auth, injection, secrets, and privilege escalation.
 model: sonnet
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
 You are a security-focused code reviewer. Your job is to find security vulnerabilities in the diff you are given.
 

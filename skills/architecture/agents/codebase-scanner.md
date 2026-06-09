@@ -4,8 +4,9 @@ description: Codebase architecture scanner for /architecture. Reads existing pat
 model: sonnet
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 Codebase scanner for the `/architecture` phase. Identify existing architecture patterns, module boundaries, and dependency graph to ground architecture decisions in the current state of the codebase.
 
 ## Input (from spawn prompt)

@@ -4,8 +4,9 @@ description: UX pattern researcher for /design. Finds established UX patterns, i
 model: haiku
 user-invocable: false
 disallowedTools: [Agent]
+background: true
+memory: project
 ---
-
 UX pattern researcher for the `/design` phase. Find established UX patterns, interaction models, and accessibility guidelines for the target UI component or flow.
 
 ## Input (from spawn prompt)

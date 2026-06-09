@@ -21,9 +21,9 @@ Determine scope from the problem domain and complexity — not a label.
 ## Process
 
 1. **Ingestion**: Read issue (problem statement + AC). If no issue exists, elicit a problem statement from the user.
-2. **Scoping**: Each work unit from the scope assessment is a candidate (group) for delegation to 
+2. **Scoping**: Each work unit from the scope assessment is a candidate (group) for delegation to
 3. **Delegation** (sequentially, per work, group one by one):
-   - **3a**: Dispatch Prior-Art Scout (parallel) with work unit context → receive prior art findings. Summarize  findings for next step.
+   - **3a**: Dispatch Prior-Art Scout (parallel sub-agents) with work unit context → receive prior art findings. Summarize  findings for next step.
    - **3b**: Invoke `Skill("describe")` with the research brief in payload. User interaction — PPT, visualization, problem statement validation. Get the response in chat, not in GitHub issue.
     - **3c**: For complex work units, invoke `Skill("specify")` to derive acceptance criteria from the problem statement. Get the response in chat, not in GitHub issue.
 4. **Review and decision**: Verify all work units have a problem statement and AC. If multiple approaches exist for a work unit, present them to the user for selection. Re-iterate until you fully understand the problem and receive user approval.
