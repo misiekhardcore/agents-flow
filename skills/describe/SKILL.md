@@ -29,9 +29,9 @@ Read `references/scope-ppt.md` for scope classification and PPT checklist.
 
 ### Multi-area or complex problem
 1. **Elicitation**: Ask user for problem/goal if not already provided.
-2. **Research** (spawn parallel sub-agents):
-  - **Domain Researcher** (`sonnet`): Scan codebase for prior art, related features, existing patterns relevant to the problem domain.
-  - **Gate** (high-risk only): If `high_risk: true`, spawn **Flow-Analyst** (`sonnet`) in parallel to map existing user/data flows in the affected domain.
+2. **Research** (spawn in parallel):
+   - `Agent("describe/agents/domain-researcher.md")` — pass `domain` (the feature domain) and `cwd` (absolute repo root).
+   - **Gate** (high-risk only): if high-risk signals are present, also spawn `Agent("describe/agents/flow-analyst.md")` — pass `domain`, `cwd`, and `entry_points` from domain-researcher output.
 3. **PPT**: Run Product Pressure Test (see `references/scope-ppt.md`) — invoke `Skill("grill-me")` with user.
 4. **Visualization and Validation**: Produce Mermaid/ASCII for user journeys, feature comparisons, system boundaries.Confirm understanding of each visual with the user, grill the user, until alignment is achieved.
 5. **Synthesis**: Return structured problem statement.

@@ -19,14 +19,16 @@ Lead UI/UX design decisions. Goal: Produce visual and interaction design that fi
   - Implementation constraints.
 
 ## Process
-1. **Research** (spawn parallel sub-agents):
-   - **UX Researcher** (`haiku`): Scan existing component and UI patterns, a11y requirements, design system in the codebase.
+1. **Research** (spawn `Agent("design/agents/ux-researcher.md")`):
+   - Pass `component` (target UI component or flow) and `context` (product context and target users).
 2. **Design**: For each component, propose 2-3 visual/interaction approaches:
    - Prototypes (screenshots/code).
    - Wireframes (ASCII/Mermaid).
    - Interaction flows (state machines/sequence).
    - Component hierarchy trees.
-3. **Evaluate**: Review proposals for a11y compliance, keyboard nav, screen readers.  Invoke `Skill("grill-me")` to conduct a detailed review. User selects the approach.
+3. **Evaluate** (spawn `Agent("design/agents/reviewer-a11y.md")`):
+   - Pass `component` and `proposals` (list of approach names and descriptions).
+   - Present a11y findings alongside proposals. Invoke `Skill("grill-me")` for deliberation. User selects approach.
 4. **Output**: Invoke `Skill("preflight")`, read `_shared/handoff-artifact.md`, and write design decisions to issue body under `## Implementation plan` if not specified otherwise.
 
 ## Rules
