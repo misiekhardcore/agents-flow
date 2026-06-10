@@ -7,7 +7,7 @@ model: opus
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
-Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produces draft sub-PRs + epic PR with human gates at Stages 1–3, then autonomous execution through Stage 5.
+Autonomous epic-to-PR pipeline. Takes an epic issue or description and produces draft sub-PRs + epic PR with human gates at Stages 1–3, then autonomous execution through Stage 5.
 
 ## Input
 
@@ -16,28 +16,47 @@ Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produ
 
 ## Team Shape
 
-Always multi-layer fan-out — dispatches one sub-agent per topological layer of sub-issues. See `_shared/composition.md` for spawn justification.
+Always multi-layer fan-out — dispatches one sub-agent per topological layer of sub-issues. Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` at point of need for spawn cost models.
 
 ## Process
 
-1. **Stage 0 — Resume detection**: Read `references/detection.md` to detect prior state and determine entry stage.
-2. **Stages 1–3 — Interactive gates**: Read `references/gates.md` for stage gate procedures. Require explicit user approval at each gate; silence is not approval.
-3. **Stage 4 — Autonomous phase**: Read `references/autonomous-phase.md` for branch creation, dependency-tier computation, parallel dispatch, settlement, and epic PR creation. No human prompts.
-4. **Stage 5 — Exit**: Print exit summary to stdout. Run is complete when all sub-PRs are open and epic PR is open. Merging is left to humans.
+Invoke `Skill("orchestrator-rules")` for CWD, delegation, and seed-brief contract.
+Invoke `Skill("notes-md")` for NOTES.md lifecycle (create → checkpoint → update → leave).
 
-**Key behaviors:**
+1. **Stage 0 — Resume detection**: Read `references/detection.md` at point of need to detect prior state and determine entry stage.
+2. **Stage 1 — Discovery gate**: Read `references/gates.md` § Stage 1 at point of need. If epic has ≥3 AC, skip to Stage 2. Otherwise invoke `Skill("discover")` with seed-brief containing the description. Require explicit user approval.
+3. **Stage 2 — Epic-level /define gate**: Read `references/gates.md` § Stage 2 at point of need. If `## Implementation plan` exists in epic issue body, skip to Stage 3. Otherwise invoke `Skill("define")` with seed-brief containing epic issue and AC. Require explicit user approval. If ≤1 sub-issue, invoke `Skill("implement")` directly and exit.
+4. **Stage 3 — Per-sub-issue /define gate**: Read `references/gates.md` § Stage 3 at point of need. For each sub-issue without `## Implementation plan`, invoke `Skill("define")` with seed-brief. Require explicit user approval per sub-issue.
+5. **Stage 4 — Autonomous phase**: Read `references/autonomous-phase.md` at point of need. Create epic branch, compute dependency tiers (Kahn's algorithm, cycle breaking), dispatch per tier. For each sub-issue M, spawn `Agent("skills/implement/agents/implement-runner.md")` with comprehensive seed-brief (see § Worker Agent Inventory). Wait for tier settlement. After all tiers settle, create epic PR.
+6. **Stage 5 — Exit**: Print summary table to stdout. Invoke `Skill("compound")` for epic-level learnings (compound-on-exit). Merging is left to humans.
+
+## Key behaviors
 - Skip /discover if epic has ≥3 acceptance criteria
-- Skip /define if epic has implementation plan
+- Skip /define if epic already has implementation plan
 - Topologically sort sub-issues via Kahn's algorithm (with cycle breaking)
 - Dispatch tiers in parallel via Task sub-agents
 - Post epic PR with merge order instructions after all sub-tasks settle
 
+## Worker Agent Inventory
+
+### implement-runner
+- **File**: `skills/implement/agents/implement-runner.md`
+- **Contract**: See `## Input (from spawn prompt)` in the agent file.
+- **Output**: Draft PR on branch `feat/epic-<N>-sub-<M>` (clean or exhausted-accepted), or FAILED after 2 retries.
+
+## Sub-skills (epic-autopilot owned)
+
+|Skill|Classification|Reference|
+|-|-|-|
+|Detection|Domain — resume state logic|`references/detection.md`|
+|Gates|Domain — stage gate procedures|`references/gates.md`|
+|Autonomous Phase|Domain — sub-issue dispatch and epic PR flow|`references/autonomous-phase.md`|
+
 ## Rules
 
-Invoke `Skill("orchestrator-rules")` for CWD, delegation, and seed-brief contract.
-
-- Require explicit approval at each gate; silence is not approval
+- Require explicit approval at each stage gate; silence is not approval
 - User must not modify epic/sub-issue bodies during Stage 4
 - Branch names follow `feat/epic-<N>-sub-<M>` exactly
 - `autonomous: true` reserved for sub-task spawns from this skill only
-- `/compound` runs automatically at end of Stage 4 (epic-level pass; sub-issue implementation passes are covered by `/implement`). `/wrap-up` remains user-invoked.
+- Seed-brief every `Agent()` spawn — spawned session has zero context inheritance
+- Read reference files at point of need, not unconditionally at SKILL.md top
