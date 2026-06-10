@@ -3,7 +3,6 @@ name: specify
 description: Turn a problem statement into precise, testable acceptance criteria.
 when_to_use: Use after /describe. Invoked by /discovery; can run standalone.
 model: sonnet
-layer: 2
 user-invocable: true
 ---
 <!-- Stays inline: interactive — requires back-and-forth with user. -->

@@ -5,7 +5,6 @@ when_to_use: Use when the user asks whether Claude can do something or wants to 
 model: haiku
 effort: low
 allowed-tools: Agent Bash WebFetch WebSearch
-layer: 2
 user-invocable: true
 ---
 ## Role & Constraints

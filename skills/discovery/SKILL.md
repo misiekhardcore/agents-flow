@@ -1,7 +1,6 @@
 ---
 name: discovery
 description: Full discovery phase — explore a problem and produce a GitHub issue with AC.
-layer: 1
 when_to_use: Start of any new feature or vague problem. Precedes /define.
 argument-hint: "[issue# | description]"
 model: opus

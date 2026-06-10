@@ -1,7 +1,6 @@
 ---
 name: define
 description: Lead definition phase. Resolves architecture and design technical decisions.
-layer: 1
 when_to_use: Use after /discovery produces an approved issue with AC. Precedes /implement.
 argument-hint: "[issue#]"
 model: opus

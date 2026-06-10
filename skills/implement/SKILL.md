@@ -1,7 +1,6 @@
 ---
 name: implement
 description: Full implementation cycle — build, review, and verify, then open a PR.
-layer: 1
 when_to_use: Use to run the full implementation cycle (build → review → verify → PR) from an approved issue.
 argument-hint: "[issue#]"
 model: sonnet

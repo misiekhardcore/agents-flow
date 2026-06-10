@@ -5,7 +5,6 @@ when_to_use: Use to implement approved architecture decisions/implementation pla
 argument-hint: "[issue#]"
 model: sonnet
 effort: high
-layer: 2
 user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---

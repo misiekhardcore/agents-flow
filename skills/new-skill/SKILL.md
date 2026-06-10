@@ -1,7 +1,6 @@
 ---
 name: new-skill
 description: Scaffold a new skill conforming to the authoring standard. Interviews the author, generates a SKILL.md, and writes it to the chosen location.
-layer: 1
 when_to_use: Use when creating a new skill for personal use, a project, or this plugin.
 model: haiku
 effort: low

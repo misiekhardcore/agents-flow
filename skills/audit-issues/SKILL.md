@@ -1,7 +1,6 @@
 ---
 name: audit-issues
 description: Audit open GitHub issues for drift against repo state. Flags broken refs, stale claims, and contradictions.
-layer: 1
 when_to_use: Use when auditing a GitHub repo's open issues for drift, broken refs, or stale claims.
 argument-hint: "[owner/repo | #NN | owner/repo#NN]"
 model: sonnet

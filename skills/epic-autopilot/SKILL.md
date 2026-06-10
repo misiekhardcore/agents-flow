@@ -1,7 +1,6 @@
 ---
 name: epic-autopilot
 description: Autonomous epic-to-PR pipeline. Chains /discovery → /define → /implement end-to-end for each sub-issue, opening draft PRs.
-layer: 1
 when_to_use: Use when you have an epic issue number or a free-text description and want the full cycle automated.
 argument-hint: "[epic# | description]"
 model: opus

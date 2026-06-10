@@ -1,7 +1,6 @@
 ---
 name: resolve-pr-feedback
 description: Process PR review feedback in bulk — triage, fix in parallel, and reply with verdicts.
-layer: 1
 when_to_use: PR has review comments or given thread URL.
 argument-hint: "[thread-URL]"
 model: sonnet

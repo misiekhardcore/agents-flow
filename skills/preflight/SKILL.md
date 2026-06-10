@@ -3,7 +3,6 @@ name: preflight
 description: Repository and scope verification protocol before mutations or bulk file edits.
 when_to_use: "Invoke before `gh` or `git push` operations. Apply scope checks when modifying 3+ files or request matches: audit, refactor, normalize, sweep, propagate, extract, rename."
 user-invocable: false
-layer: 3
 ---
 ## Repository Pre-flight
 

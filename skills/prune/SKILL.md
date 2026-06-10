@@ -1,7 +1,6 @@
 ---
 name: prune
 description: Audit skill authoring quality and prune dead state from ~/.claude/. Vault health is delegated to /lint.
-layer: 1
 model: haiku
 effort: low
 allowed-tools: Agent AskUserQuestion Bash Read

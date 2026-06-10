@@ -5,7 +5,6 @@ when_to_use: Use to produce architectural decisions for a feature. Invoked by /d
 model: opus
 effort: high
 allowed-tools: Agent Bash Read WebSearch WebFetch
-layer: 2
 user-invocable: true
 ---
 ## Role & Constraints

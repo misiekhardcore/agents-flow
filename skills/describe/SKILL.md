@@ -6,7 +6,6 @@ argument-hint: "[issue# | description]"
 model: opus
 effort: high
 allowed-tools: Agent Bash Read
-layer: 2
 user-invocable: true
 ---
 Lead product discovery. Explores problems interactively, builds shared understanding via visualizations and user stories, and hands off structured problem statements.
