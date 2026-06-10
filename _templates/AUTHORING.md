@@ -4,14 +4,7 @@ This document defines the structural and behavioral conventions for building ski
 
 ## Role Taxonomy
 
-Skills are classified by execution context and responsibility. See `${CLAUDE_PLUGIN_ROOT}/docs/dispatch-primitives.md` for the full decision framework.
-
-|Role|Runs in|User interaction|Dispatches|`context: fork`|
-|-|-|-|-|-|
-|**Orchestrator**|Main context|Yes|Optionally: other Orchestrators and/or Workers|Never|
-|**Interaction**|Main context|Yes — only|Never|Never|
-|**Worker**|Background/isolated|Task confirmations only|Optionally: other Workers|Always (Skill); implied (Agent file)|
-|**Protocol**|Caller's context|N/A|Never|Never|
+Skills are classified by execution context and responsibility. See `${CLAUDE_PLUGIN_ROOT}/docs/dispatch-primitives.md` for the canonical taxonomy and `${CLAUDE_PLUGIN_ROOT}/_shared/dispatch-decision.md` for the condensed runtime reference.
 
 ### Skill vs. Reference File
 
