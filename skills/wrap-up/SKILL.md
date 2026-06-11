@@ -4,7 +4,6 @@ description: Clean up local state after a PR is open — remove the worktree, de
 when_to_use: Run when ready to discard the feature worktree after a PR is open.
 model: sonnet
 user-invocable: true
-layer: 2
 allowed-tools: Bash Read
 ---
 Safely remove the feature worktree, delete the branch, and clear any remaining NOTES.md. In standalone mode, confirms before destructive actions and refuses when the operation would destroy protected state. When invoked with `confirmed` as skill arg (e.g., `/wrap-up confirmed`), executes directly without user prompts. Orchestrators spawn `Agent('wrap-up/agents/wrap-up-runner.md')` for fully autonomous cleanup. Cleans up local state: removes worktree, deletes branch, clears NOTES.md. Expects PR to be in a terminal state. Refuses destructive actions on dirty state in standalone mode.

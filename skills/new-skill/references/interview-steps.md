@@ -48,10 +48,10 @@ This answer determines which template to use in step 3 and pre-fills the model/e
 **If Specialist or Primitive:** Ask one follow-up `AskUserQuestion` with `header: "Contract"`, question: "Does this skill require user interaction during execution (deliberation, decisions, grill-me), or is it fully autonomous (research, verification, code work)?"
 
 **Options:**
-- **Interactive (Recommended)** — user must be present; invoked via `Skill()`; set `layer: 2`
-- **Autonomous** — no user interaction; invoked via `Agent()`; set `layer: 3` and `user-invocable: false`
+- **Interactive (Recommended)** — user must be present; invoked via `Skill()`; set `user-invocable: true`
+- **Autonomous** — no user interaction; invoked via `Agent()`; set `user-invocable: false`
 
-> **If the skill needs BOTH research and user interaction**: it must be split into two skills — an autonomous research skill (layer 3, `Agent()`-only) and an interactive skill (layer 2, `Skill()`-only). Name the research skill `<name>-research`. See `_shared/composition.md` § Consumption Contracts.
+> **If the skill needs BOTH research and user interaction**: it must be split into two skills — an autonomous research skill (`user-invocable: false`, `Agent()`-only) and an interactive skill (`user-invocable: true`, `Skill()`-only). Name the research skill `<name>-research`. See `_shared/composition.md` § Consumption Contracts.
 
 Then ask one follow-up `AskUserQuestion` with `header: "Visibility"`, question: "Should this skill be hidden from the slash-command menu?"
 

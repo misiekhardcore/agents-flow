@@ -3,7 +3,6 @@ name: scope-assessment
 description: Given a list of work units (each with an id and resource list), group them by shared resources and output one agent entry per conflict-free group. Use when an orchestrator needs to fan out work without resource conflicts.
 model: haiku
 user-invocable: false
-layer: 3
 context: fork
 agent: Explore
 ---

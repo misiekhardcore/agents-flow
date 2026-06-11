@@ -1,45 +1,55 @@
 ---
 name: new-skill
-description: Scaffold a new skill conforming to the authoring standard. Interviews the author, generates a SKILL.md, and writes it to the chosen location.
-layer: 1
-when_to_use: Use when creating a new skill for personal use, a project, or this plugin.
-model: haiku
+description: Scaffold a conformant SKILL.md. Interviews the author, generates the file, writes it.
+when_to_use: Creating or extending a skill in any context — plugin, project, or personal config.
+model: sonnet
 effort: low
 allowed-tools: Read Write Bash
 ---
-Interactive skill scaffolder. Help author create skill conforming to claude-workflow standard. One question at a time.
+Maintenance skill that interviews the author to produce a conformant SKILL.md. Runs entirely in main context; never uses `context: fork`. One question at a time.
 
-## Input
+## Protocol skills
 
-A brief statement from the author of what the skill should do — or nothing, in which case start with step (a).
+Adopt `Skill("interviewing-rules")`.
 
 ## Process
 
-1. Read `${CLAUDE_PLUGIN_ROOT}/_templates/AUTHORING.md` — skill-types table, `_shared/` files decision table, frontmatter guide.
+1. **Read authoring guide** — Read `${CLAUDE_PLUGIN_ROOT}/_templates/AUTHORING.md` for skill-types table, `_shared/` files decision table, and frontmatter guide.
 
-2. **Interview the author** — ask ONE question at a time. See `skills/new-skill/references/interview-steps.md` for the question sequence.
+2. **Interview the author** — Follow the sequence in `references/interview-steps.md`. Ask one question at a time per `Skill("interviewing-rules")`. Use `AskUserQuestion` for bounded option sets; plain prompt for free-text.
 
-   Use `AskUserQuestion` for bounded option sets (c–k); plain prompt for free-text (a, b, l). Place recommended option first with ` (Recommended)` — derive from step (b).
+3. **Select template** — Read `${CLAUDE_PLUGIN_ROOT}/docs/dispatch-primitives.md` for the role taxonomy and dispatch rules.
 
-3. **Select template** based on role: Orchestrator → `SKILL.orchestrator.template.md`; Specialist/Utility → `SKILL.specialist.template.md`; Primitive → `SKILL.primitive.template.md`.
+   From the description, assess which role fits. Present the likely role with rationale. `AskUserQuestion` `header: "Role"`: "Does `<role>` match your intent?"
 
-4. **Generate SKILL.md** by filling template: Frontmatter (`name`, `description`, `model` plus opt-in fields per author choice); skeleton sections as placeholders; spawn-justification if parallelism selected; `_shared/` reference lines per `_templates/AUTHORING.md`.
+   Options: **Yes (Recommended)**, **No, let me choose**. If No, show the role table from dispatch-primitives and let them pick.
 
-5. **Show draft** in fenced code block. Ask: "Shall I write it to `<target-path>`? (y/n)". Require explicit yes.
+   **Role follow-ups:**
+   - **Orchestrator** — `AskUserQuestion` `header: "Orchestrator type"`: "Research-leading (deep reasoning, `opus`, `effort: high`) or Coordinator (sequences sub-skills, `sonnet`)?"
+   - **Worker** — Plain prompt: "What input does it expect and what does it produce?"
+   - **Interaction** — "Does it need a research sub-agent?" If yes, split: autonomous research agent + interactive skill.
+   - **Protocol** — Plain prompt: "Which behavioral convention does it encode?"
 
-6. **On yes**: create directory if needed, write file. Report path and advise filling placeholder sections.
+   Based on the determined role: Orchestrator → `SKILL.orchestrator.template.md`; Specialist/Utility → `SKILL.specialist.template.md`; Primitive → `SKILL.primitive.template.md`.
 
-7. **On no**: ask which step to revise, loop back, regenerate.
+4. **Generate SKILL.md** — Fill template with interview answers: frontmatter, skeleton sections, spawn-justification if parallelism selected, `_shared/` reference lines per AUTHORING.md.
+
+5. **Show draft** — Fenced code block. Ask: "Shall I write it to `<target-path>`? (y/n)". Require explicit yes.
+
+6. **On yes** — Create directory if needed, write file. Report path and advise filling placeholder sections.
+
+7. **On no** — Ask which step to revise, loop back, regenerate.
 
 ## Output
 
-A single file at the chosen target location, conforming to the authoring standard. Empty skeleton sections for the author to fill.
+Single SKILL.md at target path, shown for approval before writing.
 
 ## Rules
 
-- One question at a time. Require explicit yes before writing.
+- Require explicit yes before writing.
 - Do not invent domain content — locks in guesses.
-- Defaults (if skipped): model: sonnet; effort, argument-hint, allowed-tools, user-invocable: omit; target: personal.
-- Include `when_to_use` only if author identified mis-routing risk (step c); omit otherwise.
-- If target `SKILL.md` exists, ask whether to overwrite.
-- Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md`
+- All reference-file reads are point-of-need, not unconditional at top.
+- Defaults (if skipped): `model: sonnet`; `effort`, `argument-hint`, `allowed-tools`, `user-invocable`: omit; target: personal.
+- Generated frontmatter: no `layer:`, no `context: fork`, no `agent:`.
+- Generated `Agent()` calls must include a seed-brief per `${CLAUDE_PLUGIN_ROOT}/_shared/seed-brief.md`.
+- If target `SKILL.md` exists, ask before overwriting.

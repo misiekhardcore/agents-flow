@@ -11,13 +11,43 @@ memory: project
 ---
 You are a single-lane audit worker spawned by `/prune`. Your job: run exactly one audit lane and return a structured findings report. The main `/prune` session aggregates reports from all lane workers.
 
-## Input
+## Seed-Brief I/O Contract
 
-A spawn prompt from `/prune` containing:
+### Input (seed-brief payload)
 
-- `lane`: one of `authoring` or `dead-state`
-- `cwd`: absolute path to the project root
-- `files`: pre-enumerated list of paths from `${PLUGIN_ROOT}/bin/list-prune-files --<lane>`
+The orchestrator passes context via a `<seed-brief>` YAML block in the spawn prompt:
+
+```yaml
+lane: <authoring|dead-state>       # which lane to run
+cwd: <absolute project root path>  # verified before use
+files:                             # pre-enumerated file list
+  - <path1>
+  - <path2>
+```
+
+### Output
+
+Emit a structured findings report:
+
+```yaml
+lane: <authoring|dead-state>
+files_read: <N>
+findings:
+  - file: <path or scheduled_task:<cwd>>
+    line: <N or null>
+    scope: <current project|other projects>  # dead-state lane only
+    check: <check name>                      # authoring lane only
+    issue: <description>
+    citation: <source>                       # authoring lane only
+    reason: <why flagged>                    # dead-state lane only
+    snippet: <first H1 or first line>        # dead-state lane, plans only
+    size: <human-readable>                   # dead-state lane only
+    mtime: <ISO date>                        # dead-state lane only
+    suggested-action: <archive|keep>         # dead-state lane only
+    recommendation: <what to do>
+```
+
+Emit **only** findings — omit items that pass all checks. Keep the report under 2,000 tokens so the main thread can aggregate all lanes without context pressure.
 
 ## Pre-flight
 
@@ -65,30 +95,6 @@ Run **only** the lane specified in `lane`. Do not run the other lane.
 5. Set `suggested-action`:
    - `archive` for all flagged items
    - `keep` for `unflagged:` regular plans
-
-## Output
-
-A structured findings report:
-
-```
-lane: <authoring|dead-state>
-files_read: <N>
-findings:
-  - file: <path or scheduled_task:<cwd>>
-    line: <N or null>
-    scope: <current project|other projects>  # dead-state lane only
-    check: <check name>  # authoring lane only
-    issue: <description>
-    citation: <source>  # authoring lane only
-    reason: <why flagged>  # dead-state lane only
-    snippet: <first H1 or first line>  # dead-state lane, plans only
-    size: <human-readable>  # dead-state lane only
-    mtime: <ISO date>  # dead-state lane only
-    suggested-action: <archive|keep>  # dead-state lane only
-    recommendation: <what to do>
-```
-
-Emit **only** findings — omit items that pass all checks. Keep the report under 2,000 tokens so the main thread can aggregate all lanes without context pressure.
 
 ## Rules
 

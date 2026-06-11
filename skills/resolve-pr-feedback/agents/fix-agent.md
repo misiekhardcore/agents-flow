@@ -10,11 +10,24 @@ memory: project
 ---
 PR feedback fix agent. Read and fix all review threads assigned to your file group, then report verdicts. All context is in the spawn prompt.
 
-## Input (from spawn prompt)
+## Input (seed-brief)
 
-- `cwd`: absolute path to the worktree root
-- `threads`: list of review thread objects: `{ id, file, line, comment, category }`
-- `pr_number`: GitHub PR number
+The orchestrator passes context as a `<seed-brief>` YAML block:
+
+```yaml
+repo: <owner/repo>
+branch: <branch-name>
+payload:
+  task: fix-review-threads
+  cwd: <absolute-worktree-path>
+  pr_number: <N>
+  threads:
+    - id: <thread-id>
+      file: <path>
+      line: <N>
+      comment: "<comment text>"
+      category: <category>
+```
 
 ## Process
 
@@ -31,7 +44,7 @@ PR feedback fix agent. Read and fix all review threads assigned to your file gro
 
 ## Output
 
-```
+```yaml
 threads:
   - id: <thread-id>
     verdict: fixed | already-handled | needs-human

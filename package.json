@@ -7,7 +7,8 @@
   },
   "scripts": {
     "prepare": "husky",
-    "format": "bin/minify-md -i -r ."
+    "format:check": "bin/minify-md --check",
+    "format:fix": "bin/minify-md --write"
   },
   "devDependencies": {
     "husky": "^9.1",
@@ -15,7 +16,7 @@
   },
   "lint-staged": {
     "*.md": [
-      "bin/minify-md -i -r"
+      "bin/minify-md --write"
     ]
   }
 }

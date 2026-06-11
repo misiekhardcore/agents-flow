@@ -9,18 +9,31 @@ memory: project
 ---
 Single-issue auditor. Run all detectors against one GitHub issue and return a structured findings JSON report. Spawned in parallel by `/audit-issues` — one per issue.
 
-## Input (from spawn prompt)
+## Seed-Brief I/O Contract
 
-- `cwd`: absolute path to local repo clone
-- `issue_number`: GitHub issue number
-- `repo`: owner/repo
-- `default_branch_ref`: latest commit SHA of the default branch (pre-fetched by orchestrator)
+The orchestrator passes context as a `<seed-brief>` YAML block in the spawn prompt:
+
+```yaml
+<seed-brief>
+repo: owner/repo
+issue_number: "123"
+cwd: /absolute/path/to/local/clone
+default_branch_ref: abc123def
+</seed-brief>
+```
+
+|Field|Type|Description|
+|-|-|-|
+|`repo`|string|GitHub `owner/repo` identifier.|
+|`issue_number`|string|GitHub issue number (quoted to preserve as string).|
+|`cwd`|string|Absolute path to local repo clone. Pre-verified by orchestrator.|
+|`default_branch_ref`|string|Commit SHA of the default branch (pre-fetched by orchestrator via `git fetch origin`).|
 
 ## Process
 
 1. `cd <cwd> && pwd`.
 2. `gh issue view <issue_number>` — read full issue body, title, labels, linked PRs, and references.
-3. Run detectors (see `references/detectors.md` in /audit-issues skill if available; otherwise use defaults below):
+3. Run detectors using rules pre-digested from `references/detectors.md` and passed by the orchestrator in the spawn prompt (fall back to built-in defaults below if none passed):
    - **Stale file refs**: file paths in the issue body → check if they exist on `default_branch_ref`.
    - **Broken PR links**: `#NNN` references → verify they resolve to real PRs/issues.
    - **Contradicted claims**: "X works" or "X is fixed" claims → verify against current code.
