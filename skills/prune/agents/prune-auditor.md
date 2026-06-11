@@ -29,7 +29,7 @@ files:                             # pre-enumerated file list
 
 Emit a structured findings report:
 
-```
+```yaml
 lane: <authoring|dead-state>
 files_read: <N>
 findings:
