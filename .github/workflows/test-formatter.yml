@@ -1,0 +1,28 @@
+name: Check formatter
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'bin/minify-md'
+      - 'bin/test-minify-md.py'
+      - '.github/workflows/test-formatter.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'bin/minify-md'
+      - 'bin/test-minify-md.py'
+      - '.github/workflows/test-formatter.yml'
+
+jobs:
+  test-formatter:
+    name: Run formatter tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Check agent markdown minifier script
+        run: python3 bin/test-minify-md.py
