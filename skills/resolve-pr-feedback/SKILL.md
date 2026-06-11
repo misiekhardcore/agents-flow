@@ -18,13 +18,13 @@ for seed-brief format and `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for par
 - No argument: walk all unresolved threads on the current branch's PR via `gh pr view`.
 - Thread URL: extract `owner/repo/number` and filter to matching `databaseId`.
 
-## Worker Agent Inventory
+## Worker Agent
 
 ### fix-agent
 **File**: `agents/fix-agent.md`
-**Role**: Reads one file-group of review threads, applies fixes, verifies, emits verdicts.
+**Role**: Reads one file-group of review threads, applies fixes, verifies, commits, emits verdicts.
 **Spawn**: `Agent("skills/resolve-pr-feedback/agents/fix-agent.md")` — one per disjoint file group, in parallel.
-**I/O (seed-brief passed in spawn prompt)**:
+**Input (seed-brief)**:
 ```yaml
 <seed-brief>
 repo: <owner/repo>
@@ -52,31 +52,6 @@ threads:
     note: <reason if needs-human>
 ```
 
-### reply-agent
-**File**: `agents/reply-agent.md`
-**Role**: Drafts a reply comment for one thread given the fix verdict. Spawned after all fix-agents complete.
-**Spawn**: `Agent("skills/resolve-pr-feedback/agents/reply-agent.md")` — one per thread, parallel.
-**I/O (seed-brief passed in spawn prompt)**:
-```yaml
-<seed-brief>
-repo: <owner/repo>
-branch: <branch-name>
-payload:
-  task: "draft-reply"
-  thread_id: <thread-id>
-  thread_comment: "<comment text>"
-  verdict: fixed | already-handled | needs-human
-  commit_sha: <sha-or-null>
-  note: "<reason if needs-human>"
-</seed-brief>
-```
-**Output** (YAML block):
-```yaml
-thread_id: <thread-id>
-reply: |
-  <draft reply text>
-```
-
 ## Process
 
 ### Phase 1 — Fetch
@@ -91,17 +66,17 @@ reply: |
 2. Group by category → present triage summary to user; allow override.
 3. Map threads to files for conflict avoidance (no two agents on same file).
 
-### Phase 3 — Fix (Parallel)
-1. Group threads by file; build seed-brief per group.
+### Phase 3 — Fix (Parallel per file group)
+1. Build seed-brief per file group from triage mapping.
 2. Checkpoint NOTES.md; spawn fix-agents in parallel.
-3. Each fix-agent reads context → applies fix → verifies → commits → reports verdict.
-4. After all fix-agents return: run full test suite for regression check.
-5. Update NOTES.md with verdicts.
+3. Each fix-agent: read context → apply fix → verify → commit → report verdict.
+4. After all return: run full test suite for regression check.
+5. Collect verdicts; update NOTES.md.
 
-### Phase 4 — Reply
+### Phase 4 — Reply (main thread)
 1. Read `references/verdicts.md` for verdict/reply mapping and mutation rules.
-2. For each thread, spawn reply-agent with seed-brief (verdict + commit info).
-3. Collect all draft replies; post them via `gh api .../replies`.
+2. For each thread, draft reply based on verdict and commit SHA.
+3. Post replies via `gh api .../replies`.
 4. Resolve threads where verdict in `{fixed, fixed-differently, not-addressing}`.
 5. Verify: `gh pr view <N> --json reviewThreads` — confirm all resolved.
 
