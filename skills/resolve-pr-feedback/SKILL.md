@@ -16,6 +16,7 @@ for seed-brief format and `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for par
 ## Input
 
 - No argument: walk all unresolved threads on the current branch's PR via `gh pr view`.
+- PR URL: walk all unresolved threads on the PR via `gh pr view`.
 - Thread URL: extract `owner/repo/number` and filter to matching `databaseId`.
 
 ## Worker Agent
