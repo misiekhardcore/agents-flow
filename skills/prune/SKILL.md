@@ -5,6 +5,7 @@ model: haiku
 effort: low
 allowed-tools: Agent AskUserQuestion Bash Read
 ---
+## Role & Constraints
 Audit skill authoring quality and prune dead state from `~/.claude/`. Archive approved candidates — never delete.
 
 ## Pre-flight
