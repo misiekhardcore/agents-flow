@@ -1,1 +1,1 @@
-/home/michal/Projects/claude-workflow/AGENTS.md
+AGENTS.md
