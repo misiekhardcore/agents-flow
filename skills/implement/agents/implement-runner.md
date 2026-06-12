@@ -51,10 +51,8 @@ Findings: <summary of remaining findings or "none">
 ## Process
 
 1. **Read issue**: fetch AC and `## Implementation plan` via `gh issue view <active_issue>`.
-2. **Scope**: count sub-issues (`gh issue list --search "parent:<active_issue>" --json number`). Sub-issues present → multi-unit; otherwise → single-unit.
-3. **Build**:
-   - **Single-unit**: spawn `Agent("skills/build/agents/build-worker.md")` with seed-brief containing `repo`, `branch`, `active_issue`, `scope`, `resources`, and implementation plan from issue.
-   - **Multi-unit**: spawn parallel `Agent("skills/build/agents/build-worker.md")` — one per sub-issue, each with `repo`, `branch`, sub-issue number as `active_issue`, relevant scope slice, and file subset from `resources`. Use `background: true` agents for parallelism.
+2. **Scope**: enumerate sub-issues (`gh issue list --search "parent:<active_issue>" --json number`). Each sub-issue is one build group. If no sub-issues, the issue itself is one group.
+3. **Build**: spawn one `Agent("skills/build/agents/build-worker.md")` per group with seed-brief containing `repo`, `branch`, group issue or `active_issue`, relevant scope slice, and file subset from `resources`. Use `background: true` agents for parallelism.
 4. **Review**: spawn `Agent("skills/review/agents/review-runner.md")` with `<seed-brief>`:
    ```
    diff: <output of git diff main...HEAD>
