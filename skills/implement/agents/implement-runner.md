@@ -10,9 +10,9 @@ maxTurns: 30
 ---
 Autonomous implementation cycle runner. Drives build → review → verify up to 3 times and opens a draft PR. All context is in the spawn prompt — no user interaction at any point.
 
-## Input Contract (seed-brief)
+## Seed-Brief I/O Contract
 
-Spawned with a `<seed-brief>` block (see `_shared/seed-brief.md`):
+The orchestrator passes context as a `<seed-brief>` YAML block in the spawn prompt (see `_shared/seed-brief.md`):
 
 ```
 <seed-brief>
@@ -28,17 +28,19 @@ payload:
 </seed-brief>
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `repo` | string | owner/repo. Pre-verified by caller. |
-| `branch` | string | feat/<slug>. Pre-verified by caller. |
-| `active_issue` | number | GitHub issue number. |
-| `max_cycles` | number | Maximum fix cycles (default: 3). |
-| `scope` | string | One-sentence description of this work unit. |
-| `payload.resources` | string[] | File paths this unit owns. |
-| `payload.progress` | string | NOTES.md slice for crash-safe resume (<=15 lines). |
+### Input
 
-## Output Contract
+|Field|Type|Description|
+|-|-|-|
+|`repo`|string|owner/repo. Pre-verified by caller.|
+|`branch`|string|feat/<slug>. Pre-verified by caller.|
+|`active_issue`|number|GitHub issue number.|
+|`max_cycles`|number|Maximum fix cycles (default: 3).|
+|`scope`|string|One-sentence description of this work unit.|
+|`payload.resources`|string[]|File paths this unit owns.|
+|`payload.progress`|string|NOTES.md slice for crash-safe resume (<=15 lines).|
+
+### Output
 
 On completion, emit:
 ```
