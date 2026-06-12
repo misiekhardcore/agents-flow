@@ -80,3 +80,4 @@ Token budgets per artifact/phase, CLAUDE.md placement rules, `@`-imports: `${CLA
 - Orchestrator SKILL.md must be ≤ 150 lines. No inline domain work — delegate.
 - Worker agents should include `disallowedTools: [Agent]` to prevent recursive spawning.
 - **Persist lessons to AGENTS.md**: When you discover a project-level convention, gotcha, or architecture rule that future agents would benefit from, add it to this file under the relevant section. NOTES.md is ephemeral session scratch — durable knowledge lives here.
+- **Update docs with code**: Any change to a skill, agent, or command must update all related docs (README.md, docs/*.md, AGENTS.md, other skills referencing it) in the same commit. Stale docs rot faster than dead code.
