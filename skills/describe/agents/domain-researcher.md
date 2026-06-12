@@ -1,16 +1,14 @@
 ---
 name: domain-researcher
-description: Domain pattern scanner for /describe. Reads codebase to extract architecture patterns, data models, and API contracts relevant to the target domain.
+description: Domain pattern scanner. Reads codebase to extract architecture patterns, data models, and API contracts relevant to the target domain.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 ---
-Domain researcher for the `/describe` phase. Scan the codebase to extract architecture patterns, data models, API contracts, and existing conventions relevant to the target domain.
+Domain researcher. Scan the codebase to extract architecture patterns, data models, API contracts, and existing conventions relevant to the target domain.
 
 ## Seed-Brief I/O Contract
-
-### Input
 
 - `domain`: the feature domain or component to research (e.g., "auth system", "payment service")
 - `cwd`: absolute path to the repo root

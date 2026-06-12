@@ -7,8 +7,6 @@ model: opus
 effort: high
 allowed-tools: Agent Bash Read
 ---
-## Role & Constraints
-
 Lead discovery phase. Transform vague ideas into well-specified GitHub issues ready for architecture and implementation. Pure orchestrator — delegates all domain work to sub-skills.
 
 Invoke `Skill("orchestrator-rules")` — adopt CWD verification, delegation, seed-brief contract, NOTES.md progress tracking.
@@ -17,7 +15,7 @@ Invoke `Skill("orchestrator-rules")` — adopt CWD verification, delegation, see
 
 ### 1. Ingestion
 
-Read issue (problem statement + AC). If no issue exists, elicit a one-sentence problem summary from the user.
+Read issue (problem statement + AC), if specified. If no issue exists, elicit a one-sentence problem summary from the user.
 
 Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
 
@@ -59,17 +57,9 @@ Require explicit user approval.
 
 Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
 
-## Sub-skill classification
-
-|Skill|Contract|Invocation|Classification|
-|-|-|-|-|
-|`/describe`|Shell (interactive) — user conversation lead: research, PPT, visualization, problem statement|`Skill("describe")`|Layer 2|
-|`/specify`|Shell (interactive) — AC derivation via grill-me passes|`Skill("specify")`|Layer 2|
-
 ## Rules
 
-- **Delegate, don't duplicate**: Sub-skills own their domain. Do not research, grill, or produce describe/specify output yourself.
+- **Delegate, don't duplicate**: Sub-skills own their domain.
 - **Explicit approval**: Partial feedback ≠ approval. Require direct "Yes/Approved".
 - **Persistence**: Prior-art findings persisted in Prior decisions / Evidence fields.
 - **Traceability**: Every feature gets one issue; sub-issues use proper GitHub relationships.
-- **Point-of-need reads**: Load `_shared/handoff-artifact.md` at step 7, `_shared/compound-on-exit.md` at step 9. Do not preload.

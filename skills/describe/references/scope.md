@@ -1,4 +1,4 @@
-# Scope work units for /describe
+# Scope work units
 
 |Work unit type|Description|Parallelism|
 |-|-|-|

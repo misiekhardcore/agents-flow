@@ -1,4 +1,4 @@
-# Scope Assessment and Product Pressure Test for describe
+# Scope Assessment and Product Pressure Test
 
 ## Scope Assessment
 

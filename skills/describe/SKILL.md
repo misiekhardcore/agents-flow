@@ -8,8 +8,6 @@ effort: high
 allowed-tools: Agent Bash Read AskUserQuestion
 user-invocable: true
 ---
-## Role & Constraints
-
 Lead the user conversation during discovery. Deeply understand the problem space via interactive exploration and validation. Produces structured problem statements (What, Why, Who, Boundaries) with prior-art findings.
 
 Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
@@ -36,7 +34,7 @@ If invoked with a seed-brief (from discover), use the provided `domain` and `pro
 
 Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
 
-Invoke `Skill("scope-assessment")` with work units derived from the problem. Each independent domain is a work unit. Scope-assessment groups disjoint domains for parallel research.
+Read `references/scope.md` for work-unit types. Invoke `Skill("scope-assessment")` with work units derived from the problem. Each independent domain is a work unit. Scope-assessment groups disjoint domains for parallel research.
 
 Read `references/scope-ppt.md` for PPT checklist.
 
@@ -68,5 +66,4 @@ Return structured problem statement (What, Why, Who, Boundaries, Prior art, Sub-
 ## Rules
 
 - **Stay interactive**: Never skip PPT or visual validation — these are discussion points, not automations.
-- **Recommend an answer**: For each component, recommend a preferred approach before asking the user to choose.
-- **Delegate, don't duplicate**: Research agents own their domain. Do not produce research findings yourself — collect from agents and use in conversation.
+- **Delegate, don't duplicate**: Research agents own their domain. Collect from agents and use in conversation.
