@@ -51,23 +51,26 @@ Findings: <summary of remaining findings or "none">
 ## Process
 
 1. **Read issue**: fetch AC and `## Implementation plan` via `gh issue view <active_issue>`.
-2. **Build**: spawn `Agent("skills/build/agents/build-worker.md")` with seed-brief containing `repo`, `branch`, `active_issue`, `scope`, `resources`, and implementation plan from issue.
-3. **Review**: spawn `Agent("skills/review/agents/review-runner.md")` with `<seed-brief>`:
+2. **Scope**: count sub-issues (`gh issue list --search "parent:<active_issue>" --json number`). Sub-issues present → multi-unit; otherwise → single-unit.
+3. **Build**:
+   - **Single-unit**: spawn `Agent("skills/build/agents/build-worker.md")` with seed-brief containing `repo`, `branch`, `active_issue`, `scope`, `resources`, and implementation plan from issue.
+   - **Multi-unit**: spawn parallel `Agent("skills/build/agents/build-worker.md")` — one per sub-issue, each with `repo`, `branch`, sub-issue number as `active_issue`, relevant scope slice, and file subset from `resources`. Use `background: true` agents for parallelism.
+4. **Review**: spawn `Agent("skills/review/agents/review-runner.md")` with `<seed-brief>`:
    ```
    diff: <output of git diff main...HEAD>
    acceptance_criteria: <## Requirements from issue>
    dispatch_mode: fix-brief
    ```
-4. **Verify**: spawn `Agent("skills/verify/agents/verify-runner.md")` with `<seed-brief>`:
+5. **Verify**: spawn `Agent("skills/verify/agents/verify-runner.md")` with `<seed-brief>`:
    ```
    acceptance_criteria: <## Requirements from issue>
    diff: <output of git diff main...HEAD>
    ```
-5. **Evaluate**:
-   - Clean pass → PR creation (step 6).
-   - Findings present and cycles < max_cycles → write fix brief to `.claude/NOTES.md` → go to step 2.
+6. **Evaluate**:
+   - Clean pass → PR creation (step 7).
+   - Findings present and cycles < max_cycles → write fix brief to `.claude/NOTES.md` → go to step 2 (re-scope, rebuild).
    - Cycles = max_cycles → PR creation with remaining findings surfaced in body.
-6. **PR**: see PR Creation section.
+7. **PR**: see PR Creation section.
 
 Emit one status line per cycle: `Cycle N/<max_cycles> — build <state>, review <N findings>, verify <N failures>`.
 
