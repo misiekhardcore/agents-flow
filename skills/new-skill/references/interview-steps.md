@@ -22,7 +22,7 @@ This file details the 12-step interview sequence that new-skill conducts with th
 **`AskUserQuestion`** with `header: "Mis-routing"`, question: "Could another skill be invoked instead of this one?"
 
 **Options:**
-- **Yes** — mis-routing is plausible; follow up with a free-text prompt: "Describe what this skill does NOT do and which skill handles it instead (e.g. 'Does NOT audit plugin files — use /prune for that'), and any sequence precondition (e.g. 'Use after /discovery'). This becomes the `when_to_use` frontmatter."
+- **Yes** — mis-routing is plausible; follow up with a free-text prompt: "Describe what this skill does NOT do and which skill handles it instead (e.g. 'Does NOT audit plugin files — use /prune for that'), and any sequence precondition (e.g. 'Use after /discover'). This becomes the `when_to_use` frontmatter."
 - **No / Skip** — omit `when_to_use` frontmatter.
 
 Only generate `when_to_use` frontmatter when the author answers Yes; omit otherwise.
@@ -32,7 +32,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 **`AskUserQuestion`** with `header: "Role"`, question: "Which role does this skill fill?"
 
 **Options** (4-option limit — if the author is unsure between the two orchestrator variants, pick **Orchestrator** here and clarify in the follow-up):
-- **Orchestrator** — leads a phase; spawns sub-skills or specialists; may write a handoff artifact (e.g. `/discovery`, `/define`, `/implement`)
+- **Orchestrator** — leads a phase; spawns sub-skills or specialists; may write a handoff artifact (e.g. `/discover`, `/define`, `/implement`)
 - **Specialist** — executes a bounded task; receives a seed brief from an orchestrator (e.g. `/build`, `/review`, `/architecture`)
 - **Interactive primitive** — reusable inline behavior; invoked by specialists; no team, no handoff (e.g. `/grill-me`)
 - **Utility** — user-invocable maintenance/post-work skill; no seed brief, no handoff artifact (e.g. `/compound`, `/prune`, `/resolve-pr-feedback`)
@@ -40,7 +40,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 **If Orchestrator:** Ask one follow-up `AskUserQuestion` with `header: "Orchestrator type"`, question: "Does this orchestrator do its own deep reasoning, or sequence already-designed sub-skills?"
 
 **Options:**
-- **Research-leading** — spawns a research team before the main team; deep reasoning at the orchestrator layer (e.g. `/discovery`, `/define`). Defaults model to `opus` and `effort: high`.
+- **Research-leading** — spawns a research team before the main team; deep reasoning at the orchestrator layer (e.g. `/discover`, `/define`). Defaults model to `opus` and `effort: high`.
 - **Coordinator** — sequences sub-skills in a loop; research happens upstream or in the sub-skills (e.g. `/implement`). Defaults model to `sonnet`, no `effort`.
 
 This answer determines which template to use in step 3 and pre-fills the model/effort defaults (which the author can still override in steps e/f).

@@ -28,12 +28,12 @@ Pick the lightest path that fits the task:
 |Size|Path|
 |-|-|
 |Trivial fix|`/implement` directly|
-|Medium feature|`/discovery` → `/implement`|
-|Large feature / epic|`/discovery` → `/define` → `/implement`|
+|Medium feature|`/discover` → `/implement`|
+|Large feature / epic|`/discover` → `/define` → `/implement`|
 
 Building blocks: `/describe`, `/specify`, `/architecture`, `/design`, `/build`, `/review`, `/verify`, `/grill-me`, `/wrap-up`, `/prune`, `/compound`. For the full lifecycle see `${CLAUDE_PLUGIN_ROOT}/docs/workflow.md`.
 
-During `/define` or `/discovery` exploration: time-box codebase reading to 3–5 tool calls, then ask the user a focused question.
+During `/define` or `/discover` exploration: time-box codebase reading to 3–5 tool calls, then ask the user a focused question.
 
 ## Architecture
 
@@ -80,3 +80,4 @@ Token budgets per artifact/phase, CLAUDE.md placement rules, `@`-imports: `${CLA
 - Orchestrator SKILL.md must be ≤ 150 lines. No inline domain work — delegate.
 - Worker agents should include `disallowedTools: [Agent]` to prevent recursive spawning.
 - **Persist lessons to AGENTS.md**: When you discover a project-level convention, gotcha, or architecture rule that future agents would benefit from, add it to this file under the relevant section. NOTES.md is ephemeral session scratch — durable knowledge lives here.
+- **Update docs with code**: Any change to a skill, agent, or command must update all related docs (README.md, docs/*.md, AGENTS.md, other skills referencing it) in the same commit. Stale docs rot faster than dead code.

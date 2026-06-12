@@ -1,7 +1,7 @@
 ---
 name: define
 description: Lead definition phase. Resolves architecture and design technical decisions.
-when_to_use: Use after /discovery produces an approved issue with AC. Precedes /implement.
+when_to_use: Use after /discover produces an approved issue with AC. Precedes /implement.
 argument-hint: "[issue#]"
 model: opus
 effort: high
@@ -13,7 +13,7 @@ Phase Lead. Transform an approved issue into a concrete implementation plan (arc
 Adopt `Skill("orchestrator-rules")` for checkpoint, NOTES.md, and seed-brief conventions.
 
 ## Input
-Issue number with acceptance criteria from /discovery. Read body at entry; reference-read issue on demand throughout.
+Issue number with acceptance criteria from /discover. Read body at entry; reference-read issue on demand throughout.
 
 ## Team Shape
 Invoke `Skill("scope-assessment")` with work units (one per distinct module or sub-issue). Receive agent plan — one agent per disjoint group. No preset agent count; width matches scope.

@@ -1,6 +1,6 @@
 ---
 name: epic-autopilot
-description: Autonomous epic-to-PR pipeline. Chains /discovery → /define → /implement end-to-end for each sub-issue, opening draft PRs.
+description: Autonomous epic-to-PR pipeline. Chains /discover → /define → /implement end-to-end for each sub-issue, opening draft PRs.
 when_to_use: Use when you have an epic issue number or a free-text description and want the full cycle automated.
 argument-hint: "[epic# | description]"
 model: opus
@@ -12,7 +12,7 @@ Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produ
 ## Input
 
 - **Positive integer** → existing GitHub epic issue
-- **Any other string** → free-text description (triggers `/discovery` to create epic)
+- **Any other string** → free-text description (triggers `/discover` to create epic)
 
 ## Team Shape
 
@@ -26,7 +26,7 @@ Always multi-layer fan-out — dispatches one sub-agent per topological layer of
 4. **Stage 5 — Exit**: Print exit summary to stdout. Run is complete when all sub-PRs are open and epic PR is open. Merging is left to humans.
 
 **Key behaviors:**
-- Skip /discovery if epic has ≥3 acceptance criteria
+- Skip /discover if epic has ≥3 acceptance criteria
 - Skip /define if epic has implementation plan
 - Topologically sort sub-issues via Kahn's algorithm (with cycle breaking)
 - Dispatch tiers in parallel via Task sub-agents
