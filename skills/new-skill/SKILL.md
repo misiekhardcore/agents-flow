@@ -50,6 +50,5 @@ Single SKILL.md at target path, shown for approval before writing.
 - Do not invent domain content — locks in guesses.
 - All reference-file reads are point-of-need, not unconditional at top.
 - Defaults (if skipped): `model: sonnet`; `effort`, `argument-hint`, `allowed-tools`, `user-invocable`: omit; target: personal.
-- Generated frontmatter: no `layer:`, no `context: fork`, no `agent:`.
 - Generated `Agent()` calls must include a seed-brief per `${CLAUDE_PLUGIN_ROOT}/_shared/seed-brief.md`.
 - If target `SKILL.md` exists, ask before overwriting.

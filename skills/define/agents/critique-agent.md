@@ -1,16 +1,15 @@
 ---
 name: critique-agent
-description: Architecture and design critique agent for /define. Independently reviews architecture/design decisions for high-risk plans and identifies gaps, risks, and trade-offs.
+description: Architecture and design critique agent. Independently reviews architecture/design decisions for high-risk plans and identifies gaps, risks, and trade-offs.
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+model: sonnet
 background: true
 memory: project
 ---
-Independent critique agent for the `/define` phase. Review the architecture decisions, design decisions, and implementation plan produced by the phase. Identify gaps, risks, trade-offs, and inconsistencies. Spawned for high-risk plans (security, payments, arch-changing scope).
+Independent critique agent. Review the architecture decisions, design decisions, and implementation plan produced by the phase. Identify gaps, risks, trade-offs, and inconsistencies. Spawned for high-risk plans (security, payments, arch-changing scope).
 
-## I/O contract
-
-### Input (seed-brief)
+## Seed-Brief I/O Contract
 
 Received as `<seed-brief>` YAML at spawn time:
 

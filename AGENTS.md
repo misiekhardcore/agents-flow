@@ -55,7 +55,7 @@ During `/define` or `/discovery` exploration: time-box codebase reading to 3–5
 - **Handoff artifact** (`_shared/handoff-artifact.md`): five-field issue body structure (AC, Constraints, Prior decisions, Evidence, Open questions) for cross-phase state transfer.
 - **No autonomous merge.** Exit cleanly at awaiting-merge. Merging is always human.
 - **No issue body updates for intra-orchestrator state.** The five-field shape is for phase boundaries only.
-- **`/discovery` → `/discover` rename announced** in `_templates/AUTHORING.md` but not yet executed — skill still lives at `skills/discovery/`. `/discovery` remains the correct command for now.
+- **`/discovery` → `/discover` rename**. Skill lives at `skills/discover/`. The `/discover` command is now the correct entry point.
 
 ## Authoring new skills
 
