@@ -31,7 +31,7 @@ If issue lacks `## Implementation plan`: read `references/stage-1.md` at point o
 
 ### 2 — Implement
 
-If plan present, branch absent, no open PR: read `references/stage-2.md` at point of need. Spawn `Agent("implement/agents/implement-runner.md")` with seed-brief (`repo`, `branch`, `issue`, `max_cycles: 3`). Print pause message. **Exit.** User re-invokes after review.
+If plan present, branch absent, no open PR: read `references/stage-2.md` at point of need. Invoke `Skill("implement")` with seed-brief handoff (`repo`, `branch`, `issue`, `max_cycles: 3`). Print pause message. **Exit.** User re-invokes after review.
 
 ### 3 — Resolve PR feedback
 
@@ -43,14 +43,19 @@ If clean PR awaiting merge: read `references/stage-4.md` at point of need. Print
 
 ### 5 — Post-merge (compound-on-exit)
 
-If PR merged: read `references/stage-5.md` at point of need. Invoke `Skill("compound")` (compound-on-exit pattern). Spawn `Agent("wrap-up/agents/wrap-up-runner.md")` with seed-brief (`repo`, `branch`, `worktree_path`). Print ship-complete summary. **Exit.**
+If PR merged: read `references/stage-5.md` at point of need. Invoke `Skill("compound")` (compound-on-exit pattern). Invoke `Skill("wrap-up")` with seed-brief handoff (`repo`, `branch`, `worktree_path`). Print ship-complete summary. **Exit.**
 
-## Worker I/O Contracts
+## Worker Agent Inventory
 
-|Worker|Input|Output|
-|-|-|-|
-|`implement-runner`|`repo`, `branch`, `issue`, `max_cycles`|PR URL, findings|
-|`wrap-up-runner`|`repo`, `branch`, `worktree_path`|Removal summary|
+### implement
+- **Invocation**: `Skill("implement")`
+- **Seed-brief handoff**: `repo`, `branch`, `issue`, `max_cycles`
+- **Output**: PR URL, findings
+
+### wrap-up
+- **Invocation**: `Skill("wrap-up")`
+- **Seed-brief handoff**: `repo`, `branch`, `worktree_path`
+- **Output**: Removal summary
 
 ## Rules
 - Invoke `Skill("orchestrator-rules")` for CWD, delegation, no-autonomous-merge, seed-brief, and NOTES.md tracking.
