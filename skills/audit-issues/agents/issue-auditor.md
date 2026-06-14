@@ -9,7 +9,7 @@ memory: project
 ---
 Single-issue auditor. Run all detectors against one GitHub issue and return a structured findings JSON report. Spawned in parallel by `/audit-issues` — one per issue.
 
-## Seed-Brief I/O Contract
+## Input (from spawn prompt)
 
 The orchestrator passes context as a `<seed-brief>` YAML block in the spawn prompt:
 

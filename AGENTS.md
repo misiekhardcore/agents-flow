@@ -51,7 +51,7 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 - **Preflight before gh/git push.** Invoke `Skill("preflight")` — verifies repo, branch, CWD. Spawned workers skip preflight.
 - **NOTES.md** at `.claude/NOTES.md` is the in-phase progress ledger (gitignored). Create on entry, checkpoint before spawn, update on return, leave for the phase-ending skill.
 - **Seed-brief** (`_shared/seed-brief.md`) packages spawn-time context as YAML in XML. Used by orchestrators when spawning agents. NOT for mid-cycle state (use NOTES.md) or phase-to-phase handoff (use issue body).
-- **SKILL.md vs agent files**: SKILL.md owns process flow and spawn instructions. Agent files own the seed-brief I/O contract (input fields, output format). Never inline the contract in SKILL.md — reference the agent file. Agent file headings use `## Seed-Brief I/O Contract`. SKILL.md uses `## Worker Agent Inventory` with per-agent subsections.
+- **SKILL.md vs agent files**: SKILL.md owns process flow and spawn instructions. Agent files own the seed-brief I/O contract (input fields, output format). Never inline the contract in SKILL.md — reference the agent file. Agent file headings use `## Input (from spawn prompt)`. SKILL.md uses `## Worker Agent Inventory` with per-agent subsections.
 - **Handoff artifact** (`_shared/handoff-artifact.md`): five-field issue body structure (AC, Constraints, Prior decisions, Evidence, Open questions) for cross-phase state transfer.
 - **No autonomous merge.** Exit cleanly at awaiting-merge. Merging is always human.
 - **No issue body updates for intra-orchestrator state.** The five-field shape is for phase boundaries only.
