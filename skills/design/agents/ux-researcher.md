@@ -3,7 +3,7 @@ name: ux-researcher
 description: UX pattern researcher for /design. Finds established UX patterns, interaction models, and accessibility guidelines for the target UI component or flow.
 model: haiku
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---

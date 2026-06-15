@@ -5,11 +5,9 @@ argument-hint: "[PR# or URL]"
 when_to_use: Use after /build to review implementation quality. Invoked by /implement; can run standalone against a PR.
 model: sonnet
 effort: high
-layer: 2
 user-invocable: true
 allowed-tools: Agent Bash Read
 ---
-## Role & Constraints
 Lead review phase. Goal: Thoroughly review implementation against requirements and produce actionable findings. Produce inline GitHub review comments.
 
 ## I/O

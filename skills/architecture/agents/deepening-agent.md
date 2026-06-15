@@ -3,7 +3,7 @@ name: deepening-agent
 description: Gap-deepening research agent for /architecture. Explores one specific gap or open question that codebase-scanner and patterns-researcher left unresolved. Spawned conditionally, max 2 rounds.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---
@@ -36,5 +36,5 @@ Remaining open: <anything still unresolved, or "None">
 ## Rules
 
 - One gap per spawn — do not broaden scope.
-- Read only. No writes.
+- Read only.
 - If the gap cannot be resolved with available information, say so explicitly.

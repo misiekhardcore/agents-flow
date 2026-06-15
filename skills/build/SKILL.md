@@ -5,11 +5,9 @@ when_to_use: Use to implement approved architecture decisions/implementation pla
 argument-hint: "[issue#]"
 model: sonnet
 effort: high
-layer: 2
 user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
-## Role & Constraints
 Lead build phase. Goal: Take a fully specified GitHub issue and produce working code. Builds a feature using TDD. Produces implementation code in a worktree. Hands off via the worktree for review.
 
 ## I/O

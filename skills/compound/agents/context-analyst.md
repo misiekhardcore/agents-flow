@@ -3,7 +3,7 @@ name: context-analyst
 description: Compound context analyst. Reviews session history and diff to extract what broke, what was tried, what worked, and why. One of three parallel compound extraction agents.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---
@@ -33,6 +33,6 @@ Root cause: <concise root cause statement>
 
 ## Rules
 
-- Read only — do not write files.
+- Read only.
 - Stick to facts from the session — do not infer or extrapolate.
 - If the session was routine (no novel debugging), output: `Routine — no novel diagnosis path.`

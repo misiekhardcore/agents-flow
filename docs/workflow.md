@@ -6,8 +6,8 @@ Lifecycle walkthrough from discovery to closure.
 |Size|Path|Handoff|
 |-|-|-|
 |**Trivial**|`/implement`|→ PR|
-|**Medium**|`/discovery` → `/implement`|Issue Body → PR|
-|**Large**|`/discovery` → `/define` → `/implement`|Issue Body → Issue Body → PR|
+|**Medium**|`/discover` → `/implement`|Issue Body → PR|
+|**Large**|`/discover` → `/define` → `/implement`|Issue Body → Issue Body → PR|
 
 **State Management**:
 - **Inter-phase**: GitHub issue body (5-field structure — invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md`).
@@ -16,9 +16,9 @@ Lifecycle walkthrough from discovery to closure.
 
 ## Phase Details
 
-### 1. `/discovery` (Opus, High)
+### 1. `/discover` (Opus, High)
 **Goal**: Vague idea → well-specified GitHub issue.
-- **Process**: Classify Scope → Prior-Art Scout → `/describe` ( la-inline) → `/specify` (sequential subagent).
+- **Process**: Delegate to `/describe` (research, PPT, visuals) → `/specify` (AC generation).
 - **Output**: Issue with **Problem statement** + **Handoff block** (AC, Constraints, Decisions, Evidence, Questions).
 - **Gate**: Explicit user approval of issue body.
 - **Next**: `/define` (Large) or `/implement` (Medium).

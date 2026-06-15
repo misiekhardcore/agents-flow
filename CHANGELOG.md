@@ -31,7 +31,7 @@ GitHub Releases (with auto-generated notes and source tarballs) remain the canon
   - `handoff-artifact` -> `_shared/handoff-artifact.md` - cross-phase handoff protocol for GitHub issue body (reference doc, not invoked skill)
   - `notes-md` -> `_shared/notes-md-protocol.md` - in-phase memory layer lifecycle and structure (reference doc, not invoked skill)
   - All callers updated from `Invoke \`Skill("name")\`` to `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<name>.md\``.
-  - `_templates/AUTHORING.md` decision rule refined with concrete examples; `_shared/` catalogue expanded.
+  - `_shared/AUTHORING.md` decision rule refined with concrete examples; `_shared/` catalogue expanded.
   - `skills/scope-assessment/SKILL.md` gained missing `layer: 3` frontmatter.
 
 ### Added

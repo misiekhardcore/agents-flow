@@ -12,19 +12,19 @@ The main conversation handles human interaction (approvals, grill-me, confirmati
 
 Four roles define the dispatch contract and execution context:
 
-| Role | Runs in | User interaction | Dispatches | `context: fork` |
-|---|---|---|---|---|
-| **Orchestrator** | Main context | Yes | Optionally: other Orchestrators and/or Workers | Never |
-| **Interaction** | Main context | Yes — only | Never | Never |
-| **Worker** | Background/isolated | Task confirmations only | Optionally: other Workers | Always (Skill); implied (Agent file) |
-| **Protocol** | Caller's context | N/A | Never | Never |
+|Role|Runs in|User interaction|Dispatches|`context: fork`|
+|-|-|-|-|-|
+|**Orchestrator**|Main context|Yes|Optionally: other Orchestrators and/or Workers|Never|
+|**Interaction**|Main context|Yes — only|Never|Never|
+|**Worker**|Background/isolated|Task confirmations only|Optionally: other Workers|Always (Skill); implied (Agent file)|
+|**Protocol**|Caller's context|N/A|Never|Never|
 
 Worker sub-types — same role, different packaging:
 
-| Sub-type | Format | Invocation | User-invocable |
-|---|---|---|---|
-| Worker Skill | SKILL.md + `context: fork` | `Skill("name")` | Can be |
-| Worker Agent | `agents/*.md` file | `Agent("path.md")` | Never |
+|Sub-type|Format|Invocation|User-invocable|
+|-|-|-|-|
+|Worker Skill|SKILL.md + `context: fork`|`Skill("name")`|Can be|
+|Worker Agent|`agents/*.md` file|`Agent("path.md")`|Never|
 
 Key distinctions:
 
@@ -55,15 +55,15 @@ Never use on Orchestrators, Interactions, or Protocols.
 
 Always specify explicitly — never rely on the silent `general-purpose` default.
 
-| Task type | `agent:` |
-|---|---|
-| Read-only or pure computation: file scan, codebase research, lookups, structured reasoning over prompt input | `Explore` — Haiku model, no CLAUDE.md loaded |
-| Read-only: planning-phase analysis | `Plan` — no CLAUDE.md |
-| Agent dispatch required, writes required, or gh mutations | `general-purpose` |
+|Task type|`agent:`|
+|-|-|
+|Read-only or pure computation: file scan, codebase research, lookups, structured reasoning over prompt input|`Explore` — Haiku model, no CLAUDE.md loaded|
+|Read-only: planning-phase analysis|`Plan` — no CLAUDE.md|
+|Agent dispatch required, writes required, or gh mutations|`general-purpose`|
 
 ### `Agent("path.md")` — Worker Agent dispatch
 
-Use for parallel fan-out and bulk I/O workers. Worker Agents are defined as `agents/*.md` files within a skill directory. They always run isolated (autonomous, no user interaction). Standard frontmatter: `disallowedTools: [Agent, AskUserQuestion]` (prevents recursive spawning and interactive prompts).
+Use for parallel fan-out and bulk I/O workers. Worker Agents are defined as `agents/*.md` files within a skill directory. They always run isolated (autonomous, no user interaction). Standard frontmatter: `disallowedTools: Agent AskUserQuestion` (prevents recursive spawning and interactive prompts).
 
 When to use Worker Agent vs Worker Skill:
 

@@ -2,10 +2,10 @@
 
 ## Stage 1 — Discovery gate
 
-If input is a positive integer and the epic issue has a well-formed `## Requirements` section (≥3 acceptance criteria), skip /discovery and go to Stage 2.
+If input is a positive integer and the epic issue has a well-formed `## Requirements` section (≥3 acceptance criteria), skip /discover and go to Stage 2.
 
 Otherwise:
-1. Run `/discovery` on the epic (or free-text description). This is interactive.
+1. Run `/discover` on the epic (or free-text description). This is interactive.
 2. **Pause for explicit user approval.** Present: "Discovery complete. Review the issue body above. Approve to continue to /define, or provide feedback."
 3. Wait for explicit approval before proceeding.
 

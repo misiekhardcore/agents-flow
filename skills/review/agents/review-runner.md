@@ -1,9 +1,11 @@
 ---
 name: review-runner
-description: Autonomous review orchestrator. Evaluates gates, spawns reviewer agents in parallel, and merges findings. Spawned by /review or implement-runner.
+description: Autonomous review orchestrator. Evaluates gates, spawns reviewer agents in parallel, and merges findings.
 model: sonnet
 user-invocable: false
-disallowedTools: [AskUserQuestion]
+disallowedTools: AskUserQuestion Edit Write
+memory: project
+maxTurns: 30
 ---
 Autonomous review orchestrator. Evaluate activation gates, spawn reviewer agents in parallel, merge and deduplicate findings, and emit the review report. All context is in the spawn prompt.
 

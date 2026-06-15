@@ -3,34 +3,61 @@ name: implement-runner
 description: Autonomous implement orchestrator. Runs build → review → verify cycles and opens a PR. Spawned by /implement or autopilot orchestrators; never invoked by the user.
 model: sonnet
 user-invocable: false
-disallowedTools: [AskUserQuestion]
+disallowedTools: AskUserQuestion
 memory: project
 background: true
 maxTurns: 30
 ---
-Autonomous implementation cycle runner. Drive build → review → verify up to 3 times and open a draft PR. All context is in the spawn prompt — no user interaction at any point.
+Autonomous implementation cycle runner. Drives build → review → verify up to 3 times and opens a draft PR. All context is in the spawn prompt — no user interaction at any point.
 
 ## Input (from spawn prompt)
 
-- `repo`: owner/repo (pre-verified by caller)
-- `branch`: feat/<slug> (pre-verified by caller)
-- `issue`: GitHub issue number
-- `max_cycles`: maximum fix cycles (default: 3)
+The orchestrator passes context as a `<seed-brief>` YAML block in the spawn prompt (see `_shared/seed-brief.md`):
+
+```
+<seed-brief>
+repo: owner/repo
+branch: feat/<slug>
+active_issue: <number>
+max_cycles: 3
+scope: "<description of work unit>"
+payload:
+  resources: [<file paths>]
+  progress: |
+    <NOTES.md slice — task list subset and decisions>
+</seed-brief>
+```
+
+|Field|Type|Description|
+|-|-|-|
+|`repo`|string|owner/repo. Pre-verified by caller.|
+|`branch`|string|feat/<slug>. Pre-verified by caller.|
+|`active_issue`|number|GitHub issue number.|
+|`max_cycles`|number|Maximum fix cycles (default: 3).|
+|`scope`|string|One-sentence description of this work unit.|
+|`payload.resources`|string[]|File paths this unit owns.|
+|`payload.progress`|string|NOTES.md slice for crash-safe resume (<=15 lines).|
+
+## Output
+
+On completion, emit:
+```
+PR: <url>
+Findings: <summary of remaining findings or "none">
+```
 
 ## Process
 
-1. **Read issue**: fetch AC and `## Implementation plan` via `gh issue view <issue>`.
-2. **Scope**: count sub-issues (`gh issue list --search "parent:<issue>"`). Sub-issues present → multi-unit; otherwise → single-unit.
-3. **Build**:
-   - Single-unit: spawn `Agent("skills/build/agents/build-runner.md")` with `issue` and `implementation_plan`.
-   - Multi-unit: spawn parallel `Agent("skills/build/agents/build-worker.md")` — one per sub-issue.
-4. **Review**: spawn `Agent("skills/review/agents/review-runner.md")`:
+1. **Read issue**: fetch AC and `## Implementation plan` via `gh issue view <active_issue>`.
+2. **Scope**: enumerate sub-issues (`gh issue list --search "parent:<active_issue>" --json number`). Each sub-issue is one build group. If no sub-issues, the issue itself is one group.
+3. **Build**: spawn one `Agent("skills/build/agents/build-worker.md")` per group with seed-brief containing `repo`, `branch`, group issue or `active_issue`, relevant scope slice, and file subset from `resources`. Use `background: true` agents for parallelism.
+4. **Review**: spawn `Agent("skills/review/agents/review-runner.md")` with `<seed-brief>`:
    ```
    diff: <output of git diff main...HEAD>
    acceptance_criteria: <## Requirements from issue>
    dispatch_mode: fix-brief
    ```
-5. **Verify**: spawn `Agent("skills/verify/agents/verify-runner.md")`:
+5. **Verify**: spawn `Agent("skills/verify/agents/verify-runner.md")` with `<seed-brief>`:
    ```
    acceptance_criteria: <## Requirements from issue>
    diff: <output of git diff main...HEAD>
@@ -51,7 +78,7 @@ Run from worktree root:
 2. Push branch: `git push -u origin HEAD`.
 3. Resolve base: `git symbolic-ref refs/remotes/origin/HEAD` or fall back to `main`.
 4. Create draft PR: `gh pr create --draft --base <base> --title "<title>" --body "<body>"`.
-   - `## Summary` (1-2 sentences), `## Testing notes` (repro steps), `## Notes` (from NOTES.md or exhausted findings).
+   - `## Summary`, `## Testing notes`, `## Notes` (from NOTES.md or exhausted findings).
 5. Delete `.claude/NOTES*.md` files.
 6. Emit: `PR: <url>`.
 

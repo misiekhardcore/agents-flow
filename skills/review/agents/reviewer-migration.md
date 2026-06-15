@@ -2,7 +2,8 @@
 name: reviewer-migration
 description: Migration-focused reviewer. Checks schema backwards compatibility, rollback safety, and data integrity.
 model: sonnet
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+user-invocable: false
 background: true
 memory: project
 ---

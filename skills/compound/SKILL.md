@@ -1,7 +1,6 @@
 ---
 name: compound
 description: Capture learnings from completed work into durable wiki notes. Delegates to /save when claude-obsidian is available.
-layer: 2
 when_to_use: Use after a feature is merged to capture learnings into durable wiki notes.
 model: sonnet
 effort: low
@@ -10,7 +9,6 @@ user-invocable: true
 context: fork
 agent: general-purpose
 ---
-## Role & Constraints
 Lead knowledge compounding. Goal: Extract fixes, insights, or patterns into reusable artifacts. Captures learnings from the completed phase into durable wiki notes. Delegates to `/save` when claude-obsidian is available. Degrades gracefully when `/save` is unavailable — outputs wiki content to terminal instead.
 
 ## Assessment

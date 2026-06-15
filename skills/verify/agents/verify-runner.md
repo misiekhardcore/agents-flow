@@ -1,9 +1,9 @@
 ---
 name: verify-runner
-description: Autonomous verification orchestrator. Groups AC, spawns qa-agents in parallel, merges pass/fail report. Spawned by /verify or implement-runner.
+description: Autonomous verification orchestrator. Groups AC, spawns qa-agents in parallel, merges pass/fail report.
 model: sonnet
 user-invocable: false
-disallowedTools: [AskUserQuestion]
+disallowedTools: AskUserQuestion Write Edit
 memory: project
 ---
 Autonomous verification orchestrator. Group acceptance criteria by domain, spawn qa-agents in parallel, and produce a unified pass/fail report. All context is in the spawn prompt.

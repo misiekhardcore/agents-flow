@@ -2,7 +2,8 @@
 name: reviewer-standards
 description: Standards-focused code reviewer. Checks code conventions, naming, and test quality.
 model: haiku
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+user-invocable: false
 background: true
 memory: project
 ---

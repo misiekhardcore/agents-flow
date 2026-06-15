@@ -68,7 +68,7 @@ To prevent race conditions and "last-write-wins" conflicts:
 - **Isolation Escape Hatch**: If disjoint scope cannot be guaranteed, use `isolation: "worktree"` to provide each agent with its own git worktree.
 
 ### 3. Defensive Frontmatter
-Worker agents should include `disallowedTools: [Agent]` in their frontmatter to prevent recursive agent spawning.
+Worker agents should include `disallowedTools: Agent` in their frontmatter to prevent recursive agent spawning.
 
 ## Custom Agent Authoring
 
@@ -113,15 +113,71 @@ The `/discovery` skill has been renamed to `/discover`.
 - **Breaking Change**: Existing `CLAUDE.md` references to `/discovery` will break.
 - **Action**: Users must manually update their references. No compatibility shim is provided to avoid technical debt.
 
-## Skill Roles & Templates
+## Body Assembly by Role/Tier
 
-Each skill maps to one of the following templates. Use the corresponding template from `_templates/`.
+Each skill maps to a role and tier. `/new-skill` derives the tier from the role, then assembles the SKILL.md body from these patterns.
 
-|Role|Definition|Example|Model|Template|
-|-|-|-|-|-|
-|**Orchestrator**|Coordinates sub-skills and agents; manages loop and phase sequencing.|`/implement`, `/issue-autopilot`|`sonnet`/`opus`|`SKILL.orchestrator`|
-|**Worker**|Bounded task with seed-brief input and findings report output. Runs isolated via `context: fork`.|`/verify`, `/scope-assessment`|`haiku`/`sonnet`|`SKILL.worker`|
-|**Interaction**|Inline user-interaction behavior; no delegation.|`/grill-me`|`sonnet`|`SKILL.primitive`|
+### Tier Mapping
+
+|Role|Tier|`user-invocable`|Template|
+|-|-|-|-|
+|**Orchestrator**|1 (Orchestrator)|`true`|Single minimal template|
+|**Specialist**|2 (Sub-skill)|`true`|Single minimal template|
+|**Utility**|2 (Sub-skill)|`true`|Single minimal template|
+|**Primitive**|2 (Sub-skill)|`true`|Single minimal template|
+|**Protocol**|3 (Behavioral)|`false`|Single minimal template|
+
+### Body Sections by Role
+
+`/new-skill` composes the SKILL.md body from these sections per derived role. Each section is documented inline; the skill generates only what the role needs.
+
+|Role|Sections to include|`## Protocol skills`|`## Process` format|
+|-|-|-|-|
+|**Orchestrator**|`## Process`, `## Rules`|Required|`### N. Title` per step|
+|**Specialist**|`## Input`, `## Process`, `## Output`, `## Rules`|If needed (Protocol skills)|`### N. Title` per step|
+|**Utility**|`## Process`, `## Rules`|If needed|Plain numbered list|
+|**Primitive**|`## Input`, `## Process` (2-4 steps), `## Output`, `## Rules`|Never|Plain numbered list|
+|**Protocol**|Summary sentence, `## Contract`, `## Behavior`, `## Verification`|Never|Titled sections (no Process heading)|
+
+### Section Templates
+
+**`## Protocol skills`** (Orchestrator, Specialist, Utility):
+```
+Adopt `Skill("<protocol-name>")`.
+```
+One line per protocol. Usually `orchestrator-rules` for orchestrators, `interviewing-rules` for interactive skills.
+
+**`## Process`** (Orchestrator):
+```
+### 1. <Title>
+<Step description.>
+```
+Sequential step numbering. Orchestrators always include Init NOTES.md, Sign-off, and Compound.
+
+**`## Input`** (Specialist, Primitive):
+```
+<!-- What the skill receives — issue, seed-brief fields, or problem statement. -->
+```
+
+**`## Output`** (Specialist, Primitive):
+```
+<!-- What the skill produces — report, file, findings. -->
+```
+
+**`## Rules`** (Orchestrator, Specialist, Utility, Primitive):
+```
+- <Rule 1>
+- <Rule 2>
+```
+
+### Default Frontmatter by Role
+
+|Field|Orchestrator|Specialist|Utility|Primitive|Protocol|
+|-|-|-|-|-|-|
+|`model`|`sonnet`|`sonnet`|`sonnet`|`sonnet`|`sonnet`|
+|`effort`|omit|omit|omit|omit|omit|
+|`allowed-tools`|omit|omit|omit|omit|omit|
+|`user-invocable`|omit (defaults true)|omit|omit|omit|`false`|
 
 ## Orchestrator Decomposition
 
@@ -131,7 +187,7 @@ When an orchestrator must decide how to fan out work across agents, use `/scope-
 2. Invoke `/scope-assessment`; receive back an agent plan where each entry covers a set of work units that share no resources with any other entry.
 3. Dispatch one agent per entry in the plan.
 
-Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in a dedicated `references/` doc. That doc must also cite `/scope-assessment` as the canonical decomposition algorithm. The layer-3 skill encodes the algorithm only; per-caller variation lives at the call site.
+Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in a dedicated `references/` doc. That doc must also cite `/scope-assessment` as the canonical decomposition algorithm. The protocol skill encodes the algorithm only; per-caller variation lives at the call site.
 
 ## `_shared/` File Catalogue
 
@@ -155,7 +211,7 @@ name: <agent-name>
 description: <one sentence — what it does and when it's spawned>
 model: <sonnet|haiku|opus>
 user-invocable: false
-disallowedTools: [Agent, AskUserQuestion]
+disallowedTools: Agent AskUserQuestion
 ---
 <Role sentence. Input source. No user interaction.>
 

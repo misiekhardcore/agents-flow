@@ -3,7 +3,7 @@ name: skill-discovery
 description: Skill marketplace discovery agent for /find-skills. Searches the skills.sh leaderboard and verifies quality signals. Returns a ranked candidate list for user confirmation.
 model: haiku
 user-invocable: false
-disallowedTools: [Agent, AskUserQuestion]
+disallowedTools: Agent Write Edit AskUserQuestion
 background: true
 ---
 Skill discovery agent. Search the skills marketplace and return ranked candidates for the user to choose from. The orchestrator handles confirmation and installation.

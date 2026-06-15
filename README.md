@@ -9,12 +9,11 @@ flowchart TB
         direction TB
         Start([feature request]) --> Discovery
 
-        subgraph Discovery["/discovery — explore & scope"]
+        subgraph Discovery["/discover — explore & scope"]
             direction LR
             D_Describe["/describe — problem space"]
             D_Specify["/specify — acceptance criteria"]
-            D_Scout["Prior-Art Scout"]
-            D_Scout -.seed brief.-> D_Describe
+
         end
 
         subgraph Define["/define — solution architecture"]
@@ -97,10 +96,10 @@ Then enable it in your project or globally in Claude Code settings.
 
 |Skill|Description|
 |-|-|
-|`/discovery`|Explore a problem and produce a GitHub issue with acceptance criteria|
+|`/discover`|Explore a problem and produce a GitHub issue with acceptance criteria|
 |`/define`|Plan architecture and design; produces the implementation handoff|
 |`/implement`|Full build→review→verify cycle, ends with a draft PR|
-|`/epic-autopilot`|Autonomous epic→PR pipeline; chains `/discovery → /define → /implement` per sub-issue|
+|`/epic-autopilot`|Autonomous epic→PR pipeline; chains `/discover → /define → /implement` per sub-issue|
 |`/issue-autopilot`|Single-issue end-to-end pipeline: `/define` → `/implement` → `/resolve-pr-feedback` → `/compound` → `/wrap-up`|
 |`/build`|Code against an issue's acceptance criteria using TDD|
 |`/review`|Review an implementation or external PR; correctness, standards, and conditional specialists|
@@ -133,8 +132,8 @@ Without `claude-obsidian`, every skill still runs; vault operations are skipped 
 |Task size|Path|
 |-|-|
 |Trivial fix|`/implement` directly|
-|Medium feature|`/discovery` → `/implement`|
-|Large feature / epic|`/discovery` → `/define` → `/implement`|
+|Medium feature|`/discover` → `/implement`|
+|Large feature / epic|`/discover` → `/define` → `/implement`|
 
 Full lifecycle walkthrough: [`docs/workflow.md`](docs/workflow.md)
 
@@ -149,7 +148,7 @@ Multi-plugin coordination: MCP scope, inter-plugin dependencies, optional `claud
 ## Authoring standard
 
 - **Templates**: role-specific skeletons in `_templates/`
-- **Convention doc**: `_templates/AUTHORING.md` — skill types, frontmatter, `_shared/` references
+- **Convention doc**: `_shared/AUTHORING.md` — skill types, frontmatter, `_shared/` references
 - **Scaffolder**: `/new-skill` — interactive generator
 
 Shared protocols at `_shared/`:

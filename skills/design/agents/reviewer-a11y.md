@@ -3,7 +3,7 @@ name: reviewer-a11y
 description: A11y compliance reviewer for /design. Evaluates proposed UI designs for accessibility compliance, keyboard navigation, and screen reader support.
 model: haiku
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---

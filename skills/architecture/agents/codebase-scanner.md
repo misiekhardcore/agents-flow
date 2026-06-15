@@ -3,7 +3,7 @@ name: codebase-scanner
 description: Codebase architecture scanner for /architecture. Reads existing patterns, module boundaries, and dependency graph to inform architecture decisions.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---
@@ -35,6 +35,6 @@ Files scanned: <count>
 
 ## Rules
 
-- Read only. No writes.
+- Read only.
 - Prioritize breadth over depth — identify structure, don't read every implementation detail.
 - Cap at 20 files if codebase is large; note the sampling strategy.

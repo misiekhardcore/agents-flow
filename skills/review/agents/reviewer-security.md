@@ -2,7 +2,8 @@
 name: reviewer-security
 description: Security-focused code reviewer. Checks auth, injection, secrets, and privilege escalation.
 model: sonnet
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+user-invocable: false
 background: true
 memory: project
 ---

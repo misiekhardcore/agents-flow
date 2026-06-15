@@ -3,7 +3,7 @@ name: solution-extractor
 description: Solution pattern extractor for /compound. Distills root cause, solution, and prevention into a reusable knowledge artifact. One of three parallel compound extraction agents.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---

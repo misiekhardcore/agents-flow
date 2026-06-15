@@ -3,7 +3,7 @@ name: constraint-analyzer
 description: Architecture constraint analyzer for /architecture. Reads codebase-scanner and patterns-researcher outputs and maps system constraints, topology, integration risks, and assumption challenges.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---
@@ -45,7 +45,7 @@ Scale pressure points:
 
 ## Rules
 
-- Read only. No writes.
+- Read only.
 - Derive constraints from existing code and docs — not from speculation.
 - If input data is sparse, note what is missing rather than fabricating.
 - Keep output under 500 tokens.

@@ -3,7 +3,7 @@ name: build-worker
 description: Parallel build worker for one work unit. Implements a single sub-issue or file group in the shared worktree. Spawned in parallel by implement-runner for multi-unit scope.
 model: sonnet
 user-invocable: false
-disallowedTools: [AskUserQuestion]
+disallowedTools: AskUserQuestion
 background: true
 memory: project
 ---

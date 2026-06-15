@@ -3,7 +3,7 @@ name: qa-agent
 description: QA agent for one acceptance criteria group. Verifies each AC in the group is met with evidence. Spawned in parallel by verify-runner.
 model: haiku
 user-invocable: false
-disallowedTools: [Agent, AskUserQuestion]
+disallowedTools: Agent AskUserQuestion Write Edit
 background: true
 memory: project
 ---

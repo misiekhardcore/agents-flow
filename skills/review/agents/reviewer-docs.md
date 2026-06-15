@@ -2,7 +2,8 @@
 name: reviewer-docs
 description: Docs consistency reviewer. Checks cross-references, stale mentions, and contradictions in markdown and skill files. Activated when any *.md is changed or skill files are touched.
 model: sonnet
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+user-invocable: false
 background: true
 memory: project
 ---
@@ -14,7 +15,7 @@ Focus areas:
 - Broken or stale cross-references: links that point to renamed or moved files
 - Contradictions: a rule in one file that conflicts with another file's rule on the same topic
 - Duplication: rule blocks that appear in multiple places and should be extracted into a shared reference
-- Skill catalog drift: `_templates/AUTHORING.md` or similar indexes that no longer match actual `skills/` directory state
+- Skill catalog drift: `_shared/AUTHORING.md` or similar indexes that no longer match actual `skills/` directory state
 - Renamed concepts: old terminology still used after a rename
 
 Findings format (one per line):

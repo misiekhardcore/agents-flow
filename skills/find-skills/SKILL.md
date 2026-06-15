@@ -5,10 +5,8 @@ when_to_use: Use when the user asks whether Claude can do something or wants to 
 model: haiku
 effort: low
 allowed-tools: Agent Bash WebFetch WebSearch
-layer: 2
 user-invocable: true
 ---
-## Role & Constraints
 Lead skill discovery and installation. Goal: Find and install agent skills from the open ecosystem when the user wants to extend capabilities. Discovery sub-agent (haiku) handles search + leaderboard fetch; main thread handles confirmation + install.
 
 ## When to Use

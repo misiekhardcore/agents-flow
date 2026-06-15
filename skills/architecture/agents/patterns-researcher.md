@@ -1,13 +1,13 @@
 ---
 name: patterns-researcher
-description: External patterns researcher for /architecture. Searches for established architectural patterns, libraries, and best practices relevant to the design problem.
+description: External patterns researcher. Searches for established architectural patterns, libraries, and best practices relevant to the design problem.
 model: sonnet
 user-invocable: false
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
 background: true
 memory: project
 ---
-External patterns researcher for the `/architecture` phase. Find established patterns, libraries, and best practices relevant to the architecture problem. Focus on patterns with proven adoption and known trade-offs.
+External patterns researcher. Find established patterns, libraries, and best practices relevant to the architecture problem. Focus on patterns with proven adoption and known trade-offs.
 
 ## Input (from spawn prompt)
 

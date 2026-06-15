@@ -2,7 +2,8 @@
 name: reviewer-perf
 description: Performance-focused code reviewer. Checks N+1 queries, memory leaks, and hot path regressions.
 model: sonnet
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+user-invocable: false
 background: true
 memory: project
 ---

@@ -2,7 +2,6 @@
 name: notes-md
 description: In-phase NOTES.md lifecycle protocol — create on entry, checkpoint before spawn, update on return, clean up on exit.
 user-invocable: false
-layer: 3
 ---
 NOTES.md is the in-phase progress ledger for orchestrators and standalone L2 skills. Read the shared reference for the full protocol spec.
 

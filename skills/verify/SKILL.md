@@ -5,13 +5,11 @@ argument-hint: "[issue#]"
 when_to_use: Use after /build to verify all acceptance criteria are met. Invoked by /implement; can run standalone.
 model: haiku
 effort: low
-layer: 2
 user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 context: fork
 agent: general-purpose
 ---
-## Role & Constraints
 Lead verification phase. Goal: Verify every AC from the issue is met with evidence. Report pass/fail per criterion.
 
 ## I/O

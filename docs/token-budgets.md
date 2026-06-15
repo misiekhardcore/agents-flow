@@ -29,7 +29,7 @@ Full session context â€” system prompt + CLAUDE.md + prior turns + tool output â
 
 |Phase boundary|Target|Verification|
 |-|-|-|
-|End of `/discovery`|**<15k tokens**|`/context` after issue body is written, before reset|
+|End of `/discover`|**<15k tokens**|`/context` after issue body is written, before reset|
 |End of `/define`|**<15k tokens**|After implementation plan is written into issue|
 |End of `/implement`|**<20k tokens**|After draft PR is opened|
 
@@ -96,10 +96,10 @@ Each `/skill` invocation loads the full skill body verbatim. Multiple invocation
 
 **Anti-pattern**:
 ```
-/discovery   # writes issue #482
+/discover   # writes issue #482
 /define      # writes implementation plan to #482
 # later, after confusion:
-/discovery   # re-loads entire skill to "re-check the spec"
+/discover   # re-loads entire skill to "re-check the spec"
 ```
 
 Fix: read the issue body or NOTES.md instead. The skill body has nothing to add on re-read.

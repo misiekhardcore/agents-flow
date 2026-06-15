@@ -2,7 +2,8 @@
 name: reviewer-correctness
 description: Correctness-focused code reviewer. Checks AC satisfaction, logic errors, and edge cases.
 model: sonnet
-disallowedTools: [Agent]
+disallowedTools: Agent Write Edit
+user-invocable: false
 background: true
 memory: project
 ---
