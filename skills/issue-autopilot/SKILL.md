@@ -50,20 +50,6 @@ worktree_path: <absolute path to worktree>
 ```
 Print ship-complete summary. **Exit.**
 
-## Worker Agent Inventory
-
-### implement-runner
-- **Agent file**: `skills/implement/agents/implement-runner.md`
-- **Invocation**: `Agent("implement/agents/implement-runner.md")`
-- **Seed-brief handoff**: `repo`, `branch`, `issue`, `max_cycles`
-- **Output**: PR URL
-
-### wrap-up-runner
-- **Agent file**: `skills/wrap-up/agents/wrap-up-runner.md`
-- **Invocation**: `Agent("wrap-up/agents/wrap-up-runner.md")`
-- **Seed-brief handoff**: `repo`, `branch`, `worktree_path`
-- **Output**: Worktree cleanup summary
-
 ## Rules
 
 - **Loop-break**: Stage 3 — break if unresolved thread count non-zero and unchanged after one pass.
