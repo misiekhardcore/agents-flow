@@ -1,6 +1,6 @@
 # Skill Authoring Guide
 
-This document defines the structural and behavioral conventions for building skills in `claude-workflow`.
+This document defines the structural and behavioral conventions for building skills in `agents-flow`.
 
 ## Role Taxonomy
 
@@ -43,7 +43,7 @@ user-invocable: false
 - Divide into sections: **Contract**, **Behavior**, **Verification** (as appropriate).
 - Document entry conditions, exit behaviors, and any state mutations.
 
-### Protocol Skills in `claude-workflow`
+### Protocol Skills in `agents-flow`
 
 The current Protocol skill catalog lives in `skills/`. Consult `ls skills/` for a list of available protocols. Each skill directory contains a `SKILL.md` with the authoritative protocol definition.
 

@@ -1,5 +1,5 @@
 {
-  "name": "claude-workflow",
+  "name": "agents-flow",
   "owner": {
     "name": "Michal Konopski",
     "url": "https://github.com/misiekhardcore"
@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "claude-workflow",
+      "name": "agents-flow",
       "source": "./",
       "description": "Workflow skills for Claude Code — standardized feature lifecycle: /discover → /define → /implement. 26 skills, shared protocols, authoring standard, /new-skill scaffolder.",
       "version": "2.0.1",
@@ -18,8 +18,8 @@
         "name": "Michal Konopski",
         "url": "https://github.com/misiekhardcore"
       },
-      "homepage": "https://github.com/misiekhardcore/claude-workflow",
-      "repository": "https://github.com/misiekhardcore/claude-workflow",
+      "homepage": "https://github.com/misiekhardcore/agents-flow",
+      "repository": "https://github.com/misiekhardcore/agents-flow",
       "license": "MIT"
     }
   ]

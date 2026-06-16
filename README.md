@@ -1,4 +1,4 @@
-# claude-workflow
+# agents-flow
 
 Workflow skills plugin for Claude Code — a standardized lifecycle for feature development.
 
@@ -86,8 +86,8 @@ flowchart TB
 ## Install
 
 ```bash
-claude plugin marketplace add misiekhardcore/claude-workflow
-claude plugin install claude-workflow@claude-workflow
+claude plugin marketplace add misiekhardcore/agents-flow
+claude plugin install agents-flow@agents-flow
 ```
 
 Then enable it in your project or globally in Claude Code settings.
@@ -167,7 +167,7 @@ Shared protocols at `_shared/`:
 
 Versions in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (both `metadata.version` and `plugins[0].version`) must agree. Trigger the **Release** workflow via `workflow_dispatch` to bump all three in lockstep, commit, tag, and publish.
 
-Per-release notes with full diffs: [GitHub Releases](https://github.com/misiekhardcore/claude-workflow/releases). In-repo summary: [`CHANGELOG.md`](CHANGELOG.md).
+Per-release notes with full diffs: [GitHub Releases](https://github.com/misiekhardcore/agents-flow/releases). In-repo summary: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## License
 

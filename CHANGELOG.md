@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the **claude-workflow** plugin are recorded here. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
+All notable changes to the **agents-flow** plugin are recorded here. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [2.0.1] - 2026-06-16
 ### Fixed
@@ -75,9 +75,9 @@ All notable changes to the **claude-workflow** plugin are recorded here. The for
 - Complete v2 terminology cleanup and documentation update
 # Changelog
 
-All notable changes to the **claude-workflow** plugin are recorded here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
+All notable changes to the **agents-flow** plugin are recorded here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
-GitHub Releases (with auto-generated notes and source tarballs) remain the canonical artifact: <https://github.com/misiekhardcore/claude-workflow/releases>. This file mirrors them in repo so changes are visible without leaving the source tree.
+GitHub Releases (with auto-generated notes and source tarballs) remain the canonical artifact: <https://github.com/misiekhardcore/agents-flow/releases>. This file mirrors them in repo so changes are visible without leaving the source tree.
 
 ## [1.6.2] - 2026-05-15
 ### Added

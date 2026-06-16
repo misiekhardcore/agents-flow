@@ -1,8 +1,8 @@
-# AGENTS.md — claude-workflow plugin
+# AGENTS.md — agents-flow plugin
 
 ## Repository type
 
-This is a **Claude Code skills plugin** installed via `claude plugin marketplace add misiekhardcore/claude-workflow`. It is not a standalone app — skills live at `skills/<name>/SKILL.md` and are loaded by Claude Code at invocation time.
+This is a **Claude Code skills plugin** installed via `claude plugin marketplace add misiekhardcore/agents-flow`. It is not a standalone app — skills live at `skills/<name>/SKILL.md` and are loaded by Claude Code at invocation time.
 
 ## Commands
 
@@ -67,7 +67,7 @@ Token budgets per artifact/phase, CLAUDE.md placement rules, `@`-imports: `${CLA
 ## Plugin path variables
 
 - `${CLAUDE_PLUGIN_ROOT}` — plugin install dir. Skills reference `_shared/` via `${CLAUDE_PLUGIN_ROOT}/_shared/<file.md>`. Fallback: if not expanded inline, skills use `_shared/<file.md>` and Claude resolves via glob against `~/.claude/plugins/cache/<marketplace>/<version>/`.
-- `${CLAUDE_PLUGIN_DATA}` — `~/.claude/plugins/data/claude-workflow/` for persistent cached state.
+- `${CLAUDE_PLUGIN_DATA}` — `~/.claude/plugins/data/agents-flow/` for persistent cached state.
 
 ## Existing instruction files
 

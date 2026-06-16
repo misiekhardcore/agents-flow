@@ -1,6 +1,6 @@
 # Dispatch Primitives — Decision Framework
 
-This document establishes when to use each dispatch mechanism in `claude-workflow` (`Skill`, `Agent`, `context: fork`, `agent:`, `isolation: worktree`) and defines the canonical role taxonomy (Orchestrator, Interaction, Worker, Protocol). It replaces the layer-number terminology in `AUTHORING.md` as the human-facing classification system.
+This document establishes when to use each dispatch mechanism in `agents-flow` (`Skill`, `Agent`, `context: fork`, `agent:`, `isolation: worktree`) and defines the canonical role taxonomy (Orchestrator, Interaction, Worker, Protocol). It replaces the layer-number terminology in `AUTHORING.md` as the human-facing classification system.
 
 ## Core Principle
 

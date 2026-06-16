@@ -1,5 +1,5 @@
 {
-  "name": "claude-workflow",
+  "name": "agents-flow",
   "version": "2.0.1",
   "description": "Workflow skills for Claude Code — standardized feature lifecycle: /discover → /define → /implement. Ships a family of lifecycle skills, shared protocols, an authoring standard, and the /new-skill scaffolder.",
   "author": {
@@ -7,8 +7,8 @@
     "url": "https://github.com/misiekhardcore"
   },
   "license": "MIT",
-  "homepage": "https://github.com/misiekhardcore/claude-workflow",
-  "repository": "https://github.com/misiekhardcore/claude-workflow",
+  "homepage": "https://github.com/misiekhardcore/agents-flow",
+  "repository": "https://github.com/misiekhardcore/agents-flow",
   "keywords": [
     "workflow",
     "skills",
