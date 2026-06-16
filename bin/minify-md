@@ -259,7 +259,7 @@ def main() -> int:
         print('Agent-facing markdown files are not minified:', file=sys.stderr)
         for relative_path in changed_paths:
             print(f'  - {relative_path}', file=sys.stderr)
-        print('Run: python3 .ci/minify_agent_facing_markdown.py --write', file=sys.stderr)
+        print('Run: bin/minify-md --write', file=sys.stderr)
         return 1
 
     if args.write and changed_paths:
