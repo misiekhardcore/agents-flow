@@ -112,7 +112,7 @@ If confirmed, the tier determines `user-invocable` frontmatter: `true` for tiers
 
 If the author picks **Restricted subset**, ask one free-text follow-up: "Which tools should it be allowed to use? (space-separated — e.g. `Read Grep Glob Bash`)".
 
-- Validate that each entry is a real Claude Code tool name (reject unknown names and re-ask).
+- Validate that each entry is a real tool name for the author's active coding agent (reject unknown names and re-ask).
 - Use the answer verbatim as the value of `allowed-tools:`.
 
 ## Step 10: Parallelism

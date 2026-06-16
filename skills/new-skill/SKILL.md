@@ -24,7 +24,7 @@ Adopt `Skill("interviewing-rules")`.
 
    Derive tier from role after step (d). Present derived tier with criteria. Ask author to confirm or override.
 
-4. **Assemble SKILL.md** — Read `_templates/SKILL.template.md`. Fill frontmatter with interview answers (name, description, model, effort, allowed-tools, user-invocable per tier). Compose body sections from AUTHORING.md § Body Assembly by Role/Tier per derived role. Include only sections the role needs.
+4. **Assemble SKILL.md** — Read `_templates/SKILL.template.md`. Fill frontmatter with interview answers (name, description, model, effort, allowed-tools, user-invocable per tier). Always include `compatibility: claude-code opencode`. Compose body sections from AUTHORING.md § Body Assembly by Role/Tier per derived role. Include only sections the role needs.
 
 5. **Show draft** — Fenced code block. Ask: "Shall I write it to `<target-path>`? (y/n)". Require explicit yes.
 
@@ -39,6 +39,6 @@ Adopt `Skill("interviewing-rules")`.
 - Require explicit yes before writing. Silence is NOT approval.
 - Do not invent domain content — locks in guesses.
 - Point-of-need reads only; nothing loaded at skill entry except protocol skills.
-- Defaults (if skipped): `model: sonnet`; `effort`, `argument-hint`, `allowed-tools`, `user-invocable`: omit; target: personal.
+- Defaults (if skipped): `model: sonnet`; `compatibility: claude-code opencode` (always included); `effort`, `argument-hint`, `allowed-tools`, `user-invocable`: omit; target: personal.
 - Generated `Agent()` calls must include a seed-brief per `${CLAUDE_PLUGIN_ROOT}/_shared/seed-brief.md`.
 - If target `SKILL.md` exists, ask before overwriting.
