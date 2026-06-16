@@ -4,7 +4,7 @@
 
 **Entry condition**: Issue has `## Implementation plan`, branch `feat/issue-<N>` does not exist, no open PR.
 
-1. Checkpoint NOTES.md. Spawn `Agent("implement/agents/implement-runner.md")` from current directory:
+1. Checkpoint NOTES.md. Spawn `Agent("agents/implement-runner.md")` from current directory:
    ```
    repo: <owner/repo>
    branch: feat/issue-<N>

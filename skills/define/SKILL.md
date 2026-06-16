@@ -42,8 +42,8 @@ Verify all ACs covered. Present to user. Invoke `Skill("grill-me")` to challenge
 ### 6. Critique (high-risk only)
 
 For high-risk plans (security, payments, arch-changing scope): after architecture + design, spawn in parallel:
-- `Agent("define/agents/critique-agent.md")` with `sonnet`
-- `Agent("define/agents/critique-agent.md")` with `haiku` (second independent pass, two perspectives)
+- `Agent("agents/critique-agent.md")` with `sonnet`
+- `Agent("agents/critique-agent.md")` with `haiku` (second independent pass, two perspectives)
 
 Each with seed-brief containing `issue`, `architecture_decisions`, `design_decisions`, and `scope`. Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`. Merge findings from both before presenting to user. Get approval.
 

@@ -23,7 +23,7 @@ Use this skill when the user:
 
 ## Process
 1. Read `references/search-guide.md` for search strategy and `references/categories.md` for category guidance and fallback options.
-2. Spawn `Agent("find-skills/agents/skill-discovery.md")` with the `query`. Agent checks the leaderboard and runs `npx skills find [query]`.
+2. Spawn `Agent("agents/skill-discovery.md")` with the `query`. Agent checks the leaderboard and runs `npx skills find [query]`.
 3. Sub-agent verifies quality — install count, source reputation, and GitHub stars.
 4. Present candidate skills to the user with name, description, install count, and source.
 5. On confirmation, install with `npx skills add <package> -g -y`.

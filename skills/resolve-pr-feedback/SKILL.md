@@ -33,7 +33,7 @@ Adopt `Skill("orchestrator-rules")` — use NOTES.md as progress ledger, checkpo
 1. Group affected files into non-overlapping sets.
 2. Build seed-brief per file group from triage mapping.
 3. Checkpoint NOTES.md.
-4. Spawn one `Agent("skills/resolve-pr-feedback/agents/fix-agent.md")` per file group with seed-brief (see Worker Agent I/O contract above).
+4. Spawn one `Agent("agents/fix-agent.md")` per file group with seed-brief (see Worker Agent I/O contract above).
 5. After all return: run full test suite for regression check.
 6. Collect verdicts; update NOTES.md.
 

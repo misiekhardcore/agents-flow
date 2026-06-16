@@ -73,7 +73,7 @@ Worker agents should include `disallowedTools: Agent` in their frontmatter to pr
 ## Custom Agent Authoring
 
 ### When to use a Custom Agent File
-Use a dedicated file in the skill's `agents/` directory when:
+Use a dedicated file in the `agents/` directory when:
 - Specific tool restrictions are required.
 - A specific model override is needed.
 - `disallowedTools` guardrails must be enforced.
@@ -203,7 +203,7 @@ Reference on-demand via `Read \`${CLAUDE_PLUGIN_ROOT}/_shared/<file>.md\``:
 
 ## Agent File Template
 
-Agent files live in `skills/<skill-name>/agents/<agent-name>.md`. Use this template:
+Agent files live in `agents/<agent-name>.md`. Use this template:
 
 ```yaml
 ---
@@ -238,7 +238,7 @@ structured output block
 
 ## Agent Catalogue
 
-Agent files live under `skills/<name>/agents/`. See each skill's `agents/` directory for its agent files. Common patterns:
-- `<skill>/agents/<skill>-runner.md` — autonomous core (Tier 2 shell + runner split)
-- `<skill>/agents/<role>-agent.md` — parallel worker (spawned by runner)
-- `<skill>/agents/reviewer-<domain>.md` — domain reviewer (spawned by review-runner)
+All agent files live under `agents/`. See each skill's `## Worker Agent Inventory` section for spawned agents. Common patterns:
+- `agents/<skill>-runner.md` — autonomous core (Tier 2 shell + runner split)
+- `agents/<role>-agent.md` — parallel worker (spawned by runner)
+- `agents/reviewer-<domain>.md` — domain reviewer (spawned by review-runner)

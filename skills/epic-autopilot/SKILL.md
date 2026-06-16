@@ -41,7 +41,7 @@ Read `references/gates.md` § Stage 3 at point of need. For each sub-issue witho
 
 ### 5. Autonomous phase (Stage 4)
 
-Read `references/autonomous-phase.md` at point of need. Checkpoint NOTES.md. Create epic branch, compute dependency tiers (Kahn's algorithm, cycle breaking), dispatch per tier. For each sub-issue M, checkpoint NOTES.md then spawn `Agent("skills/implement/agents/implement-runner.md")` with seed-brief per `references/autonomous-phase.md` § seed brief. Wait for tier settlement. After all tiers settle, create epic PR.
+Read `references/autonomous-phase.md` at point of need. Checkpoint NOTES.md. Create epic branch, compute dependency tiers (Kahn's algorithm, cycle breaking), dispatch per tier. For each sub-issue M, checkpoint NOTES.md then spawn `Agent("agents/implement-runner.md")` with seed-brief per `references/autonomous-phase.md` § seed brief. Wait for tier settlement. After all tiers settle, create epic PR.
 
 ### 6. Exit (Stage 5)
 

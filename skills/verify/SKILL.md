@@ -19,7 +19,7 @@ Lead verification phase. Goal: Verify every AC from the issue is met with eviden
 
 ## Process
 1. Acquire verification package: `git diff` for diff, `gh issue view` for AC.
-2. Spawn `Agent("verify/agents/verify-runner.md")` with `acceptance_criteria` and `diff`. Runner groups AC, spawns qa-agents in parallel, and returns the unified report.
+2. Spawn `Agent("agents/verify-runner.md")` with `acceptance_criteria` and `diff`. Runner groups AC, spawns qa-agents in parallel, and returns the unified report.
 
 ## Rules
 - **Separation**: Never fix issues during verification. Report failures in the verify output; fixes are a `/build` responsibility.

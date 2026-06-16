@@ -31,7 +31,7 @@ Invoke `Skill("worktree")` to create or verify the implementation worktree.
 Read `_shared/handoff-artifact.md` at this point. Ensure issue body has the five-field structure (AC, Constraints, Prior decisions, Evidence, Open questions).
 
 ### 6. Delegate
-Per disjoint group, spawn `Agent("implement/agents/implement-runner.md")` with seed-brief containing `repo`, `branch`, `active_issue`, `max_cycles: 3`, `scope`, and `payload` (resources + NOTES.md progress slice). See `_shared/seed-brief.md` for seed-brief format and `agents/implement-runner.md` for the runner I/O contract. Runner handles build → review → verify cycles internally (3-cycle hard stop per `references/scope-cycles.md`).
+Per disjoint group, spawn `Agent("agents/implement-runner.md")` with seed-brief containing `repo`, `branch`, `active_issue`, `max_cycles: 3`, `scope`, and `payload` (resources + NOTES.md progress slice). See `_shared/seed-brief.md` for seed-brief format and `agents/implement-runner.md` for the runner I/O contract. Runner handles build → review → verify cycles internally (3-cycle hard stop per `references/scope-cycles.md`).
 
 Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`.
 

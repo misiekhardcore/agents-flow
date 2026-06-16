@@ -19,7 +19,7 @@ Read `references/dispatch-process.md` for dispatch modes, process steps, and PR 
 
 ## Process
 1. Acquire review package per dispatch mode (see `references/dispatch-process.md`).
-2. Spawn `Agent("review/agents/review-runner.md")` with `diff`, `acceptance_criteria`, and `dispatch_mode`. Runner evaluates gates and spawns reviewer agents internally.
+2. Spawn `Agent("agents/review-runner.md")` with `diff`, `acceptance_criteria`, and `dispatch_mode`. Runner evaluates gates and spawns reviewer agents internally.
 3. Collect findings from runner.
 4. Emit output per dispatch mode (fix brief, findings report, or posted GitHub review).
 

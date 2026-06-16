@@ -26,7 +26,7 @@ Read `references/process.md` for step-by-step process, TDD, context hygiene, and
 1. Run pre-flight (repo/scope confirmation).
 2. Read the issue and linked sub-issues.
 3. Create worktree, init `./.claude/NOTES.md` with task list.
-4. Invoke `Skill("scope-assessment")` with work units derived from sub-issues and file groups → receive agent plan: spawn parallel `Agent("build/agents/build-worker.md")` — one per work unit.
+4. Invoke `Skill("scope-assessment")` with work units derived from sub-issues and file groups → receive agent plan: spawn parallel `Agent("agents/build-worker.md")` — one per work unit.
 5. Consider invoking `Skill("compaction-protocol")` for context management during long build sessions.
 
 ## Output

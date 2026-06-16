@@ -6,7 +6,7 @@ model: sonnet
 user-invocable: true
 allowed-tools: Bash Read
 ---
-Safely remove the feature worktree, delete the branch, and clear any remaining NOTES.md. In standalone mode, confirms before destructive actions and refuses when the operation would destroy protected state. When invoked with `confirmed` as skill arg (e.g., `/wrap-up confirmed`), executes directly without user prompts. Orchestrators spawn `Agent('wrap-up/agents/wrap-up-runner.md')` for fully autonomous cleanup. Cleans up local state: removes worktree, deletes branch, clears NOTES.md. Expects PR to be in a terminal state. Refuses destructive actions on dirty state in standalone mode.
+Safely remove the feature worktree, delete the branch, and clear any remaining NOTES.md. In standalone mode, confirms before destructive actions and refuses when the operation would destroy protected state. When invoked with `confirmed` as skill arg (e.g., `/wrap-up confirmed`), executes directly without user prompts. Orchestrators spawn `Agent('agents/wrap-up-runner.md')` for fully autonomous cleanup. Cleans up local state: removes worktree, deletes branch, clears NOTES.md. Expects PR to be in a terminal state. Refuses destructive actions on dirty state in standalone mode.
 
 ## Input
 
@@ -25,7 +25,7 @@ Safely remove the feature worktree, delete the branch, and clear any remaining N
 7. Otherwise (standalone mode): run steps 2–4 (state machine + user confirmations), then step 5.
 8. Report what was removed.
 
-**Orchestrator mode**: orchestrators should spawn `Agent('wrap-up/agents/wrap-up-runner.md')` directly instead of calling this skill — the runner is fully autonomous.
+**Orchestrator mode**: orchestrators should spawn `Agent('agents/wrap-up-runner.md')` directly instead of calling this skill — the runner is fully autonomous.
 
 ## Output
 

@@ -12,7 +12,7 @@ Lead UI/UX design decisions. Produce visual and interaction design that fits exi
 
 ### 1. Research
 
-Spawn `Agent("design/agents/ux-researcher.md")` — pass `component` (target UI component or flow) and `context` (product context and target users).
+Spawn `Agent("agents/ux-researcher.md")` — pass `component` (target UI component or flow) and `context` (product context and target users).
 
 ### 2. Design
 
@@ -24,7 +24,7 @@ For each component, propose 2-3 visual/interaction approaches:
 
 ### 3. Evaluate
 
-Spawn `Agent("design/agents/reviewer-a11y.md")` — pass `component` and `proposals` (list of approach names and descriptions).
+Spawn `Agent("agents/reviewer-a11y.md")` — pass `component` and `proposals` (list of approach names and descriptions).
 
 Present a11y findings alongside proposals. Invoke `Skill("grill-me")` for deliberation. User selects approach.
 

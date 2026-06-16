@@ -63,7 +63,7 @@ Always specify explicitly — never rely on the silent `general-purpose` default
 
 ### `Agent("path.md")` — Worker Agent dispatch
 
-Use for parallel fan-out and bulk I/O workers. Worker Agents are defined as `agents/*.md` files within a skill directory. They always run isolated (autonomous, no user interaction). Standard frontmatter: `disallowedTools: Agent AskUserQuestion` (prevents recursive spawning and interactive prompts).
+Use for parallel fan-out and bulk I/O workers. Worker Agents live in `agents/*.md` at the repo root, one per role. They always run isolated (autonomous, no user interaction). Standard frontmatter: `disallowedTools: Agent AskUserQuestion` (prevents recursive spawning and interactive prompts).
 
 When to use Worker Agent vs Worker Skill:
 

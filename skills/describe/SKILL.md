@@ -41,8 +41,8 @@ Read `references/scope-ppt.md` for PPT checklist.
 ### 3. Research
 
 Per scope-assessment group, spawn in parallel:
-- `Agent("describe/agents/domain-researcher.md")` — pass `domain`, `cwd`.
-- **Gate** (high-risk only: payments, auth, data migration): also spawn `Agent("describe/agents/flow-analyst.md")` — pass `domain`, `cwd`, and entry points from domain-researcher output.
+- `Agent("agents/domain-researcher.md")` — pass `domain`, `cwd`.
+- **Gate** (high-risk only: payments, auth, data migration): also spawn `Agent("agents/flow-analyst.md")` — pass `domain`, `cwd`, and entry points from domain-researcher output.
 
 Collect all findings before proceeding.
 

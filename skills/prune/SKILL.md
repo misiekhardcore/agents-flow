@@ -34,7 +34,7 @@ Run `${PLUGIN_ROOT}/bin/list-prune-files --<lane>` from the project root for eac
 
 Read `${CLAUDE_PLUGIN_ROOT}/_shared/dispatch-decision.md` § Role taxonomy and `isolation: worktree`.
 
-Spawn one `Agent("skills/prune/agents/prune-auditor.md")` per selected lane in parallel. Each spawn must include a seed-brief:
+Spawn one `Agent("agents/prune-auditor.md")` per selected lane in parallel. Each spawn must include a seed-brief:
 
 ```
 <seed-brief>

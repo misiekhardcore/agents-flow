@@ -23,7 +23,7 @@ If issue lacks `## Implementation plan`: read `references/stage-1.md` at point o
 
 ### 3. Implement (Stage 2)
 
-If plan present, branch absent, no open PR: read `references/stage-2.md` at point of need. Checkpoint NOTES.md. Spawn `Agent("implement/agents/implement-runner.md")` with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
+If plan present, branch absent, no open PR: read `references/stage-2.md` at point of need. Checkpoint NOTES.md. Spawn `Agent("agents/implement-runner.md")` with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
 ```
 repo: <owner/repo>
 branch: feat/issue-<N>
@@ -42,7 +42,7 @@ If clean PR awaiting merge: read `references/stage-4.md` at point of need. Print
 
 ### 6. Post-merge cleanup (Stage 5)
 
-If PR merged: read `references/stage-5.md` at point of need. Checkpoint NOTES.md. Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Spawn `Agent("wrap-up/agents/wrap-up-runner.md")` with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
+If PR merged: read `references/stage-5.md` at point of need. Checkpoint NOTES.md. Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Spawn `Agent("agents/wrap-up-runner.md")` with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
 ```
 repo: <owner/repo>
 branch: feat/issue-<N>

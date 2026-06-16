@@ -35,7 +35,7 @@ Create `.claude/NOTES.md` with task list, decisions log, next-action per `Skill(
 
 Read `references/detectors.md` for detector logic, verdict ranking, and JSON schema — pass pertinent rules into each spawn prompt so workers do not re-read.
 
-Spawn one `Agent("audit-issues/agents/issue-auditor.md")` per issue with a `<seed-brief>` YAML block containing `repo`, `issue_number`, `cwd`, and `default_branch_ref`. Fan-out in parallel for ≥3 issues; run inline for 1–2.
+Spawn one `Agent("agents/issue-auditor.md")` per issue with a `<seed-brief>` YAML block containing `repo`, `issue_number`, `cwd`, and `default_branch_ref`. Fan-out in parallel for ≥3 issues; run inline for 1–2.
 
 Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`.
 
