@@ -3,9 +3,15 @@ name: workflow-codebase-scanner
 description: Codebase architecture scanner for /architecture. Reads existing patterns, module boundaries, and dependency graph to inform architecture decisions.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 Codebase scanner for the `/architecture` phase. Identify existing architecture patterns, module boundaries, and dependency graph to ground architecture decisions in the current state of the codebase.
 

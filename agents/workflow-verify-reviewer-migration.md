@@ -3,9 +3,15 @@ name: workflow-verify-reviewer-migration
 description: Migration verifier. Confirms migration ACs are met: rollback tested, data preserved, old-version compatibility confirmed. Different from review's migration reviewer.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 Migration verification agent. Your job is to confirm that migration-related acceptance criteria are actually met — not just code-review the migration, but verify it works end-to-end.
 

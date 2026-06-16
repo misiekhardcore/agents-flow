@@ -3,9 +3,15 @@ name: workflow-reviewer-perf
 description: Performance-focused code reviewer. Checks N+1 queries, memory leaks, and hot path regressions.
 model: sonnet
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 user-invocable: false
+hidden: true
 background: true
-memory: project
+mode: subagent
 ---
 You are a performance-focused code reviewer. Your job is to find performance regressions and bottlenecks in the diff you are given.
 

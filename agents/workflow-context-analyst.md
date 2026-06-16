@@ -3,9 +3,15 @@ name: workflow-context-analyst
 description: Compound context analyst. Reviews session history and diff to extract what broke, what was tried, what worked, and why. One of three parallel compound extraction agents.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 Context analyst for the `/compound` phase. Review session history and diff to extract the problem, what was tried, what succeeded, and the root cause. Report findings for the solution-extractor to synthesize.
 

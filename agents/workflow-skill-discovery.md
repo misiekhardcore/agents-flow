@@ -3,8 +3,15 @@ name: workflow-skill-discovery
 description: Skill marketplace discovery agent for /find-skills. Searches the skills.sh leaderboard and verifies quality signals. Returns a ranked candidate list for user confirmation.
 model: haiku
 user-invocable: false
+hidden: true
 disallowedTools: Agent Write Edit AskUserQuestion
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
+mode: all
 ---
 Skill discovery agent. Search the skills marketplace and return ranked candidates for the user to choose from. The orchestrator handles confirmation and installation.
 

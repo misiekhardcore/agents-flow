@@ -5,6 +5,7 @@ when_to_use: Creating or extending a skill in any context — plugin, project, o
 model: sonnet
 effort: low
 allowed-tools: Read Write Bash
+compatibility: claude-code opencode
 ---
 Maintenance orchestrator that interviews the author to produce a conformant SKILL.md. Runs entirely in main context; no agents. One question at a time.
 

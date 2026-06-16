@@ -5,6 +5,7 @@ when_to_use: Use when auditing a GitHub repo's open issues for drift, broken ref
 argument-hint: "[owner/repo | #NN | owner/repo#NN]"
 model: sonnet
 allowed-tools: Agent Bash Read
+compatibility: claude-code opencode
 ---
 Audit open issues for drift against repo state. Product: updated issues themselves (mutate on confirm). Read-only by default — mutate only after explicit per-issue confirmation.
 

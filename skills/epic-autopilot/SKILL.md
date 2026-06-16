@@ -6,6 +6,7 @@ argument-hint: "[epic# | description]"
 model: opus
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
+compatibility: claude-code opencode
 ---
 Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produces draft sub-PRs + epic PR with human gates at Stages 1–3, then autonomous execution through Stage 5.
 

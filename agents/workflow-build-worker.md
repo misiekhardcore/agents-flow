@@ -3,9 +3,14 @@ name: workflow-build-worker
 description: Parallel build worker for one work unit. Implements a single sub-issue or file group in the shared worktree. Spawned in parallel by implement-runner for multi-unit scope.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
 background: true
-memory: project
+mode: all
 ---
 Parallel build worker for one bounded work unit. Implement the assigned sub-issue or file group using TDD. Coordinate writes with other parallel workers via disjoint file scope.
 

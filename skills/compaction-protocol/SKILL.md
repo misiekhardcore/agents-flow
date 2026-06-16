@@ -2,6 +2,7 @@
 name: compaction-protocol
 description: Context management protocol for rot reduction using editing, delegation, and summarization.
 user-invocable: false
+compatibility: claude-code opencode
 ---
 Used by `/build` to manage context rot. Read on-demand at compaction steps; do not preload.
 

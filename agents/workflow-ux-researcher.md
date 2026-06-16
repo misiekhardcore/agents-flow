@@ -3,9 +3,15 @@ name: workflow-ux-researcher
 description: UX pattern researcher for /design. Finds established UX patterns, interaction models, and accessibility guidelines for the target UI component or flow.
 model: haiku
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 UX pattern researcher for the `/design` phase. Find established UX patterns, interaction models, and accessibility guidelines for the target UI component or flow.
 

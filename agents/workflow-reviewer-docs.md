@@ -3,9 +3,15 @@ name: workflow-reviewer-docs
 description: Docs consistency reviewer. Checks cross-references, stale mentions, and contradictions in markdown and skill files. Activated when any *.md is changed or skill files are touched.
 model: sonnet
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 user-invocable: false
+hidden: true
 background: true
-memory: project
+mode: subagent
 ---
 You are a docs consistency reviewer. Your job is to verify that markdown and skill file changes are consistent with the rest of the documentation — no broken links, stale mentions, or duplicated rules.
 

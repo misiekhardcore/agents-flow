@@ -3,9 +3,15 @@ name: workflow-wrap-up-runner
 description: Autonomous cleanup runner. Removes worktree, deletes branch, and clears NOTES.md after PR merge.
 model: haiku
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: primary
 ---
 Autonomous cleanup agent. Remove the feature worktree, delete the branch, and clear NOTES.md. Called only after the PR is in a terminal state (merged or closed). No user interaction.
 

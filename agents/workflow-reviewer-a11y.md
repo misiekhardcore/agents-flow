@@ -3,9 +3,15 @@ name: workflow-reviewer-a11y
 description: A11y compliance reviewer for /design. Evaluates proposed UI designs for accessibility compliance, keyboard navigation, and screen reader support.
 model: haiku
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 A11y compliance reviewer for the `/design` phase. Evaluate proposed UI designs for accessibility compliance against WCAG 2.1 AA, keyboard navigation, and screen reader support.
 

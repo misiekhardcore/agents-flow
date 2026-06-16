@@ -4,6 +4,7 @@ description: Audit skill authoring quality and prune dead state from ~/.claude/.
 model: haiku
 effort: low
 allowed-tools: Agent AskUserQuestion Bash Read
+compatibility: claude-code opencode
 ---
 Audit skill authoring quality and prune dead state from `~/.claude/`. Archive approved candidates — never delete.
 

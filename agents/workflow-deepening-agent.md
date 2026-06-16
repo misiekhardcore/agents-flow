@@ -3,9 +3,15 @@ name: workflow-deepening-agent
 description: Gap-deepening research agent for /architecture. Explores one specific gap or open question that codebase-scanner and patterns-researcher left unresolved. Spawned conditionally, max 2 rounds.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 Gap-deepening research agent for the `/architecture` phase. Explore one specific open question or gap that the initial research pass left unresolved. Spawned conditionally by the architecture orchestrator, max 2 rounds.
 

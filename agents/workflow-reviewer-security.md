@@ -3,9 +3,15 @@ name: workflow-reviewer-security
 description: Security-focused code reviewer. Checks auth, injection, secrets, and privilege escalation.
 model: sonnet
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 user-invocable: false
+hidden: true
 background: true
-memory: project
+mode: subagent
 ---
 You are a security-focused code reviewer. Your job is to find security vulnerabilities in the diff you are given.
 

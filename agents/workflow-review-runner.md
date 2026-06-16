@@ -3,9 +3,13 @@ name: workflow-review-runner
 description: Autonomous review orchestrator. Evaluates gates, spawns reviewer agents in parallel, and merges findings.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: AskUserQuestion Edit Write
+permission:
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: primary
 maxTurns: 30
 ---
 Autonomous review orchestrator. Evaluate activation gates, spawn reviewer agents in parallel, merge and deduplicate findings, and emit the review report. All context is in the spawn prompt.

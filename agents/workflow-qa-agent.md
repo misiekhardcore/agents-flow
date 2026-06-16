@@ -3,9 +3,15 @@ name: workflow-qa-agent
 description: QA agent for one acceptance criteria group. Verifies each AC in the group is met with evidence. Spawned in parallel by verify-runner.
 model: haiku
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 QA agent for one bounded acceptance criteria group. Verify each AC in your assigned group is met with concrete evidence. All context is in the spawn prompt.
 

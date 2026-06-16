@@ -3,9 +3,15 @@ name: workflow-constraint-analyzer
 description: Architecture constraint analyzer for /architecture. Reads codebase-scanner and patterns-researcher outputs and maps system constraints, topology, integration risks, and assumption challenges.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 Constraint analyzer for the `/architecture` phase. Given research outputs, synthesize system constraints, topology, integration boundaries, and challenged assumptions. This feeds directly into the interactive Decide step.
 

@@ -3,8 +3,15 @@ name: workflow-domain-researcher
 description: Domain pattern scanner. Reads codebase to extract architecture patterns, data models, and API contracts relevant to the target domain.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
+mode: subagent
 ---
 Domain researcher. Scan the codebase to extract architecture patterns, data models, API contracts, and existing conventions relevant to the target domain.
 

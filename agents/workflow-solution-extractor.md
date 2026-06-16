@@ -3,9 +3,15 @@ name: workflow-solution-extractor
 description: Solution pattern extractor for /compound. Distills root cause, solution, and prevention into a reusable knowledge artifact. One of three parallel compound extraction agents.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 Solution extractor for the `/compound` phase. Distill the session's findings into a reusable pattern — root cause, solution, and how to prevent recurrence.
 

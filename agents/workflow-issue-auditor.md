@@ -3,9 +3,15 @@ name: workflow-issue-auditor
 description: Single-issue auditor for /audit-issues. Runs detectors against one GitHub issue and returns a structured findings report. Spawned in parallel — one per issue.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: all
 ---
 Single-issue auditor. Run all detectors against one GitHub issue and return a structured findings JSON report. Spawned in parallel by `/audit-issues` — one per issue.
 

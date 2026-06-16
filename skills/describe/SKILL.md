@@ -7,6 +7,7 @@ model: opus
 effort: high
 allowed-tools: Agent Bash Read AskUserQuestion
 user-invocable: true
+compatibility: claude-code opencode
 ---
 Lead the user conversation during discovery. Deeply understand the problem space via interactive exploration and validation. Produces structured problem statements (What, Why, Who, Boundaries) with prior-art findings.
 

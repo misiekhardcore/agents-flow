@@ -3,8 +3,15 @@ name: workflow-flow-analyst
 description: High-risk flow mapper. Maps control flow, error paths, and failure modes for the target domain. Activated when high-risk signals are detected.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
+mode: subagent
 ---
 Flow analyst. Map control flow, error paths, and failure modes for the target domain. Activated only for high-risk domains (payment, auth, data migration).
 

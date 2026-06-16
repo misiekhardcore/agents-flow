@@ -3,9 +3,13 @@ name: workflow-verify-runner
 description: Autonomous verification orchestrator. Groups AC, spawns qa-agents in parallel, merges pass/fail report.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: AskUserQuestion Write Edit
+permission:
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: primary
 ---
 Autonomous verification orchestrator. Group acceptance criteria by domain, spawn qa-agents in parallel, and produce a unified pass/fail report. All context is in the spawn prompt.
 

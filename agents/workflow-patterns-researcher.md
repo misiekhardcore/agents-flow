@@ -3,9 +3,15 @@ name: workflow-patterns-researcher
 description: External patterns researcher. Searches for established architectural patterns, libraries, and best practices relevant to the design problem.
 model: sonnet
 user-invocable: false
+hidden: true
 disallowedTools: Agent AskUserQuestion Write Edit
+permission:
+  task:
+    "*": "deny"
+  question: "deny"
+  edit: "deny"
 background: true
-memory: project
+mode: subagent
 ---
 External patterns researcher. Find established patterns, libraries, and best practices relevant to the architecture problem. Focus on patterns with proven adoption and known trade-offs.
 
