@@ -17,7 +17,7 @@ The lifecycle moves state between three artifact tiers. Each has a hard cap:
 |Artifact|Cap|Why|
 |-|-|-|
 |`.claude/NOTES.md` (per session)|**<2k tokens**|Re-read on every resume and before every `/compact`|
-|GitHub issue body (handoff)|**<2k tokens**|Loaded fully at phase start; the five-field shape in `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` targets this|
+|GitHub issue body (handoff)|**<2k tokens**|Loaded fully at phase start; the five-field shape in `Read _shared/handoff-artifact.md` targets this|
 |Seed brief to sub-agent|**<500 tokens**|Brief is objective + constraint + report contract — not session history|
 |Sub-agent report to lead|1–2k tokens|Anthropic's reference figure for the isolation pattern|
 
@@ -43,20 +43,19 @@ These are *targets*, not enforced caps. They signal when a phase is dragging con
 
 Compare system + tools + messages totals against targets. Relevant deltas:
 
-- **System + CLAUDE.md jumps between sessions** → a CLAUDE.md edit grew per-turn cost. Trim or move out.
+- **System + instruction file jumps between sessions** → an edit to the agent's instruction file grew per-turn cost. Trim or move out.
 - **Messages line growing toward 30k inside a phase** → run context editing or delegate bulk lookups to a sub-agent.
 - **End-of-phase total over target** → harvest into issue body now; do not carry conversation across boundary.
 
-## CLAUDE.md placement
+## Instruction file placement
 
-CLAUDE.md is loaded verbatim every turn. Where it lives determines who pays.
+The per-turn instruction file (e.g. `CLAUDE.md` for Claude Code, `AGENTS.md` for opencode) is loaded verbatim every turn. Where it lives determines who pays.
 
 |Path|Loaded by|Lifetime|Use for|
 |-|-|-|-|
-|`~/.claude/CLAUDE.md`|Every session, every project|User-global|Tone, formatting, global rules, memory pointers|
-|`./CLAUDE.md`|Every session in this repo|Project, committed to git|Tech stack, build commands, project invariants, directory map|
-|`./CLAUDE.local.md`|Every session in this repo, only this machine|Personal, gitignored|Local overrides, personal scratch rules, machine-specific paths|
-|`./<subdir>/CLAUDE.md`|Sessions whose CWD enters that subdir|Subsystem|Subsystem quirks|
+|`~/.claude/CLAUDE.md`|Claude Code — every session, every project|User-global|Tone, formatting, global rules, memory pointers|
+|`./CLAUDE.md` or `./AGENTS.md`|Every session in this repo|Project, committed to git|Tech stack, build commands, project invariants, directory map|
+|`./CLAUDE.local.md`|Claude Code — every session in this repo, only this machine|Personal, gitignored|Local overrides, personal scratch rules, machine-specific paths|
 
 All files in the current path stack are loaded additively — every level pays tokens on every turn. Don't duplicate rules across levels.
 
@@ -64,18 +63,18 @@ All files in the current path stack are loaded additively — every level pays t
 
 |Scope|Recommended|Hard cap|
 |-|-|-|
-|Global `~/.claude/CLAUDE.md`|<50 lines|100 lines|
-|Project `./CLAUDE.md`|<200 lines|300 lines|
+|Global user config|<50 lines|100 lines|
+|Project root config|<200 lines|300 lines|
 |Subdirectory|<50 lines|100 lines|
 
 Move anything not used in the majority of sessions: long rule blocks (>50 lines) into a dedicated `REFERENCE.md` read on demand; workflow-specific instructions into skills that load only when invoked.
 
 ## `@`-imports
 
-CLAUDE.md supports `@path/to/file` to inline another markdown file at load time. Imports recurse up to **5 hops** ([Memory docs](https://code.claude.com/docs/en/memory)).
+Some tools (Claude Code) support `@path/to/file` to inline another markdown file at load time. Imports recurse up to **5 hops** ([Memory docs](https://code.claude.com/docs/en/memory)).
 
 ```markdown
-# CLAUDE.md
+# AGENTS.md
 
 Tone and global rules go here directly.
 
@@ -106,18 +105,18 @@ Fix: read the issue body or NOTES.md instead. The skill body has nothing to add 
 
 ## When to read this doc
 
-- Setting up a new project: pick CLAUDE.md placement and trim the template.
+- Setting up a new project: pick instruction file placement and trim the template.
 - Model starts confusing phases or re-litigating decisions: check per-phase totals with `/context`.
 - A skill author asks "where should this rule live": placement table answers it.
-- Reviewing a PR that grows CLAUDE.md by >20 lines: justify against sizing targets.
+- Reviewing a PR that grows the root instruction file by >20 lines: justify against sizing targets.
 
 ## See also
 
 - [`context-hygiene.md`](context-hygiene.md) — *why* phases reset and how the four hygiene rules interact.
 - [`cross-plugin.md`](cross-plugin.md) — MCP-server sizing.
-- Invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/notes-md-protocol.md` — `.claude/NOTES.md` shape and update cadence.
-- Invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` — five-field issue-body structure.
-- Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` — spawn cost models and parallel sub-agent rubric.
+- Invoke `Read _shared/notes-md-protocol.md` — `.claude/NOTES.md` shape and update cadence.
+- Invoke `Read _shared/handoff-artifact.md` — five-field issue-body structure.
+- Read `_shared/composition.md` — spawn cost models and parallel sub-agent rubric.
 
 ## Sources
 

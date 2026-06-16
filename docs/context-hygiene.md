@@ -17,9 +17,9 @@ Logic for treating phase boundaries as context resets to prevent reasoning rot.
   - Verbose-I/O (large output → small field set).
 
 ## Handoff Artifact
-Fixed shape per `Read ${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md`:
+Fixed shape per `Read _shared/handoff-artifact.md`:
 - Acceptance criteria, Constraints, Prior decisions (opt), Evidence (opt), Open questions (opt).
 
 ## See also
-- `${CLAUDE_PLUGIN_ROOT}/docs/token-budgets.md` for concrete numbers.
+- `docs/token-budgets.md` for concrete numbers.
 - Invoke `Skill("compaction-protocol")` for in-phase pressure.

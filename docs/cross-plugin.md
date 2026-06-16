@@ -1,6 +1,6 @@
 # Cross-plugin Coordination
 
-Plugin-specific decisions for `agents-flow` and how it coexists with other Claude Code plugins. For general CLAUDE.md layering, `plugin.json.dependencies`, and MCP namespacing, see Anthropic's Claude Code plugin documentation and the [MCP specification](https://modelcontextprotocol.io/).
+Plugin-specific decisions for `agents-flow` and how it coexists with other plugins. For general instruction file layering, `plugin.json.dependencies`, and MCP namespacing, see Anthropic's Claude Code plugin documentation and the [MCP specification](https://modelcontextprotocol.io/).
 
 ## MCP scope
 
@@ -31,5 +31,5 @@ Skills probe for these commands; vault-aware path activates if present, otherwis
 ## See also
 
 - [`README.md`](../README.md) — `claude-obsidian` integration overview
-- [`token-budgets.md`](token-budgets.md) — CLAUDE.md placement, `@`-import syntax, per-artifact token budgets
+- [`token-budgets.md`](token-budgets.md) — instruction file placement, `@`-import syntax, per-artifact token budgets
 - [`plugin.json`](../.claude-plugin/plugin.json) — plugin metadata

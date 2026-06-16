@@ -9,6 +9,11 @@ All notable changes to the **agents-flow** plugin are recorded here. The format 
 ## [2.0.0] - 2026-06-16
 ### Added
 
+- Rebrand to agents-flow: add opencode compatibility, rewrite AGENTS.md and docs for tool-agnostic language
+- Add opencode install section in README.md
+- Update docs/*.md references from `${CLAUDE_PLUGIN_ROOT}` to relative paths and replace CLAUDE.md language with tool-agnostic terms
+### Added
+
 - Add git-cliff changelog handling
 - Rebuild define
 - Clarify SKILL.md and agent file responsibilities, and document knowledge persistence in AGENTS.md

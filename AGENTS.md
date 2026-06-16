@@ -1,8 +1,13 @@
-# AGENTS.md — agents-flow plugin
+# AGENTS.md — agents-flow
 
 ## Repository type
 
-This is a **Claude Code skills plugin** installed via `claude plugin marketplace add misiekhardcore/agents-flow`. It is not a standalone app — skills live at `skills/<name>/SKILL.md` and are loaded by Claude Code at invocation time.
+This is a skill/agent collection for AI coding agents (compatible with Claude Code and opencode). Skills live at `skills/<name>/SKILL.md`, agents at `agents/*.md`.
+
+## Compatibility
+
+- **Claude Code**: Install via `claude plugin marketplace add misiekhardcore/agents-flow` then `claude plugin install agents-flow@agents-flow`
+- **OpenCode**: Add `./skills` to `skills.paths` in `opencode.jsonc`
 
 ## Commands
 
@@ -15,7 +20,7 @@ Pre-commit runs `npx lint-staged` which runs `bin/minify-md -i -r` on staged `.m
 
 No tests exist. No test framework. CI only runs `npm run format` on PRs to `main`.
 
-## Release (manual workflow_dispatch)
+## Release (Claude Code — manual workflow_dispatch)
 
 Version lives in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (both `metadata.version` and `plugins[0].version`). They must stay in lockstep. The Release workflow bumps all three, commits, tags, and creates a GitHub release.
 
@@ -31,7 +36,7 @@ Pick the lightest path that fits the task:
 |Medium feature|`/discover` → `/implement`|
 |Large feature / epic|`/discover` → `/define` → `/implement`|
 
-Building blocks: `/describe`, `/specify`, `/architecture`, `/design`, `/build`, `/review`, `/verify`, `/grill-me`, `/wrap-up`, `/prune`, `/compound`. For the full lifecycle see `${CLAUDE_PLUGIN_ROOT}/docs/workflow.md`.
+Building blocks: `/describe`, `/specify`, `/architecture`, `/design`, `/build`, `/review`, `/verify`, `/grill-me`, `/wrap-up`, `/prune`, `/compound`. For the full lifecycle see `docs/workflow.md`.
 
 During `/define` or `/discover` exploration: time-box codebase reading to 3–5 tool calls, then ask the user a focused question.
 
@@ -43,7 +48,6 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 - **Templates**: `_templates/` — scaffolding skeletons for new skills (`AUTHORING.md` is the canonical authoring guide).
 - **Bin tools**: `bin/minify-md` (markdown minifier), `bin/list-prune-files` (used by `/prune` skill).
 - **Git worktrees**: `.worktrees/` dir, managed via `wt` CLI. Always create before writing code, remove after PR is open.
-- **`.claude/settings.local.json`**: Local permissions overlay (gitignored in practice, though not in .gitignore).
 
 ## Key conventions
 
@@ -60,19 +64,21 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 
 ## Authoring new skills
 
-Run `/new-skill` to scaffold a conformant `SKILL.md`. For the full authoring standard see `${CLAUDE_PLUGIN_ROOT}/_shared/AUTHORING.md`.
+Run `/new-skill` to scaffold a conformant `SKILL.md`. For the full authoring standard see `_shared/AUTHORING.md`.
 
-Token budgets per artifact/phase, CLAUDE.md placement rules, `@`-imports: `${CLAUDE_PLUGIN_ROOT}/docs/token-budgets.md`.
+Token budgets per artifact/phase, instruction file placement rules, `@`-imports: `docs/token-budgets.md`.
 
-## Plugin path variables
+## Plugin path variables (Claude Code)
 
 - `${CLAUDE_PLUGIN_ROOT}` — plugin install dir. Skills reference `_shared/` via `${CLAUDE_PLUGIN_ROOT}/_shared/<file.md>`. Fallback: if not expanded inline, skills use `_shared/<file.md>` and Claude resolves via glob against `~/.claude/plugins/cache/<marketplace>/<version>/`.
 - `${CLAUDE_PLUGIN_DATA}` — `~/.claude/plugins/data/agents-flow/` for persistent cached state.
 
+For other tools, these paths resolve differently; see the tool's plugin/skill loading docs.
+
 ## Existing instruction files
 
-- `CLAUDE.md` — symlink to this file, kept for tool compatibility.
-- `AGENTS.md` (this file) — repo-specific facts an agent would guess wrong without help.
+- `CLAUDE.md` — symlink to this file, kept for backwards compatibility (loaded by Claude Code at repo root).
+- `AGENTS.md` (this file) — repo-specific facts an agent would guess wrong without help. Loaded by opencode; referenced by other AI coding agents.
 
 ## Rules
 

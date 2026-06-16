@@ -1,6 +1,6 @@
 # agents-flow
 
-Workflow skills plugin for Claude Code — a standardized lifecycle for feature development.
+Skill/agent collection for AI coding agents — a standardized lifecycle for feature development. Compatible with Claude Code and opencode.
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'background':'#000','primaryColor':'#ffffff','primaryTextColor':'#000000','primaryBorderColor':'#000000','lineColor':'#000000','textColor':'#000000','titleColor':'#000000','clusterBkg':'#f3f4f6','clusterBorder':'#000000','edgeLabelBackground':'#ffffff'}}}%%
@@ -85,12 +85,23 @@ flowchart TB
 
 ## Install
 
+### Claude Code
 ```bash
 claude plugin marketplace add misiekhardcore/agents-flow
 claude plugin install agents-flow@agents-flow
 ```
 
 Then enable it in your project or globally in Claude Code settings.
+
+### OpenCode
+Add to your `opencode.jsonc`:
+```jsonc
+{
+  "skills": {
+    "paths": ["./skills"]
+  }
+}
+```
 
 ## Skills
 
@@ -111,7 +122,7 @@ Then enable it in your project or globally in Claude Code settings.
 |`/grill-me`|Relentless interviewing to stress-test a plan or design|
 |`/compound`|Capture learnings as structured wiki notes|
 |`/wrap-up`|Post-PR cleanup: remove feature worktree, delete branch, clear NOTES.md|
-|`/prune`|Audit CLAUDE.md, SKILL.md, and memory for staleness|
+|`/prune`|Audit AGENTS.md, SKILL.md, and memory for staleness|
 |`/audit-issues`|Drift-check open GitHub issues against the current repo state|
 |`/find-skills`|Discover and install skills from the ecosystem|
 |`/resolve-pr-feedback`|Process PR review feedback in bulk|
@@ -137,9 +148,9 @@ Without `claude-obsidian`, every skill still runs; vault operations are skipped 
 
 Full lifecycle walkthrough: [`docs/workflow.md`](docs/workflow.md)
 
-## Token budgets and CLAUDE.md placement
+## Token budgets and instruction file placement
 
-Per-artifact and per-phase token budgets, context-rot threshold, CLAUDE.md placement, and `@`-import syntax: [`docs/token-budgets.md`](docs/token-budgets.md). Context-hygiene rationale: [`docs/context-hygiene.md`](docs/context-hygiene.md).
+Per-artifact and per-phase token budgets, context-rot threshold, instruction file placement, and `@`-import syntax: [`docs/token-budgets.md`](docs/token-budgets.md). Context-hygiene rationale: [`docs/context-hygiene.md`](docs/context-hygiene.md).
 
 ## Ecosystem
 
