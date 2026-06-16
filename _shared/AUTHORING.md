@@ -176,24 +176,17 @@ Sequential step numbering. Orchestrators always include Init NOTES.md, Sign-off,
 
 ### Default Frontmatter by Role
 
-|Field|Orchestrator|Specialist|Utility|Primitive|Protocol|
-|-|-|-|-|-|-|
-|`model`|`sonnet`|`sonnet`|`sonnet`|`sonnet`|`sonnet`|
-|`effort`|omit|omit|omit|omit|omit|
-|`allowed-tools`|omit|omit|omit|omit|omit|
-|`user-invocable`|omit (defaults true)|omit|omit|omit|`false`|
-
-> The table above covers Claude Code fields. For the full dual-tool field registry (SKILL.md + agent `.md` fields for both Claude Code and opencode), see `_shared/frontmatter-reference.md`.
+Per-role frontmatter defaults are documented in `_shared/frontmatter-reference.md` (§ Default Values by Role). That file also serves as the canonical field registry for both tools and both file types (SKILL.md + agent `.md`).
 
 ### Dual-Compat Frontmatter
 
 All skills in `agents-flow` carry frontmatter for both Claude Code and opencode:
 
-- **SKILL.md files**: Include `compatibility: claude-code opencode` as a top-level field. All existing Claude Code fields (`when_to_use`, `argument-hint`, `model`, `effort`, `allowed-tools`, `user-invocable`, `context`, `agent:`) remain in place — opencode ignores unrecognized fields.
-- **Agent `.md` files**: Carry both Claude Code fields (`disallowedTools`, `maxTurns`, `background`, `memory`) and opencode fields (`mode`, `permission`, `hidden`). The dual fields are complementary, not redundant — each tool reads its own.
+- **SKILL.md files**: Include `compatibility: claude-code opencode` as the last field before `---`. All existing Claude Code fields remain in place — opencode ignores unrecognized fields.
+- **Agent `.md` files**: Carry both Claude Code fields and opencode fields (`mode`, `permission`, `hidden`). Each tool reads its own frontmatter; unknown fields are silently ignored.
 - **New skills**: `/new-skill` automatically adds `compatibility: claude-code opencode` to every generated SKILL.md.
 
-See `_shared/frontmatter-reference.md` for the complete field registry and mapping.
+See `_shared/frontmatter-reference.md` for the complete field registry, per-role defaults, and Claude Code → OpenCode field mapping.
 
 ## Orchestrator Decomposition
 

@@ -89,6 +89,19 @@ Valid keys for the `permission` field. Set each to `"allow"`, `"ask"`, or `"deny
 
 `read`, `edit`, `glob`, `grep`, `list`, `bash`, `task`, `external_directory`, `lsp`, `skill` accept a shorthand action (`"allow"|"ask"|"deny"`) or an object of glob/pattern → action for fine-grained control. The remaining keys accept shorthand only.
 
+## Default Values by Role (Claude Code SKILL.md)
+
+Default frontmatter values for each skill role. `/new-skill` uses these when generating a new SKILL.md.
+
+| Field | Orchestrator | Specialist | Utility | Primitive | Protocol |
+|-------|-------------|------------|---------|-----------|----------|
+| `model` | `sonnet` | `sonnet` | `sonnet` | `sonnet` | `sonnet` |
+| `effort` | omit | omit | omit | omit | omit |
+| `allowed-tools` | omit | omit | omit | omit | omit |
+| `user-invocable` | omit (defaults true) | omit | omit | omit | `false` |
+
+See `_shared/AUTHORING.md` § Body Assembly by Role/Tier for the full role-to-template mapping.
+
 ## Field Mapping: Claude Code → OpenCode
 
 | Concept | Claude Code field | OpenCode field |
