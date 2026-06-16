@@ -2,6 +2,19 @@
 
 All notable changes to the **agents-flow** plugin are recorded here. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] - 2026-06-16
+### Added
+
+- Rewrite AGENTS.md and docs for tool-agnostic language
+- Update templates and shared protocols for tool-agnostic language
+- Add opencode frontmatter to agent files
+- Add opencode-compatible frontmatter to skill files
+
+### Changed
+
+- Minify all markdown files to pass format check
+- Review bin tools and hooks for compatibility
+- Rebrand claude-workflow → agents-flow
 ## [2.0.1] - 2026-06-16
 ### Fixed
 

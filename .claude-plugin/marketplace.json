@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Workflow skills for Claude Code — standardized feature lifecycle: /discover → /define → /implement. 26 skills, shared protocols, authoring standard, /new-skill scaffolder.",
-    "version": "2.0.1"
+    "version": "2.1.0"
   },
   "plugins": [
     {
       "name": "agents-flow",
       "source": "./",
       "description": "Workflow skills for Claude Code — standardized feature lifecycle: /discover → /define → /implement. 26 skills, shared protocols, authoring standard, /new-skill scaffolder.",
-      "version": "2.0.1",
+      "version": "2.1.0",
       "author": {
         "name": "Michal Konopski",
         "url": "https://github.com/misiekhardcore"
