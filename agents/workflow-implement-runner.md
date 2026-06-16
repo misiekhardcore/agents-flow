@@ -3,7 +3,7 @@ name: workflow-implement-runner
 description: Autonomous implement orchestrator. Runs build → review → verify cycles and opens a PR. Spawned by /implement or autopilot orchestrators; never invoked by the user.
 model: sonnet
 user-invocable: false
-disallowedTools: AskUserQuestion Write Edit
+disallowedTools: AskUserQuestion
 memory: project
 background: true
 maxTurns: 30
