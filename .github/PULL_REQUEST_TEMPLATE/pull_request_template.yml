@@ -1,0 +1,46 @@
+name: Pull Request
+description: Submit a pull request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing! Make sure to link the issue this PR addresses.
+  - type: input
+    id: issue
+    attributes:
+      label: Closes
+      description: Reference the issue this PR closes (e.g. #123)
+      placeholder: "#"
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Brief summary of the change.
+    validations:
+      required: true
+  - type: checkboxes
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Which AC from the issue does this PR address?
+      options:
+        - label: AC1
+        - label: AC2
+        - label: AC3
+        - label: AC4
+        - label: AC5
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing
+      description: How was this tested? Include commands, manual steps, or test output.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: "`npm run format:fix` passes"
+          required: true
+        - label: Docs updated (AGENTS.md, README.md, or both) if behavior changed
+        - label: No secrets or credentials in code
+          required: true

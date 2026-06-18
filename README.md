@@ -94,14 +94,11 @@ claude plugin install agents-flow@agents-flow
 Then enable it in your project or globally in Claude Code settings.
 
 ### OpenCode
-Add to your `opencode.jsonc`:
-```jsonc
-{
-  "skills": {
-    "paths": ["./skills"]
-  }
-}
+```bash
+./bin/install
 ```
+Symlinks `commands/`, `agents/`, `skills/` into `~/.config/opencode/`. Idempotent — re-run safely.
+Use `./bin/install --uninstall` to remove only this repo's symlinks.
 
 ## Skills
 

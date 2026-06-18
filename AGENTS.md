@@ -7,7 +7,7 @@ This is a skill/agent collection for AI coding agents (compatible with Claude Co
 ## Compatibility
 
 - **Claude Code**: Install via `claude plugin marketplace add misiekhardcore/agents-flow` then `claude plugin install agents-flow@agents-flow`
-- **OpenCode**: Add `./skills` to `skills.paths` in `opencode.jsonc`
+- **OpenCode**: Run `./bin/install` to symlink `commands/`, `agents/`, `skills/` into `~/.config/opencode/`
 
 ## Commands
 
@@ -15,6 +15,7 @@ This is a skill/agent collection for AI coding agents (compatible with Claude Co
 |-|-|
 |`npm run format`|Minifies all `.md` files via `bin/minify-md -i -r .`|
 |`npm run prepare`|Installs husky git hooks|
+|`./bin/install`|Symlinks `commands/`, `agents/`, `skills/` into opencode config dir|
 
 Pre-commit runs `npx lint-staged` which runs `bin/minify-md -i -r` on staged `.md` files — do not fight the minifier.
 
@@ -43,10 +44,11 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 ## Architecture
 
 - **Skills**: 26 skill dirs under `skills/`. Each has a `SKILL.md` (the actual skill body). Some also have `references/` (per-skill static docs).
+- **Commands**: `commands/` at repo root — opencode command files.
 - **Agent files**: `agents/` at repo root — 30 worker agent files, one per single-responsibility role.
 - **Shared protocols**: `_shared/*.md` — reference docs, not skills. Use `Read` not `Skill()` to access them.
 - **Templates**: `_templates/` — scaffolding skeletons for new skills (`AUTHORING.md` is the canonical authoring guide).
-- **Bin tools**: `bin/minify-md` (markdown minifier), `bin/list-prune-files` (used by `/prune` skill).
+- **Bin tools**: `bin/minify-md` (markdown minifier), `bin/list-prune-files` (used by `/prune` skill), `bin/install` (opencode symlink installer).
 - **Git worktrees**: `.worktrees/` dir, managed via `wt` CLI. Always create before writing code, remove after PR is open.
 
 ## Key conventions
