@@ -49,8 +49,13 @@ Load the "notes-md" skill — adopt NOTES.md lifecycle protocol.
 - **Output**: Bug Track or Knowledge Track note (see `skills/compound/references/knowledge-tracks.md`).
 - **Constraint**: Never include secrets/tokens. No direct filesystem writes → delegate to `/save`.
 
-## Rules
-- Capture while fresh.
-- Include verbatim error messages/stack traces in symptoms.
-- Prioritize updating existing notes over duplicates.
-- Report `/save` failures inline with the drafted note.
+<rules>
+<critical>MUST NOT include secrets or tokens in any note.</critical>
+<constraint>MUST include verbatim error messages/stack traces in symptoms.</constraint>
+<constraint>MUST report `/save` failures inline with the drafted note.</constraint>
+</rules>
+
+<guidelines>
+<recommendation>SHOULD capture learnings while fresh.</recommendation>
+<recommendation>SHOULD prioritize updating existing notes over creating duplicates.</recommendation>
+</guidelines>

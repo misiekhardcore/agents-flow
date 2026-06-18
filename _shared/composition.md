@@ -43,8 +43,7 @@ Every skill has a primary consumption contract. Callers must use the correct inv
 
 |Contract|Invocation|Session|User Interaction|Examples|
 |-|-|-|-|-|
-|**Runner (autonomous)**|`Agent("agents/runner.md")`|Isolated|None|`implement-runner`, `review-runner`|
-|**Worker (autonomous)**|`Agent("agents/worker.md")`|Isolated|Parallel|`build-worker`, `reviewer-correctness`|
+|**Worker (autonomous)**|`Agent("agents/worker.md")`|Isolated|Parallel|`build-worker`, `workflow-reviewer`, `workflow-qa-agent`|
 |**Shell (interactive)**|`Skill("name")`|Caller's session|Full|`implement`, `build`, `review`, `audit-issues`, `find-skills`|
 |**Worker Skill**|`Skill("name")`|Isolated|Task confirmations only|`compound`, `verify`, `scope-assessment`|
 

@@ -30,8 +30,11 @@ Load the "preflight" skill. Read `@_shared/handoff-artifact.md`. Write design de
 - Interaction flow diagrams.
 - Implementation constraints.
 
-## Rules
+<rules>
+<critical>MUST NOT skip user-facing deliberation — proposals are discussion points, NEVER automations.</critical>
+</rules>
 
-- **Consistency**: Follow existing design system/component patterns unless diverging.
-- **Recommend an answer**: For each component, recommend a preferred approach before asking the user to choose.
-- **Stay interactive**: Never skip user-facing deliberation — proposals are discussion points, not automations.
+<guidelines>
+<recommendation>SHOULD follow existing design system/component patterns unless diverging.</recommendation>
+<recommendation>For each component, SHOULD recommend a preferred approach before asking the user to choose.</recommendation>
+</guidelines>

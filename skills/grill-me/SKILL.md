@@ -20,8 +20,8 @@ Adopt `Skill("notes-md")` and read `@_shared/interviewing-rules.md` at point of 
 5. **Verify** — Periodically summarize the resolved tree and confirm shared understanding before proceeding.
 6. **Close** — When all branches are resolved, present the full decision-tree summary, confirm completion, and leave NOTES.md in place.
 
-## Constraints
-
-- No delegation — never dispatch sub-agents.
-- Require explicit user approval — never infer from silence.
-- Keep NOTES.md under 2k tokens; summarize stable decisions if it grows.
+<constraints>
+<boundary>MUST NOT delegate — NEVER dispatch sub-agents.</boundary>
+<limitation>MUST require explicit user approval — NEVER infer approval from silence.</limitation>
+<limitation>MUST keep NOTES.md under 2k tokens; summarize stable decisions if it grows.</limitation>
+</constraints>

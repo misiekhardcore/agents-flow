@@ -34,10 +34,10 @@ Lifecycle walkthrough from discovery to closure.
 **Goal**: Defined issue → ready-to-merge PR.
 - **Design Gate**: Verify `## Implementation plan` exists. If absent → prompt for `/define` or trivial downgrade.
 - **Scope**: Partition work units by the plan's dependency graph — independent groups run in parallel (one worktree each); dependent groups run in topological order; non-independent work falls back to sequential.
-- **Cycle** (per group): Autonomous build → review → verify → fix loop (max 5 cycles).
+- **Cycle** (per group): Autonomous build → review → verify → fix loop (max 5 cycles). The orchestrator dispatches leaf workers directly — single tier, no runner agents.
    - Build via task tool (`workflow-build-worker`): TDD implementation.
-   - Review via task tool (`workflow-review-runner`): isolated specialist review.
-   - Verify via task tool (`workflow-verify-runner`): QA verification of AC with evidence.
+   - Review: orchestrator evaluates focus gates, dispatches one `workflow-reviewer` per activated focus, then merges/dedups findings.
+   - Verify: orchestrator groups AC by domain, dispatches one `workflow-qa-agent` per group, then merges the pass/fail report.
 - **Integration**: Merge parallel group branches, then a final review + verify pass on the merged tree before the PR.
 - **Output**: Draft PR.
   - **Body**: `## Summary` → `## Testing notes` → `## Notes` (from NOTES.md harvest).

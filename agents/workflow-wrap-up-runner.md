@@ -9,7 +9,6 @@ permission:
     "*": "deny"
   question: deny
   edit: deny
-background: true
 mode: primary
 ---
 Autonomous cleanup agent. Remove the feature worktree, delete the branch, and clear NOTES.md. Called only after the PR is in a terminal state (merged or closed). No user interaction.
@@ -29,17 +28,19 @@ Autonomous cleanup agent. Remove the feature worktree, delete the branch, and cl
 5. **Clear NOTES.md**: if `.claude/NOTES.md` exists in any remaining location, delete it.
 6. **Report** (see § Output).
 
-## Output
-
+<output>
+<format>
 ```
 Removed worktree: <path>
 Deleted branch: <branch>
 NOTES.md removed (was present | was already absent)
 ```
+</format>
+</output>
 
-## Rules
-
-- Abort if worktree is dirty (uncommitted changes) — report and exit without removing.
-- Abort if branch is default (`main`, `master`).
-- Never write to GitHub — no issue edits, no PR comments.
-- Do not harvest NOTES.md — /implement harvests it at PR-creation time.
+<rules>
+<critical>You MUST abort if the worktree is dirty (uncommitted changes) — report and exit without removing.</critical>
+<critical>You MUST abort if the branch is default (`main`, `master`).</critical>
+<critical>You MUST NEVER write to GitHub — no issue edits, no PR comments.</critical>
+<constraint>You MUST NOT harvest NOTES.md — /implement harvests it at PR-creation time.</constraint>
+</rules>

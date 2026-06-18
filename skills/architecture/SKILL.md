@@ -33,9 +33,12 @@ Load the "preflight" skill. Read `@_shared/handoff-artifact.md`. Write decisions
 - Dependency graph for parallelization.
 - Research summary (informed patterns).
 
-## Rules
+<rules>
+<constraint>MUST NOT propose architecture without first reading existing code.</constraint>
+<constraint>MUST produce concrete decisions — NO vague placeholders; every section MUST be decisive.</constraint>
+<critical>MUST NOT skip user-facing deliberation — the research phase is pre-work, NEVER a replacement for discussion.</critical>
+</rules>
 
-- **Code-First**: Never propose architecture without reading existing code.
-- **Pattern Adherence**: Respect existing patterns unless justifying deviation.
-- **Concrete Only**: No vague placeholders; every section must be decisive.
-- **Stay interactive**: Never skip user-facing deliberation — the research phase is pre-work, not a replacement for discussion.
+<guidelines>
+<recommendation>SHOULD respect existing patterns unless deviation is explicitly justified.</recommendation>
+</guidelines>

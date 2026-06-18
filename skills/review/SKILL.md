@@ -19,12 +19,13 @@ Read `references/dispatch-process.md` for dispatch modes, process steps, and PR 
 
 ## Process
 1. Acquire review package per dispatch mode (see `references/dispatch-process.md`).
-2. Spawn `Agent("agents/workflow-review-runner.md")` with `diff`, `acceptance_criteria`, and `dispatch_mode`. Runner evaluates gates and spawns reviewer agents internally.
-3. Collect findings from runner.
+2. Evaluate the focus-activation gates against the diff and dispatch one `Agent("agents/workflow-reviewer.md")` per activated focus in parallel — each with a `focus:` seed-brief field plus `diff` and `acceptance_criteria`. Always activate `correctness` + `standards`; conditionally `security`, `perf`, `migration`, `docs`, `architecture`, `a11y` (gates documented in `agents/workflow-reviewer.md`). No review-runner — dispatch the leaf reviewers directly.
+3. Merge findings: dedup by `file:line` keeping the highest severity; suppress confidence < 0.60.
 4. Emit output per dispatch mode (fix brief, findings report, or posted GitHub review).
 
-## Rules
-- **Separation**: Never fix issues during review. Report findings in the review output; fixes happen in a subsequent `/build` cycle.
-- **Consensus**: All reviewers must agree before finalizing.
-- **Blocking**: Critical findings block. High-severity blocks for Security/Perf are non-waivable.
-- **Scope**: Flag changes outside issue scope.
+<rules>
+<critical>MUST NOT fix issues during review — report findings in the review output; fixes happen in a subsequent `/build` cycle.</critical>
+<constraint>All reviewers MUST agree before finalizing.</constraint>
+<critical>Critical findings MUST block. High-severity blocks for Security/Perf are non-waivable.</critical>
+<constraint>MUST flag changes outside issue scope.</constraint>
+</rules>

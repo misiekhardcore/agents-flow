@@ -32,7 +32,8 @@ Lead requirements team. Transforms problem statements into testable, non-vague a
    - State diagrams for stateful behavior.
 6. **Prioritization** — Categorize as must-have vs. nice-to-have.
 
-## Rules
-- **Zero Vagueness**: No "fast", "user-friendly", or "appropriate". Every AC must be testable.
-- **Verification**: Fetch and confirm URLs/external claims before citing in specs.
-- Read `@_shared/interviewing-rules.md`
+<rules>
+<critical>MUST NOT use vague terms like "fast", "user-friendly", or "appropriate" — every AC MUST be testable.</critical>
+<constraint>MUST fetch and confirm URLs/external claims before citing them in specs.</constraint>
+<constraint>MUST read `@_shared/interviewing-rules.md`.</constraint>
+</rules>

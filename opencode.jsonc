@@ -1,6 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["./AGENTS.md"],
+  // Disable the built-in generic `general` agent so the orchestrator must route
+  // to a named role (each role pins its own tier) rather than an untiered fallback.
+  "agent": {
+    "general": { "disable": true }
+  },
   "references": {
     "memory": {
       "path": "~/Projects/claude-memory",

@@ -9,7 +9,6 @@ permission:
     "*": "deny"
   question: deny
 maxTurns: 15
-background: true
 mode: all
 ---
 PR feedback fix agent. Read and fix all review threads assigned to your file group, then report verdicts. All context is in the spawn prompt.
@@ -46,8 +45,8 @@ payload:
 3. Retry up to 2 times per thread before marking `needs-human`.
 4. Report all verdicts (see § Output).
 
-## Output
-
+<output>
+<format>
 ```yaml
 threads:
   - id: <thread-id>
@@ -57,10 +56,12 @@ threads:
     commit: <sha or null>
     note: <reason for needs-human, if applicable>
 ```
+</format>
+</output>
 
-## Rules
-
-- Touch only files in the assigned thread list — no collateral changes.
-- Each logical fix as a separate commit referencing the thread.
-- Do not resolve the GitHub thread — the orchestrator does that.
-- If verification fails after 2 retries, mark `needs-human` and move on.
+<rules>
+<critical>You MUST touch only files in the assigned thread list — NO collateral changes.</critical>
+<constraint>Each logical fix MUST be a separate commit referencing the thread.</constraint>
+<critical>You MUST NOT resolve the GitHub thread — the orchestrator does that.</critical>
+<constraint>If verification fails after 2 retries, you MUST mark `needs-human` and move on.</constraint>
+</rules>

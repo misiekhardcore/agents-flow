@@ -108,17 +108,18 @@ Recommendation: <best fit and why>
 
 Ground in WCAG/ARIA/Material. Keep under 300 tokens.
 
-## Rules
+<rules>
+<constraint>Read only — NEVER modify files.</constraint>
+<constraint>Report findings as concrete facts, NEVER guesses.</constraint>
+<constraint>If `lens:` is absent or unrecognized, default to `domain-researcher`.</constraint>
+</rules>
 
-- Read only.
-- Report findings as concrete facts, not guesses.
-- If `lens:` is absent or unrecognized, default to `domain-researcher`.
-
-## Task metadata
-
-```
+<output>
+<format>
+Append, verbatim, at the very end of your output:
 <task_metadata>
 session_id: <session_id from input>
 lens: <lens>
 </task_metadata>
-```
+</format>
+</output>

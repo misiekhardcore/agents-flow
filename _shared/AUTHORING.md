@@ -246,7 +246,6 @@ structured output block
 
 ## Agent Catalogue
 
-All agent files live under `agents/`. See each skill's `## Worker Agent Inventory` section for spawned agents. Common patterns:
-- `agents/<skill>-runner.md` — autonomous core (Tier 2 shell + runner split)
-- `agents/<role>-agent.md` — parallel worker (spawned by runner)
-- `agents/reviewer-<domain>.md` — domain reviewer (spawned by review-runner)
+All agent files live under `agents/`. See each skill's `## Worker Agent Inventory` section for spawned agents. Dispatch is a single tier — the primary orchestrator (or a lifecycle skill) dispatches leaf workers directly; no intermediate runner agents. Common patterns:
+- `agents/<role>-agent.md` / `agents/workflow-<role>.md` — parallel leaf worker (spawned directly by the orchestrator)
+- `agents/workflow-reviewer.md` — parameterized reviewer, one dispatch per `focus:` (replaces the old per-domain reviewer agents)

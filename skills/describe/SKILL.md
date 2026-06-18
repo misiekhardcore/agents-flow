@@ -57,7 +57,7 @@ Produce Mermaid/ASCII diagrams for user journeys, feature comparisons, system bo
 
 Return structured problem statement (What, Why, Who, Boundaries, Prior art, Sub-areas). When invoked by discover, output is returned in chat — discover handles the issue body.
 
-## Rules
-
-- **Stay interactive**: Never skip PPT or visual validation — these are discussion points, not automations.
-- **Delegate, don't duplicate**: Research agents own their domain. Collect from agents and use in conversation.
+<rules>
+<critical>MUST NOT skip PPT or visual validation — these are discussion points, NEVER automations.</critical>
+<constraint>MUST delegate, not duplicate: research agents own their domain. MUST collect from agents and use their findings in conversation.</constraint>
+</rules>

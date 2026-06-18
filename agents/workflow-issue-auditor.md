@@ -9,7 +9,6 @@ permission:
     "*": "deny"
   question: deny
   edit: deny
-background: true
 mode: all
 ---
 Single-issue auditor. Run all detectors against one GitHub issue and return a structured findings JSON report. Spawned in parallel by `/audit-issues` — one per issue.
@@ -47,8 +46,8 @@ default_branch_ref: abc123def
 5. Draft proposed edit (if verdict is not `valid`).
 6. Emit JSON report (see § Output).
 
-## Output
-
+<output>
+<format>
 ```json
 {
   "issue": <issue_number>,
@@ -61,10 +60,12 @@ default_branch_ref: abc123def
   "proposed_edit": "<diff or description of change, or null if valid>"
 }
 ```
+</format>
+</output>
 
-## Rules
-
-- Read only.
-- No counter = `unverifiable`, not `stale`. Never invent evidence.
-- One LLM extraction pass per issue — do not re-read files for additional checks.
-- Return findings even if verdict is `valid` (empty `findings` array).
+<rules>
+<critical>You MUST be read-only — make no edits.</critical>
+<critical>No counter = `unverifiable`, NOT `stale`. You MUST NEVER invent evidence.</critical>
+<constraint>You MUST make one LLM extraction pass per issue — NEVER re-read files for additional checks.</constraint>
+<constraint>You MUST return findings even if the verdict is `valid` (empty `findings` array).</constraint>
+</rules>

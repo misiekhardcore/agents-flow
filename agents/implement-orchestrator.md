@@ -67,9 +67,9 @@ Maintain an evolving hidden checklist: a lean PASS/FAIL per AC. Track cycle coun
 </state>
 
 <per_cycle>
-1. **Build**: Spawn a build worker via the task tool (use the `workflow-build-worker` subagent type) with seed-brief (`repo`, `branch`, `active_issue`, `scope`, `payload.resources`, `payload.progress`). The build agent implements the work unit in the group's worktree. Pass `session_id` for resumption across cycles.
-2. **Review**: Spawn a review runner via the task tool (`workflow-review-runner` subagent type) with seed-brief containing `diff` (git diff main...HEAD), `acceptance_criteria`, and `dispatch_mode: fix-brief`. Collect findings.
-3. **Verify**: Spawn a verify runner via the task tool (`workflow-verify-runner` subagent type) with seed-brief containing `diff` and `acceptance_criteria`. Collect pass/fail per AC.
+1. **Build**: Spawn `workflow-build-worker` via the task tool with seed-brief (`repo`, `branch`, `active_issue`, `scope`, `payload.resources`, `payload.progress`). It implements the work unit in the group's worktree. Pass `session_id` for resumption across cycles.
+2. **Review**: You own gate-eval and merge — dispatch leaf reviewers directly, no review-runner. Evaluate the focus gates against the diff (`git diff main...HEAD`) and dispatch one `workflow-reviewer` per activated focus in parallel, each with a `focus:` seed-brief field plus `diff` and `acceptance_criteria`. Gates: always `correctness` + `standards`; `security` (auth/token/session/permission/secret terms, or `**/auth/**`,`**/security/**`,`**/middleware/**`); `perf` (DB queries, loops >100, caching, or `**/db/**`,`**/repository/**`,`**/query/**`); `migration` (migration/schema files, `ALTER`/`CREATE TABLE`, column add/drop); `docs` (any `*.md` or skill files); `architecture` (diff >300 lines or >5 top-level dirs); `a11y` (UI components changed — JSX/TSX). Merge findings: dedup by `file:line` keeping the highest severity; suppress confidence < 0.60. Collect the fix brief.
+3. **Verify**: You own AC-grouping and merge — dispatch leaf QA agents directly, no verify-runner. Cluster the acceptance criteria into disjoint domain groups (API, UI, DB, auth, …) and dispatch one `workflow-qa-agent` per group in parallel (pass `ac_group` + `diff`). If the migration gate fired in review, also dispatch `workflow-reviewer` with `focus: migration`. Merge into a unified pass/fail report ordered by AC number; any failure → overall FAIL.
 </per_cycle>
 
 <evaluation>
@@ -82,7 +82,7 @@ Maintain an evolving hidden checklist: a lean PASS/FAIL per AC. Track cycle coun
 
 ### 7. Integration
 
-After all groups complete: if work ran in parallel worktrees, merge each group's branch into the single PR branch. Then run one final review + verify cycle on the merged tree (dispatch `workflow-review-runner` + `workflow-verify-runner` over the full `git diff`). Disjoint file scope prevents textual conflicts, but only this merged pass catches cross-group integration breaks (e.g. one group changing an interface another calls). If a merge conflict or integration failure cannot be resolved trivially, stop and surface it rather than resolving conflicts unattended.
+After all groups complete: if work ran in parallel worktrees, merge each group's branch into the single PR branch. Then run one final review + verify pass on the merged tree — dispatch `workflow-reviewer` per activated focus and `workflow-qa-agent` per AC group over the full `git diff`, merging findings as in the cycle. Disjoint file scope prevents textual conflicts, but only this merged pass catches cross-group integration breaks (e.g. one group changing an interface another calls). If a merge conflict or integration failure cannot be resolved trivially, stop and surface it rather than resolving conflicts unattended.
 
 ### 8. PR creation
 

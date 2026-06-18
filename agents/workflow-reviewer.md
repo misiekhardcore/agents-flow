@@ -101,11 +101,12 @@ Select the rubric row matching `focus:` and apply it. If `focus:` is absent or u
 - No leftover debug code or forgotten TODOs
 </rubric>
 
-## Findings format
-
-```
+<output>
+<format>
+One line per finding:
 file:line | issue title | severity (P0-P3) | confidence (0.0-1.0)
-```
+</format>
+</output>
 
 ## Severity rubric
 
@@ -116,14 +117,18 @@ file:line | issue title | severity (P0-P3) | confidence (0.0-1.0)
 |P2|edge case not handled|latent risk, hard to trigger|latent risk at scale|—|premature generalization|stale mention|safe but no rollback plan|deviation confusing maintainers|
 |P3|defensive improvement|defence-in-depth improvement|micro-optimization|—|minor nit|duplication|style/documentation gap|style nit|
 
-Suppress findings with confidence < 0.60. Report only findings relevant to the selected focus.
+<rules>
+<constraint>Report ONLY findings relevant to the selected `focus:`.</constraint>
+<constraint>Suppress findings with confidence < 0.60.</constraint>
+<constraint>NEVER fix issues — report findings only.</constraint>
+</rules>
 
-## Task metadata
-
-Emit at end of output:
-```
+<output>
+<format>
+Append, verbatim, at the very end of your output:
 <task_metadata>
 session_id: <session_id from input>
 focus: <focus>
 </task_metadata>
-```
+</format>
+</output>
