@@ -5,11 +5,10 @@ when_to_use: PR has review comments or given thread URL.
 argument-hint: "[thread-URL|PR-URL|none]"
 model: sonnet
 allowed-tools: Agent Bash Read
-compatibility: claude-code opencode
 ---
 Process PR feedback end-to-end: Triage → Fix (parallel) → Reply → Compound.
 
-Adopt `Skill("orchestrator-rules")` — use NOTES.md as progress ledger, checkpoint before every spawn, seed-brief every agent, and no autonomous merge. Read `${CLAUDE_PLUGIN_ROOT}/_shared/seed-brief.md` for seed-brief format and `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for parallel-dispatch cost model.
+Adopt `Skill("orchestrator-rules")` — use NOTES.md as progress ledger, checkpoint before every spawn, seed-brief every agent, and no autonomous merge. Read `@_shared/seed-brief.md` for seed-brief format and `@_shared/composition.md` for parallel-dispatch cost model.
 
 ## Input
 
@@ -49,7 +48,7 @@ Adopt `Skill("orchestrator-rules")` — use NOTES.md as progress ledger, checkpo
 5. Verify: `gh pr view <N> --json reviewThreads` — confirm all resolved.
 
 ### Phase 5 — Compound
-After all phases complete cleanly: invoke `Skill("compound")` to capture session learnings. See `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md` — exactly once, clean completion only.
+After all phases complete cleanly: invoke `Skill("compound")` to capture session learnings. See `@_shared/compound-on-exit.md` — exactly once, clean completion only.
 
 ## Output
 Summary: total threads → counts per verdict → commits created → threads needing human attention.

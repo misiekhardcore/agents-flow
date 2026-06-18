@@ -4,7 +4,6 @@ description: Codebase architecture scanner for /architecture. Reads existing pat
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

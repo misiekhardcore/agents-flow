@@ -6,7 +6,6 @@ argument-hint: "[issue#]"
 model: opus
 effort: high
 allowed-tools: Agent Bash Read
-compatibility: claude-code opencode
 ---
 Lead definition phase. Transform an approved issue into a concrete implementation plan (architecture + design).
 
@@ -48,7 +47,7 @@ For high-risk plans (security, payments, arch-changing scope): after architectur
 
 Each with seed-brief containing `issue`, `architecture_decisions`, `design_decisions`, and `scope`. Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`. Merge findings from both before presenting to user. Get approval.
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
+See `@_shared/composition.md` for spawn cost models.
 
 ### 7. Synthesize
 
@@ -69,7 +68,7 @@ Require explicit user approval.
 
 ### 10. Compound on exit
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
+Read `@_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
 
 ## Rules
 

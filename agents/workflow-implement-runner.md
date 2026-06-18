@@ -4,7 +4,6 @@ description: Autonomous implement orchestrator. Runs build → review → verify
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: AskUserQuestion
 permission:
   question: deny
 background: true

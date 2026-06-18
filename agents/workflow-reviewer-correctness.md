@@ -2,7 +2,6 @@
 name: workflow-reviewer-correctness
 description: Correctness-focused code reviewer. Checks AC satisfaction, logic errors, and edge cases.
 model: sonnet
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

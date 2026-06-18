@@ -68,17 +68,16 @@ To prevent race conditions and "last-write-wins" conflicts:
 - **Isolation Escape Hatch**: If disjoint scope cannot be guaranteed, use `isolation: "worktree"` to provide each agent with its own git worktree.
 
 ### 3. Defensive Frontmatter
-Worker agents should include both Claude Code and opencode guardrails:
+Worker agents should include opencode guardrails:
 
-- **Claude Code**: `disallowedTools: Agent AskUserQuestion` — prevents recursive agent spawning and user interaction.
-- **OpenCode**: `permission: { task: {"*": "deny"}, question: "deny" }` — equivalent for opencode's permission system.
-- **Read-only workers** (reviewers, scanners): Add `Write Edit` to `disallowedTools` and `edit: "deny"` to `permission`.
+- **Permission**: `permission: { task: {"*": "deny"}, question: "deny" }` — prevents recursive agent spawning and user interaction.
+- **Read-only workers** (reviewers, scanners): Add `edit: "deny"` to `permission`.
 
 ## Custom Agent Authoring
 
 ### When to use a Custom Agent File
 Use a dedicated file in the `agents/` directory when:
-- Specific tool restrictions are required (`disallowedTools` for Claude Code, `permission` for opencode).
+- Specific tool restrictions are required (`permission` for opencode).
 - A specific model override is needed.
 - `mode` classification must be set (`primary` for orchestrators, `all` for sub-orchestrators, `subagent` for workers).
 - A `maxTurns` (`steps` in opencode) cap is required.
@@ -178,16 +177,6 @@ Sequential step numbering. Orchestrators always include Init NOTES.md, Sign-off,
 
 Per-role frontmatter defaults are documented in `_shared/frontmatter-reference.md` (§ Default Values by Role). That file also serves as the canonical field registry for both tools and both file types (SKILL.md + agent `.md`).
 
-### Dual-Compat Frontmatter
-
-All skills in `agents-flow` carry frontmatter for both Claude Code and opencode:
-
-- **SKILL.md files**: Include `compatibility: claude-code opencode` as the last field before `---`. All existing Claude Code fields remain in place — opencode ignores unrecognized fields.
-- **Agent `.md` files**: Carry both Claude Code fields and opencode fields (`mode`, `permission`, `hidden`). Each tool reads its own frontmatter; unknown fields are silently ignored.
-- **New skills**: `/new-skill` automatically adds `compatibility: claude-code opencode` to every generated SKILL.md.
-
-See `_shared/frontmatter-reference.md` for the complete field registry, per-role defaults, and Claude Code → OpenCode field mapping.
-
 ## Orchestrator Decomposition
 
 When an orchestrator must decide how to fan out work across agents, use `/scope-assessment` as the canonical decomposition step:
@@ -213,22 +202,13 @@ Reference on-demand via `Read \`_shared/<file>.md\``:
 
 ## Agent File Template
 
-Agent files live in `agents/<agent-name>.md`. Use this dual-compat template:
+Agent files live in `agents/<agent-name>.md`:
 
 ```yaml
 ---
-# --- Shared fields (both tools) ---
 name: <agent-name>
 description: <one sentence — what it does and when it's spawned>
 model: <sonnet|haiku|opus>
-
-# --- Claude Code fields ---
-user-invocable: false
-disallowedTools: Agent AskUserQuestion  # + Write Edit for read-only agents
-# maxTurns: 15
-# background: true  # for parallel workers
-
-# --- OpenCode fields ---
 mode: subagent  # primary | all | subagent
 # hidden: true  # hide from @ menu (subagent only)
 # permission:

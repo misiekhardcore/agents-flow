@@ -4,7 +4,6 @@ description: Autonomous review orchestrator. Evaluates gates, spawns reviewer ag
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: AskUserQuestion Edit Write
 permission:
   question: deny
   edit: deny

@@ -4,7 +4,6 @@ description: UX pattern researcher for /design. Finds established UX patterns, i
 model: haiku
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

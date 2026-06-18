@@ -2,7 +2,6 @@
 name: workflow-reviewer-migration
 description: Migration-focused reviewer. Checks schema backwards compatibility, rollback safety, and data integrity.
 model: sonnet
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

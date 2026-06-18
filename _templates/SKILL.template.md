@@ -7,6 +7,5 @@ description: <Does X. Use when Y.>
 # effort: high  # Uncomment for research-leading or multi-turn skills
 # allowed-tools: Agent Bash Read  # Uncomment to restrict tool surface
 # user-invocable: false  # Uncomment to hide from command menu
-compatibility: claude-code opencode
 ---
 <!-- Body sections assembled by role/tier per shared authoring guide (§ Body Assembly by Role/Tier). -->

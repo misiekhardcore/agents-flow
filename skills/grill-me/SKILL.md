@@ -4,13 +4,12 @@ description: Interview the user relentlessly about a plan or design until reachi
 when_to_use: Use when the user wants to stress-test a plan, get grilled on a design, or mentions "grill me".
 model: sonnet
 allowed-tools: AskUserQuestion Read Write Bash
-compatibility: claude-code opencode
 ---
 <!-- Interactive primitive — requires back-and-forth with user. -->
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding, and there is no ambiguity. For each question, provide your recommended answer.
 
-Adopt `Skill("notes-md")` and read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` at point of need.
+Adopt `Skill("notes-md")` and read `@_shared/interviewing-rules.md` at point of need.
 
 ## Process
 

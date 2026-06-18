@@ -4,7 +4,6 @@ description: Domain pattern scanner. Reads codebase to extract architecture patt
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

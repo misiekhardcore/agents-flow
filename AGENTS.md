@@ -2,12 +2,18 @@
 
 ## Repository type
 
-This is a skill/agent collection for AI coding agents (compatible with Claude Code and opencode). Skills live at `skills/<name>/SKILL.md`, agents at `agents/*.md`.
+This is a skill/agent collection for AI coding agents. Skills live at `skills/<name>/SKILL.md`, agents at `agents/*.md`.
 
-## Compatibility
+## Install
 
-- **Claude Code**: Install via `claude plugin marketplace add misiekhardcore/agents-flow` then `claude plugin install agents-flow@agents-flow`
-- **OpenCode**: Add `./skills` to `skills.paths` in `opencode.jsonc`
+Add `./skills` to `skills.paths` in your `opencode.jsonc`:
+```jsonc
+{
+  "skills": {
+    "paths": ["./skills"]
+  }
+}
+```
 
 ## Commands
 
@@ -19,12 +25,6 @@ This is a skill/agent collection for AI coding agents (compatible with Claude Co
 Pre-commit runs `npx lint-staged` which runs `bin/minify-md -i -r` on staged `.md` files — do not fight the minifier.
 
 No tests exist. No test framework. CI only runs `npm run format` on PRs to `main`.
-
-## Release (Claude Code — manual workflow_dispatch)
-
-Version lives in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (both `metadata.version` and `plugins[0].version`). They must stay in lockstep. The Release workflow bumps all three, commits, tags, and creates a GitHub release.
-
-**Do not bump `package.json` (0.0.1) during release** — it is internal and independent of the plugin version (currently 1.6.2).
 
 ## Feature workflow
 
@@ -52,7 +52,7 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 ## Key conventions
 
 - **Single-agent by default.** Parallel agents only for 2+ independent file groups, sub-issues, or tasks.
-- **Worker SKILLs** (not agent files) get `context: fork` and explicit `agent:` type (`Explore` for read-only, `general-purpose` for writes/gh). Agent files use `background: true` and `memory: project`.
+- **Worker SKILLs** (not agent files) get `context: fork` and explicit `agent:` type (`Explore` for read-only, `general-purpose` for writes/gh).
 - **Preflight before gh/git push.** Invoke `Skill("preflight")` — verifies repo, branch, CWD. Spawned workers skip preflight.
 - **NOTES.md** at `.claude/NOTES.md` is the in-phase progress ledger (gitignored). Create on entry, checkpoint before spawn, update on return, leave for the phase-ending skill.
 - **Seed-brief** (`_shared/seed-brief.md`) packages spawn-time context as YAML in XML. Used by orchestrators when spawning agents. NOT for mid-cycle state (use NOTES.md) or phase-to-phase handoff (use issue body).
@@ -68,16 +68,12 @@ Run `/new-skill` to scaffold a conformant `SKILL.md`. For the full authoring sta
 
 Token budgets per artifact/phase, instruction file placement rules, `@`-imports: `docs/token-budgets.md`.
 
-## Plugin path variables (Claude Code)
+## Shared protocol access
 
-- `${CLAUDE_PLUGIN_ROOT}` — plugin install dir. Skills reference `_shared/` via `${CLAUDE_PLUGIN_ROOT}/_shared/<file.md>`. Fallback: if not expanded inline, skills use `_shared/<file.md>` and Claude resolves via glob against `~/.claude/plugins/cache/<marketplace>/<version>/`.
-- `${CLAUDE_PLUGIN_DATA}` — `~/.claude/plugins/data/agents-flow/` for persistent cached state.
-
-For other tools, these paths resolve differently; see the tool's plugin/skill loading docs.
+Shared docs at `_shared/` are accessible via `@_shared/<file.md>` (configured in `opencode.jsonc` references). When a skill instructs `Read @_shared/seed-brief.md`, resolve it through the reference alias — no path variable needed.
 
 ## Existing instruction files
 
-- `CLAUDE.md` — symlink to this file, kept for backwards compatibility (loaded by Claude Code at repo root).
 - `AGENTS.md` (this file) — repo-specific facts an agent would guess wrong without help. Loaded by opencode; referenced by other AI coding agents.
 
 ## Rules
@@ -85,6 +81,6 @@ For other tools, these paths resolve differently; see the tool's plugin/skill lo
 - `.gitignore` entries: `.claude/NOTES.md`, `.worktrees/`, `node_modules/` — do not commit these.
 - Skills specify their own `model:` and `effort:` in frontmatter — trust them.
 - Orchestrator SKILL.md must be ≤ 150 lines. No inline domain work — delegate.
-- Worker agents should include `disallowedTools: Agent` to prevent recursive spawning.
+- Worker agents should include `permission: { task: {"*": "deny"}, question: "deny" }` to prevent recursive spawning and user interaction.
 - **Persist lessons to AGENTS.md**: When you discover a project-level convention, gotcha, or architecture rule that future agents would benefit from, add it to this file under the relevant section. NOTES.md is ephemeral session scratch — durable knowledge lives here.
 - **Update docs with code**: Any change to a skill, agent, or command must update all related docs (README.md, docs/*.md, AGENTS.md, other skills referencing it) in the same commit. Stale docs rot faster than dead code.

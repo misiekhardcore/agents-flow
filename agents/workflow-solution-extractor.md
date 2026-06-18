@@ -4,7 +4,6 @@ description: Solution pattern extractor for /compound. Distills root cause, solu
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

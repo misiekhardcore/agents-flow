@@ -2,7 +2,6 @@
 name: workflow-reviewer-security
 description: Security-focused code reviewer. Checks auth, injection, secrets, and privilege escalation.
 model: sonnet
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

@@ -5,7 +5,6 @@ when_to_use: Use when auditing a GitHub repo's open issues for drift, broken ref
 argument-hint: "[owner/repo | #NN | owner/repo#NN]"
 model: sonnet
 allowed-tools: Agent Bash Read
-compatibility: claude-code opencode
 ---
 Audit open issues for drift against repo state. Product: updated issues themselves (mutate on confirm). Read-only by default — mutate only after explicit per-issue confirmation.
 
@@ -40,7 +39,7 @@ Spawn one `Agent("agents/workflow-issue-auditor.md")` per issue with a `<seed-br
 
 Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`.
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
+See `@_shared/composition.md` for spawn cost models.
 
 ### 5. Aggregate
 
@@ -66,7 +65,7 @@ Require explicit user approval before applying mutations. No unconfirmed mutatio
 
 ### 8. Compound on exit
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion.
+Read `@_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion.
 
 ## Rules
 

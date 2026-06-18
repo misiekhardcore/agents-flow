@@ -4,7 +4,6 @@ description: QA agent for one acceptance criteria group. Verifies each AC in the
 model: haiku
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

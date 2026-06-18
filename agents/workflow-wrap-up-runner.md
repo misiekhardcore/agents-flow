@@ -4,7 +4,6 @@ description: Autonomous cleanup runner. Removes worktree, deletes branch, and cl
 model: haiku
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

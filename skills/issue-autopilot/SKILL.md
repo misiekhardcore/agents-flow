@@ -6,7 +6,6 @@ argument-hint: <issue#>
 model: opus
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
-compatibility: claude-code opencode
 ---
 Orchestrate the single-issue ship pipeline. Take a GitHub issue number and drive it to a merged PR with clean local state — pausing only where human action is required (review, merge).
 
@@ -43,7 +42,7 @@ If clean PR awaiting merge: read `references/stage-4.md` at point of need. Print
 
 ### 6. Post-merge cleanup (Stage 5)
 
-If PR merged: read `references/stage-5.md` at point of need. Checkpoint NOTES.md. Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Spawn `Agent("agents/workflow-wrap-up-runner.md")` with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
+If PR merged: read `references/stage-5.md` at point of need. Checkpoint NOTES.md. Read `@_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Spawn `Agent("agents/workflow-wrap-up-runner.md")` with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
 ```
 repo: <owner/repo>
 branch: feat/issue-<N>

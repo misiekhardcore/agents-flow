@@ -2,6 +2,27 @@
 
 All notable changes to the **agents-flow** plugin are recorded here. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Removed
+
+- Drop Claude Code scaffolding — deleted `.claude-plugin/`, `CLAUDE.md` symlink, release.yml CC machinery
+- Remove `compatibility: claude-code opencode` frontmatter from all 27 skill+template files
+- Remove `disallowedTools` frontmatter from all 30 agent files and 4 doc references
+- Remove all `${CLAUDE_PLUGIN_ROOT}` path variable references — replaced with `@_shared/` alias
+- Remove all CC documentation from AGENTS.md, README.md, docs/ — deleted `docs/cross-plugin.md`
+- Remove Dual-Compat Frontmatter section from `_shared/AUTHORING.md`
+
+### Added
+
+- `@_shared` reference alias in `opencode.jsonc` for shared protocol access
+
+### Changed
+
+- Rewrite release workflow to use `package.json` as single version source
+- Rewrite `_shared/frontmatter-reference.md` for opencode-only field registry
+- Rewrite AGENTS.md for opencode-first install and conventions
+
 ## [2.1.0] - 2026-06-16
 ### Added
 

@@ -6,7 +6,6 @@ argument-hint: "[issue#]"
 model: sonnet
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
-compatibility: claude-code opencode
 ---
 Orchestrate build → review → verify → fix cycles to produce a ready-to-merge PR. Delegates all phase work to sub-skills and worker agents — never codes, reviews, or runs tests inline.
 
@@ -36,7 +35,7 @@ Per disjoint group, spawn `Agent("agents/workflow-implement-runner.md")` with se
 
 Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`.
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
+See `@_shared/composition.md` for spawn cost models.
 
 ### 7. Collect
 Wait for runner return. Collect PR URL and findings.

@@ -4,7 +4,6 @@ description: Wiki overlap scanner for /compound. Searches for existing notes tha
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

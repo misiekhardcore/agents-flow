@@ -4,7 +4,6 @@ description: Architecture constraint analyzer for /architecture. Reads codebase-
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

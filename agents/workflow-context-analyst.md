@@ -4,7 +4,6 @@ description: Compound context analyst. Reviews session history and diff to extra
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

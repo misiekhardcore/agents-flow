@@ -7,7 +7,6 @@ model: sonnet
 effort: high
 user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
-compatibility: claude-code opencode
 ---
 Lead build phase. Goal: Take a fully specified GitHub issue and produce working code. Builds a feature using TDD. Produces implementation code in a worktree. Hands off via the worktree for review.
 
@@ -19,7 +18,7 @@ Lead build phase. Goal: Take a fully specified GitHub issue and produce working 
 
 Divide the issue into work units (sub-issues or file groups) which can be worked on in parallel by multiple build workers. Consider complexity, collision avoidance, dependencies, and risk when defining work units.
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
+See `@_shared/composition.md` for spawn cost models.
 
 ## Process
 Read `references/process.md` for step-by-step process, TDD, context hygiene, and commit rules.

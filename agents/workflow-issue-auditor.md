@@ -4,7 +4,6 @@ description: Single-issue auditor for /audit-issues. Runs detectors against one 
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"
