@@ -18,14 +18,14 @@ Lifecycle walkthrough from discovery to closure.
 
 ### 1. `/discover`
 **Goal**: Vague idea → well-specified GitHub issue.
-- **Process**: Discover orchestrator loads describe skill (research, visuals) → specify skill (AC generation).
+- **Process**: Discover orchestrator loads "describe" skill (research, visuals) → "specify" skill (AC generation).
 - **Output**: Issue with **Problem statement** + **Handoff block** (AC, Constraints, Decisions, Evidence, Questions).
 - **Gate**: Explicit user approval of issue body.
 - **Next**: `/define` (Large) or `/implement` (Medium).
 
 ### 2. `/define`
 **Goal**: Approved issue → technical implementation plan.
-- **Process**: Define orchestrator loads architecture skill → design skill (if visual).
+- **Process**: Define orchestrator loads "architecture" skill → "design" skill (if visual).
 - **Output**: Update issue with `## Implementation plan` (decisions, visuals, sub-issues, dependency graph).
 - **Gate**: Explicit user approval of decisions.
 - **Next**: `/implement`.
