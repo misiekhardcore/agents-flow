@@ -8,4 +8,4 @@ description: <Does X. Use when Y.>
 # allowed-tools: Agent Bash Read  # Uncomment to restrict tool surface
 # user-invocable: false  # Uncomment to hide from command menu
 ---
-<!-- Body sections assembled by role/tier per shared authoring guide (§ Body Assembly by Role/Tier). -->
+<!-- Body sections assembled by role/tier per shared authoring guide (§ Body Assembly by Role/Tier). For RFC 2119 + XML tag conventions see `_shared/rfc-xml-style-guide.md`; for opencode config/permission schema see `_shared/opencode-config-reference.md`. -->

@@ -27,17 +27,6 @@ Canonical field registry for `agents-flow` — covers opencode frontmatter for S
 |`color`|no|hex or theme color|UI appearance.|
 |`top_p`|no|0.0–1.0|Response diversity (alternative to temperature).|
 
-|Field|Required|Values|Description|
-|-|-|-|-|
-|`mode`|no|`primary`, `subagent`, `all`|Defaults `all`. `primary` = Tab-switchable; `subagent` = Task/@-invoke only; `all` = both.|
-|`hidden`|no|`true`, `false`|Hide from `@` autocomplete. Only applies to `mode: subagent`.|
-|`permission`|no|object|Tool permission overrides. Keys from permission table below.|
-|`temperature`|no|0.0–1.0|Response randomness. Omit for model default.|
-|`steps`|no|number|Max agentic iterations before forced text response.|
-|`disable`|no|`true`, `false`|Disable the agent entirely.|
-|`color`|no|hex or theme color|UI appearance.|
-|`top_p`|no|0.0–1.0|Response diversity (alternative to temperature).|
-
 ## Permission Keys (OpenCode agents)
 
 Valid keys for the `permission` field. Set each to `"allow"`, `"ask"`, or `"deny"`.
@@ -70,4 +59,4 @@ Default frontmatter values for each skill role. `/new-skill` uses these when gen
 |-|-|-|-|-|-|
 |`model`|`sonnet`|`sonnet`|`sonnet`|`sonnet`|`sonnet`|
 
-See `_shared/AUTHORING.md` § Body Assembly by Role/Tier for the full role-to-template mapping.
+See `_shared/AUTHORING.md` § Body Assembly by Role/Tier for the full role-to-template mapping. See `_shared/opencode-config-reference.md` for how these opencode frontmatter fields map to workflow conventions.

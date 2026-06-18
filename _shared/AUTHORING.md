@@ -187,6 +187,10 @@ When an orchestrator must decide how to fan out work across agents, use `/scope-
 
 Document the orchestrator's specific definition of "work unit" (what counts as an input, what its `resources` list must contain) in a dedicated `references/` doc. That doc must also cite `/scope-assessment` as the canonical decomposition algorithm. The protocol skill encodes the algorithm only; per-caller variation lives at the call site.
 
+## External Style & Config References
+
+See `_shared/rfc-xml-style-guide.md` for RFC 2119 + XML tag conventions and `_shared/opencode-config-reference.md` for opencode config/permission fields. These are the adopted external best-practice patterns for artifact authoring.
+
 ## `_shared/` File Catalogue
 
 Reference on-demand via `Read \`_shared/<file>.md\``:
