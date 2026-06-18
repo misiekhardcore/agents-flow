@@ -44,7 +44,7 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 
 - **Skills**: 26 skill dirs under `skills/`. Each has a `SKILL.md` (the actual skill body). Some also have `references/` (per-skill static docs).
 - **Commands**: `commands/` at repo root — opencode command files.
-- **Agent files**: `agents/` at repo root — 19 worker agent files (collapsed from 30 — 8 reviewers + 5 researchers → 2 parameterized agents), one per single-responsibility role.
+- **Agent files**: `agents/` at repo root — 19 worker agent files, one per single-responsibility role.
 - **Shared protocols**: `_shared/*.md` — reference docs, not skills. Use `Read` not `Skill()` to access them.
 - **Templates**: `_templates/` — scaffolding skeletons for new skills (`AUTHORING.md` is the canonical authoring guide).
 - **Bin tools**: `bin/minify-md` (markdown minifier), `bin/list-prune-files` (used by `/prune` skill), `bin/install` (opencode symlink installer).
