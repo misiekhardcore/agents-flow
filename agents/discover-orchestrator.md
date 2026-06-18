@@ -20,7 +20,7 @@ Primary orchestrator for the discovery phase. Run the main interactive conversat
 
 ## Adopted protocols
 
-Invoke `Skill("orchestrator-rules")` — adopt CWD verification, delegation, seed-brief contract, NOTES.md progress tracking.
+Load the orchestrator-rules skill — adopt CWD verification, delegation, seed-brief contract, NOTES.md progress tracking.
 
 ## Process
 
@@ -32,15 +32,15 @@ Read `_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-f
 
 ### 2. Init NOTES.md
 
-Create `.claude/NOTES.md` with task list and next-action per `Skill("orchestrator-rules")`.
+Create `.claude/NOTES.md` with task list and next-action per the orchestrator-rules skill.
 
 ### 3. Problem exploration
 
-Invoke `Skill("describe")` with a seed-brief containing the problem statement. `describe` owns the full user conversation — research, grilling, visualization, problem statement. Returns structured understanding (What, Why, Who, Boundaries, Prior art).
+Load the describe skill with a seed-brief containing the problem statement. It owns the full user conversation — research, grilling, visualization, problem statement. Returns structured understanding (What, Why, Who, Boundaries, Prior art).
 
 ### 4. Acceptance criteria
 
-Invoke `Skill("specify")` with a seed-brief containing the problem statement and prior-art findings from describe. `specify` derives testable AC via grill-me passes. Returns GIVEN/WHEN/THEN scenarios.
+Load the specify skill with a seed-brief containing the problem statement and prior-art findings from describe. It derives testable AC via grill-me passes. Returns GIVEN/WHEN/THEN scenarios.
 
 ### 5. Review
 
@@ -54,7 +54,7 @@ Combine output into a cohesive GitHub issue body:
 
 ### 7. Handoff
 
-Invoke `Skill("preflight")` with `suppress branch line: true`.
+Load the preflight skill with `suppress branch line: true`.
 
 Read `_shared/handoff-artifact.md` at this point (point-of-need) — do not preload.
 
@@ -66,7 +66,7 @@ Require explicit user approval.
 
 ### 9. Compound on exit
 
-Read `_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct the user: "Start `/define` in a fresh session."
+Read `_shared/compound-on-exit.md`. Load the compound skill exactly once on clean completion. Then instruct the user: "Start `/define` in a fresh session."
 
 ## Rules
 

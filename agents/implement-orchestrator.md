@@ -20,7 +20,7 @@ Primary orchestrator for the implementation phase. Drive build-to-review-to-veri
 
 ## Adopted protocols
 
-Invoke `Skill("orchestrator-rules")` for checkpoint, NOTES.md, and seed-brief conventions.
+Load the orchestrator-rules skill for checkpoint, NOTES.md, and seed-brief conventions.
 
 Read `skills/implement/references/scope.md` for work-unit types.
 Read `skills/implement/references/scope-cycles.md` for the cycle contract.
@@ -33,7 +33,7 @@ The command passes arguments via `<arguments raw="$ARGUMENTS" />`. If empty or v
 
 ### 1. Entry
 
-Invoke `Skill("orchestrator-rules")`, `Skill("notes-md")`, `Skill("preflight")` (with `suppress branch line: true`). Create `.claude/NOTES.md`.
+Load the orchestrator-rules, notes-md, and preflight skills (the last with `suppress branch line: true`). Create `.claude/NOTES.md`.
 
 ### 2. Ingestion
 
@@ -41,14 +41,14 @@ Read issue body (`## Requirements`, `## Implementation plan`). If plan absent an
 
 ### 3. Scope
 
-Build work units from sub-issues and file groups. Invoke `Skill("scope-assessment")` with work units (each with `id` and `resources`) -> receive agent plan of disjoint groups.
+Build work units from sub-issues and file groups. Load the scope-assessment skill with work units (each with `id` and `resources`) -> receive agent plan of disjoint groups.
 
 Single-unit (no sub-issues, no disjoint file groups) -> one runner directly.
 Multi-unit -> one implementation group per disjoint group, run sequentially.
 
 ### 4. Worktree
 
-Invoke `Skill("worktree")` to create or verify the implementation worktree.
+Load the worktree skill to create or verify the implementation worktree.
 
 ### 5. Handoff
 
@@ -64,9 +64,9 @@ Maintain an evolving hidden checklist: a lean PASS/FAIL per AC. Track cycle coun
 </state>
 
 <per_cycle>
-1. **Build**: Spawn `Agent("agents/workflow-build-worker.md")` via Task with seed-brief (`repo`, `branch`, `active_issue`, `scope`, `payload.resources`, `payload.progress`). The build agent implements the work unit in the shared worktree. Pass `session_id` for resumption across cycles.
-2. **Review**: Spawn `Agent("agents/workflow-review-runner.md")` via Task with seed-brief containing `diff` (git diff main...HEAD), `acceptance_criteria`, and `dispatch_mode: fix-brief`. Collect findings.
-3. **Verify**: Spawn `Agent("agents/workflow-verify-runner.md")` via Task with seed-brief containing `diff` and `acceptance_criteria`. Collect pass/fail per AC.
+1. **Build**: Spawn a build worker via the task tool (use the `workflow-build-worker` subagent type) with seed-brief (`repo`, `branch`, `active_issue`, `scope`, `payload.resources`, `payload.progress`). The build agent implements the work unit in the shared worktree. Pass `session_id` for resumption across cycles.
+2. **Review**: Spawn a review runner via the task tool (`workflow-review-runner` subagent type) with seed-brief containing `diff` (git diff main...HEAD), `acceptance_criteria`, and `dispatch_mode: fix-brief`. Collect findings.
+3. **Verify**: Spawn a verify runner via the task tool (`workflow-verify-runner` subagent type) with seed-brief containing `diff` and `acceptance_criteria`. Collect pass/fail per AC.
 </per_cycle>
 
 <evaluation>
@@ -89,7 +89,7 @@ Run from worktree root:
 
 ### 8. Compound
 
-Read `_shared/compound-on-exit.md`. On clean completion, invoke `Skill("compound")` exactly once. No invocation on abort or early exit.
+Read `_shared/compound-on-exit.md`. On clean completion, load the compound skill exactly once. No invocation on abort or early exit.
 
 ### 9. Finalize
 
