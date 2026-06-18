@@ -1,12 +1,6 @@
 ---
 name: describe
 description: Explore and understand a problem space interactively. Uses visualizations and user stories to build shared understanding.
-when_to_use: Use during discovery. Invoked by /discover; can run standalone before /specify.
-argument-hint: "[issue# | description]"
-model: opus
-effort: high
-allowed-tools: Agent Bash Read AskUserQuestion
-user-invocable: true
 ---
 Lead the user conversation during discovery. Deeply understand the problem space via interactive exploration and validation. Produces structured problem statements (What, Why, Who, Boundaries) with prior-art findings.
 
@@ -34,21 +28,21 @@ If invoked with a seed-brief (from discover), use the provided `domain` and `pro
 
 Read `@_shared/composition.md` for spawn cost models.
 
-Read `references/scope.md` for work-unit types. Invoke `Skill("scope-assessment")` with work units derived from the problem. Each independent domain is a work unit. Scope-assessment groups disjoint domains for parallel research.
+Read `references/scope.md` for work-unit types. Load the "scope-assessment" skill with work units derived from the problem. Each independent domain is a work unit. Scope-assessment groups disjoint domains for parallel research.
 
 Read `references/scope-ppt.md` for PPT checklist.
 
 ### 3. Research
 
-Per scope-assessment group, spawn in parallel:
-- `Agent("agents/workflow-domain-researcher.md")` — pass `domain`, `cwd`.
-- **Gate** (high-risk only: payments, auth, data migration): also spawn `Agent("agents/workflow-flow-analyst.md")` — pass `domain`, `cwd`, and entry points from domain-researcher output.
+Per scope-assessment group, spawn in parallel via Task tool:
+- `workflow-researcher` — pass `lens: domain-researcher`, `payload.domain` (domain name), and `cwd`.
+- **Gate** (high-risk only: payments, auth, data migration): also spawn `workflow-flow-analyst` — pass `domain`, `cwd`, and entry points from domain-researcher output.
 
 Collect all findings before proceeding.
 
 ### 4. PPT
 
-Run Product Pressure Test via `Skill("grill-me")` with user:
+Run Product Pressure Test via the "grill-me" skill with user:
 1. **Right Problem?** — Is this a symptom? Deeper root cause?
 2. **Cost of Inaction?** — Who is affected? How badly?
 3. **Leverage?** — Simpler move that captures 80% of value?

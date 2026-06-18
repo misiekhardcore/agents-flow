@@ -1,10 +1,6 @@
 ---
 name: design
 description: Explore visual and UX design (UI layouts, interaction flows, component structure).
-when_to_use: Use to produce UI/UX design decisions. Invoked by /define; can run standalone.
-model: sonnet
-allowed-tools: Agent Bash Read
-user-invocable: true
 ---
 Lead UI/UX design decisions. Produce visual and interaction design that fits existing systems. Hands off via GitHub issue body under `## Implementation plan`.
 
@@ -12,7 +8,7 @@ Lead UI/UX design decisions. Produce visual and interaction design that fits exi
 
 ### 1. Research
 
-Spawn `Agent("agents/workflow-ux-researcher.md")` — pass `component` (target UI component or flow) and `context` (product context and target users).
+Spawn `workflow-researcher` via Task tool — pass `lens: ux-researcher`, `payload.component` (target UI component or flow), and `payload.context` (product context and target users).
 
 ### 2. Design
 
@@ -24,13 +20,13 @@ For each component, propose 2-3 visual/interaction approaches:
 
 ### 3. Evaluate
 
-Spawn `Agent("agents/workflow-reviewer-a11y.md")` — pass `component` and `proposals` (list of approach names and descriptions).
+Spawn `workflow-reviewer` via Task tool — pass `focus: a11y`, `payload.component` and `payload.proposals` (list of approach names and descriptions).
 
-Present a11y findings alongside proposals. Invoke `Skill("grill-me")` for deliberation. User selects approach.
+Present a11y findings alongside proposals. Load the "grill-me" skill for deliberation. User selects approach.
 
 ### 4. Output
 
-Invoke `Skill("preflight")`. Read `_shared/handoff-artifact.md`. Write design decisions to issue body under `## Implementation plan`:
+Load the "preflight" skill. Read `@_shared/handoff-artifact.md`. Write design decisions to issue body under `## Implementation plan`:
 - Visual mockups/prototypes.
 - Component hierarchy.
 - Interaction flow diagrams.

@@ -1,11 +1,6 @@
 ---
 name: compound
 description: Capture learnings from completed work into durable wiki notes. Delegates to /save when agents-memo is available.
-when_to_use: Use after a feature is merged to capture learnings into durable wiki notes.
-model: sonnet
-effort: low
-allowed-tools: Agent Bash Read
-user-invocable: true
 ---
 Lead knowledge compounding. Goal: Extract fixes, insights, or patterns into reusable artifacts. Captures learnings from the completed phase into durable wiki notes. Delegates to `/save` when agents-memo is available. Degrades gracefully when `/save` is unavailable — outputs wiki content to terminal instead.
 
@@ -29,7 +24,7 @@ Otherwise → proceed to Mode Selection.
 
 ## Process
 
-Invoke `Skill("notes-md")` — adopt NOTES.md lifecycle protocol.
+Load the "notes-md" skill — adopt NOTES.md lifecycle protocol.
 
 ### Lightweight
 1. **Extraction**: Identify problem/solution from history.
@@ -41,10 +36,10 @@ Invoke `Skill("notes-md")` — adopt NOTES.md lifecycle protocol.
 5. **Staleness**: Flag contradictions with existing notes for user consolidation.
 
 ### Full
-1. **Parallel Extraction** (3 sub-agents):
-   - `Agent("agents/workflow-context-analyst.md")` — what broke, tried, worked, and why.
-   - `Agent("agents/workflow-solution-extractor.md")` — reusable pattern (root cause, solution, prevention).
-   - `Agent("agents/workflow-overlap-scanner.md")` — overlap check; recommend Update or New.
+1. **Parallel Extraction** (3 sub-agents via Task tool):
+   - `workflow-context-analyst` — what broke, tried, worked, and why.
+   - `workflow-solution-extractor` — reusable pattern (root cause, solution, prevention).
+   - `workflow-researcher` — pass `lens: overlap-scanner`, `payload.topic`, and `payload.root_cause` for overlap check; recommends Update or New.
 2. **Synthesis**: Synthesize findings into a single drafted note.
 3. **Filing**: Same as Lightweight. If overlap scanner recommended Update → pass target identifier to `/save`.
 4. **Staleness**: Present contradicting/superseded notes to user → recommend `wiki-lint`.

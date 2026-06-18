@@ -44,7 +44,7 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 
 - **Skills**: 26 skill dirs under `skills/`. Each has a `SKILL.md` (the actual skill body). Some also have `references/` (per-skill static docs).
 - **Commands**: `commands/` at repo root — opencode command files.
-- **Agent files**: `agents/` at repo root — 30 worker agent files, one per single-responsibility role.
+- **Agent files**: `agents/` at repo root — 19 worker agent files (collapsed from 30 — 8 reviewers + 5 researchers → 2 parameterized agents), one per single-responsibility role.
 - **Shared protocols**: `_shared/*.md` — reference docs, not skills. Use `Read` not `Skill()` to access them.
 - **Templates**: `_templates/` — scaffolding skeletons for new skills (`AUTHORING.md` is the canonical authoring guide).
 - **Bin tools**: `bin/minify-md` (markdown minifier), `bin/list-prune-files` (used by `/prune` skill), `bin/install` (opencode symlink installer).
@@ -80,7 +80,7 @@ Shared docs at `_shared/` are accessible via `@_shared/<file.md>` (configured in
 ## Rules
 
 - `.gitignore` entries: `.claude/NOTES.md`, `.worktrees/`, `node_modules/` — do not commit these.
-- Skills specify their own `model:` and `effort:` in frontmatter — trust them.
+- Skills list no model frontmatter — opencode assigns the model.
 - Orchestrator SKILL.md must be ≤ 150 lines. No inline domain work — delegate.
 - Worker agents should include `permission: { task: {"*": "deny"}, question: "deny" }` to prevent recursive spawning and user interaction.
 - **Persist lessons to AGENTS.md**: When you discover a project-level convention, gotcha, or architecture rule that future agents would benefit from, add it to this file under the relevant section. NOTES.md is ephemeral session scratch — durable knowledge lives here.

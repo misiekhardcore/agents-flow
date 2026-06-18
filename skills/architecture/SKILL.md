@@ -1,11 +1,6 @@
 ---
 name: architecture
 description: Decide on technical architecture for a feature (components, data flow, APIs, dependencies).
-when_to_use: Use to produce architectural decisions for a feature. Invoked by /define; can run standalone.
-model: opus
-effort: high
-allowed-tools: Agent Bash Read WebSearch WebFetch
-user-invocable: true
 ---
 Lead architecture decisions. Produce architectural decisions (components, data flow, APIs, dependencies). Hands off via GitHub issue body under `## Implementation plan`.
 
@@ -13,25 +8,25 @@ Lead architecture decisions. Produce architectural decisions (components, data f
 
 ### 1. Research
 
-Spawn in parallel:
-- `Agent("agents/workflow-codebase-scanner.md")` — pass `cwd` and `scope` (feature area or module list).
-- `Agent("agents/workflow-patterns-researcher.md")` — pass `problem` and `tech_stack`. **Gate**: skip if codebase-scanner returns >= 3 internal patterns (unless security/payments/privacy domain).
+Spawn in parallel via Task tool:
+- `workflow-researcher` — pass `lens: codebase-scanner`, `cwd`, and `payload.scope` (feature area or module list).
+- `workflow-researcher` — pass `lens: patterns-researcher`, `payload.problem` and `payload.tech_stack`. **Gate**: skip if codebase-scanner returns >= 3 internal patterns (unless security/payments/privacy domain).
 
 ### 2. Analyze
 
-Spawn `Agent("agents/workflow-constraint-analyzer.md")` — pass `problem`, `cwd`, `codebase_findings` and `patterns_findings` from step 1 outputs.
+Spawn `workflow-constraint-analyzer` via Task tool — pass `problem`, `cwd`, `codebase_findings` and `patterns_findings` from step 1 outputs.
 
 ### 3. Decide
 
-Invoke `Skill("grill-me")` with devil's advocate. For each major point, evaluate 2-3 approaches with trade-offs, diagrams, and code structure previews. User selects the recommendation.
+Load the "grill-me" skill with devil's advocate. For each major point, evaluate 2-3 approaches with trade-offs, diagrams, and code structure previews. User selects the recommendation.
 
 ### 4. Deepen
 
-Scan for vague language or thin sections → spawn `Agent("agents/workflow-deepening-agent.md")` per gap — pass `gap`, `cwd`, and `context` (summary of prior research). Max 2 rounds; user approves before each dispatch.
+Scan for vague language or thin sections → spawn `workflow-deepening-agent` via Task tool per gap — pass `gap`, `cwd`, and `context` (summary of prior research). Max 2 rounds; user approves before each dispatch.
 
 ### 5. Output
 
-Invoke `Skill("preflight")`. Read `_shared/handoff-artifact.md`. Write decisions to issue body under `## Implementation plan`:
+Load the "preflight" skill. Read `@_shared/handoff-artifact.md`. Write decisions to issue body under `## Implementation plan`:
 - Component diagram (Mermaid).
 - Key interfaces and data flow.
 - Sub-issues with GitHub relationships.
