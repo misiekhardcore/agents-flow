@@ -4,7 +4,6 @@ description: Skill marketplace discovery agent for /find-skills. Searches the sk
 model: haiku
 user-invocable: false
 hidden: true
-disallowedTools: Agent Write Edit AskUserQuestion
 permission:
   task:
     "*": "deny"

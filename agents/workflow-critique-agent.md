@@ -3,7 +3,6 @@ name: workflow-critique-agent
 description: Architecture and design critique agent. Independently reviews architecture/design decisions for high-risk plans and identifies gaps, risks, and trade-offs.
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

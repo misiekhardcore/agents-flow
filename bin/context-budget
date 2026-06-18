@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+"""context-budget — measure how much instruction text loads, and when.
+
+Reports three tiers for a tree of opencode/agent-skill artifacts:
+
+  1. STARTUP    — what every session pays up front: the `description` (and
+                  `name`) frontmatter of every command/agent/skill that is
+                  advertised for routing, plus always-on instruction files
+                  (AGENTS.md / CLAUDE.md). Bodies are NOT loaded here.
+  2. INVOCATION — the body of one artifact, loaded only when it is activated
+                  (a skill invoked, an agent spawned, a command run).
+  3. ON-DEMAND  — reference files (skills/*/references/*, _shared/*) that load
+                  only when an activated body explicitly reads them.
+
+Token figures are estimates at ~4 chars/token (rough, provider-agnostic).
+
+Usage:
+  bin/context-budget [ROOT]                 # tier report for ROOT (default: .)
+  bin/context-budget --scenario FILE...     # sum a specific load path (one run)
+  bin/context-budget [ROOT] --json          # machine-readable
+"""
+from __future__ import annotations
+import sys, os, glob, json
+
+CHARS_PER_TOKEN = 4
+
+
+def est_tokens(value) -> int:
+    n = value if isinstance(value, int) else len(value)
+    return round(n / CHARS_PER_TOKEN)
+
+
+def split_frontmatter(text: str):
+    """Return (frontmatter_str, body_str). Frontmatter is the first --- ... --- block."""
+    if text.startswith("---"):
+        end = text.find("\n---", 3)
+        if end != -1:
+            nl = text.find("\n", end + 1)
+            fm = text[3:end].strip("\n")
+            body = text[nl + 1:] if nl != -1 else ""
+            return fm, body
+    return "", text
+
+
+def fm_field(fm: str, key: str) -> str:
+    for line in fm.splitlines():
+        s = line.strip()
+        if s.startswith(key + ":"):
+            return s[len(key) + 1:].strip().strip('"').strip("'")
+    return ""
+
+
+def advertise_cost(fm: str) -> str:
+    """The text a router sees at startup: name + description."""
+    name = fm_field(fm, "name")
+    desc = fm_field(fm, "description")
+    return f"{name} {desc}".strip()
+
+
+def measure(paths):
+    files = []
+    total_chars = 0
+    for p in paths:
+        try:
+            with open(p, encoding="utf-8") as f:
+                t = f.read()
+        except (OSError, UnicodeDecodeError):
+            continue
+        files.append((p, t))
+        total_chars += len(t)
+    return files, total_chars
+
+
+def report(root: str, as_json: bool):
+    skills = sorted(glob.glob(os.path.join(root, "skills", "*", "SKILL.md")))
+    agents = sorted(glob.glob(os.path.join(root, "agents", "*.md")))
+    commands = sorted(glob.glob(os.path.join(root, "commands", "*.md")))
+    refs = sorted(glob.glob(os.path.join(root, "skills", "*", "references", "*.md")))
+    shared = sorted(glob.glob(os.path.join(root, "_shared", "*.md")))
+    always = [p for p in (
+        os.path.join(root, "AGENTS.md"),
+        os.path.join(root, "CLAUDE.md"),
+    ) if os.path.isfile(p) and not os.path.islink(p)]
+
+    # Tier 1: startup = advertised descriptions of every routable artifact + always-on files.
+    startup_chars = 0
+    advertised = 0
+    for group in (skills, agents, commands):
+        for p in group:
+            with open(p, encoding="utf-8") as f:
+                fm, _ = split_frontmatter(f.read())
+            startup_chars += len(advertise_cost(fm))
+            advertised += 1
+    _, always_chars = measure(always)
+    startup_chars += always_chars
+
+    # Tier 2: invocation = sum of bodies (loaded one-at-a-time, but show the pool).
+    def body_chars(group):
+        c = 0
+        for p in group:
+            with open(p, encoding="utf-8") as f:
+                _, body = split_frontmatter(f.read())
+            c += len(body)
+        return c
+
+    skill_body = body_chars(skills)
+    agent_body = body_chars(agents)
+    command_body = body_chars(commands)
+
+    # Tier 3: on-demand pool.
+    _, ref_chars = measure(refs)
+    _, shared_chars = measure(shared)
+
+    rows = [
+        ("STARTUP (every session)", startup_chars,
+         f"{advertised} descriptions + {len(always)} always-on file(s)"),
+        ("INVOCATION pool: skill bodies", skill_body, f"{len(skills)} skills"),
+        ("INVOCATION pool: agent bodies", agent_body, f"{len(agents)} agents"),
+        ("INVOCATION pool: command bodies", command_body, f"{len(commands)} commands"),
+        ("ON-DEMAND: skill references", ref_chars, f"{len(refs)} files"),
+        ("ON-DEMAND: _shared", shared_chars, f"{len(shared)} files"),
+    ]
+
+    if as_json:
+        print(json.dumps({
+            "root": root,
+            "tiers": [
+                {"tier": name, "chars": c, "tokens": est_tokens_int(c), "note": note}
+                for name, c, note in rows
+            ],
+        }, indent=2))
+        return
+
+    print(f"\ncontext-budget for: {root}")
+    print("=" * 64)
+    print(f"{'tier':<34}{'tokens~':>10}{'lines/note':>0}")
+    print("-" * 64)
+    for name, c, note in rows:
+        print(f"{name:<34}{est_tokens(c):>10}   {note}")
+    print("-" * 64)
+    print("Tier 1 is paid every turn. Tier 2 only for activated artifacts.")
+    print("Tier 3 only when an activated body reads the file.\n")
+
+
+def est_tokens_int(c: int) -> int:
+    return round(c / CHARS_PER_TOKEN)
+
+
+def scenario(paths):
+    files, total = measure(paths)
+    print("\nload-path scenario (sum of named files):")
+    print("=" * 64)
+    for p, t in files:
+        print(f"{est_tokens(t):>8} tok   {p}")
+    missing = [p for p in paths if not any(p == fp for fp, _ in files)]
+    for p in missing:
+        print(f"{'MISSING':>8}      {p}")
+    print("-" * 64)
+    print(f"{est_tokens(open_all(files)):>8} tok   TOTAL into one context\n")
+
+
+def open_all(files):
+    return "".join(t for _, t in files)
+
+
+def main(argv):
+    if "--scenario" in argv:
+        i = argv.index("--scenario")
+        scenario(argv[i + 1:])
+        return
+    as_json = "--json" in argv
+    args = [a for a in argv if not a.startswith("--")]
+    root = args[0] if args else "."
+    report(root, as_json)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

@@ -2,7 +2,6 @@
 name: workflow-reviewer-perf
 description: Performance-focused code reviewer. Checks N+1 queries, memory leaks, and hot path regressions.
 model: sonnet
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

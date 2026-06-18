@@ -4,7 +4,6 @@ description: PR feedback fix agent. Reads one review thread, applies the fix, ve
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion
 permission:
   task:
     "*": "deny"

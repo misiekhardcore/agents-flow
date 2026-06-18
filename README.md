@@ -1,6 +1,6 @@
 # agents-flow
 
-Skill/agent collection for AI coding agents — a standardized lifecycle for feature development. Compatible with Claude Code and opencode.
+Skill/agent collection for AI coding agents — a standardized lifecycle for feature development.
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'background':'#000','primaryColor':'#ffffff','primaryTextColor':'#000000','primaryBorderColor':'#000000','lineColor':'#000000','textColor':'#000000','titleColor':'#000000','clusterBkg':'#f3f4f6','clusterBorder':'#000000','edgeLabelBackground':'#ffffff'}}}%%
@@ -81,17 +81,9 @@ flowchart TB
     class Obsidian ext
 ```
 
-**Legend**: phase orchestrators (gray subgraphs) spawn specialists (light nodes) that do the bounded work. Plugin-level tools run outside the phase lifecycle. The agents-memo subgraph shows integrations that activate only when installed.
+**Legend**: phase orchestrators (gray subgraphs) spawn specialists (light nodes) that do the bounded work. The agents-memo subgraph shows integrations that activate only when installed.
 
 ## Install
-
-### Claude Code
-```bash
-claude plugin marketplace add misiekhardcore/agents-flow
-claude plugin install agents-flow@agents-flow
-```
-
-Then enable it in your project or globally in Claude Code settings.
 
 ### OpenCode
 ```bash
@@ -149,10 +141,6 @@ Full lifecycle walkthrough: [`docs/workflow.md`](docs/workflow.md)
 
 Per-artifact and per-phase token budgets, context-rot threshold, instruction file placement, and `@`-import syntax: [`docs/token-budgets.md`](docs/token-budgets.md). Context-hygiene rationale: [`docs/context-hygiene.md`](docs/context-hygiene.md).
 
-## Ecosystem
-
-Multi-plugin coordination: MCP scope, inter-plugin dependencies, optional `agents-memo` integration via runtime detection: [`docs/cross-plugin.md`](docs/cross-plugin.md).
-
 ## Authoring standard
 
 - **Templates**: role-specific skeletons in `_templates/`
@@ -173,7 +161,7 @@ Shared protocols at `_shared/`:
 
 ## Releasing
 
-Versions in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (both `metadata.version` and `plugins[0].version`) must agree. Trigger the **Release** workflow via `workflow_dispatch` to bump all three in lockstep, commit, tag, and publish.
+Version lives in `package.json`. Trigger the **Release** workflow via `workflow_dispatch` to bump, tag, and publish.
 
 Per-release notes with full diffs: [GitHub Releases](https://github.com/misiekhardcore/agents-flow/releases). In-repo summary: [`CHANGELOG.md`](CHANGELOG.md).
 

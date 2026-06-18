@@ -5,7 +5,6 @@ model: haiku
 user-invocable: false
 hidden: true
 maxTurns: 15
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

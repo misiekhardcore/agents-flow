@@ -4,7 +4,6 @@ description: High-risk flow mapper. Maps control flow, error paths, and failure 
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

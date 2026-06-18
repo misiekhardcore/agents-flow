@@ -4,7 +4,6 @@ description: External patterns researcher. Searches for established architectura
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

@@ -6,7 +6,6 @@ argument-hint: "[issue# | description]"
 model: opus
 effort: high
 allowed-tools: Agent Bash Read
-compatibility: claude-code opencode
 ---
 Lead discovery phase. Transform vague ideas into well-specified GitHub issues ready for architecture and implementation. Pure orchestrator — delegates all domain work to sub-skills.
 
@@ -18,7 +17,7 @@ Invoke `Skill("orchestrator-rules")` — adopt CWD verification, delegation, see
 
 Read issue (problem statement + AC), if specified. If no issue exists, elicit a one-sentence problem summary from the user.
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
+Read `@_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
 
 ### 2. Init NOTES.md
 
@@ -46,7 +45,7 @@ Combine output into a cohesive GitHub issue body:
 
 Invoke `Skill("preflight")`. Suppress branch line: true.
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` at this point (point-of-need) — do not preload.
+Read `@_shared/handoff-artifact.md` at this point (point-of-need) — do not preload.
 
 If issue exists, update the body. Otherwise create via `gh issue`.
 
@@ -56,7 +55,7 @@ Require explicit user approval.
 
 ### 9. Compound on exit
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
+Read `@_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
 
 ## Rules
 

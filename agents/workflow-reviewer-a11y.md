@@ -4,7 +4,6 @@ description: A11y compliance reviewer for /design. Evaluates proposed UI designs
 model: haiku
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

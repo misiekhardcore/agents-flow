@@ -4,7 +4,6 @@ description: Migration verifier. Confirms migration ACs are met: rollback tested
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"

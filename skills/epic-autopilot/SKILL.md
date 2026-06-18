@@ -6,7 +6,6 @@ argument-hint: "[epic# | description]"
 model: opus
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
-compatibility: claude-code opencode
 ---
 Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produces draft sub-PRs + epic PR with human gates at Stages 1–3, then autonomous execution through Stage 5.
 
@@ -17,7 +16,7 @@ Autonomous epic-to-PR orchestrator. Takes an epic issue or description and produ
 
 ## Team Shape
 
-Always multi-layer fan-out — dispatches one sub-agent per topological layer of sub-issues. Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` at point of need for spawn cost models.
+Always multi-layer fan-out — dispatches one sub-agent per topological layer of sub-issues. Read `@_shared/composition.md` at point of need for spawn cost models.
 
 ## Process
 

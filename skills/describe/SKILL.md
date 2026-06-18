@@ -7,11 +7,10 @@ model: opus
 effort: high
 allowed-tools: Agent Bash Read AskUserQuestion
 user-invocable: true
-compatibility: claude-code opencode
 ---
 Lead the user conversation during discovery. Deeply understand the problem space via interactive exploration and validation. Produces structured problem statements (What, Why, Who, Boundaries) with prior-art findings.
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
+Read `@_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
 
 ## I/O
 
@@ -33,7 +32,7 @@ If invoked with a seed-brief (from discover), use the provided `domain` and `pro
 
 ### 2. Scope
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
+Read `@_shared/composition.md` for spawn cost models.
 
 Read `references/scope.md` for work-unit types. Invoke `Skill("scope-assessment")` with work units derived from the problem. Each independent domain is a work unit. Scope-assessment groups disjoint domains for parallel research.
 

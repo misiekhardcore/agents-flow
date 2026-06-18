@@ -46,7 +46,7 @@ Every skill has a primary consumption contract. Callers must use the correct inv
 |**Runner (autonomous)**|`Agent("agents/runner.md")`|Isolated|None|`implement-runner`, `review-runner`|
 |**Worker (autonomous)**|`Agent("agents/worker.md")`|Isolated|Parallel|`build-worker`, `reviewer-correctness`|
 |**Shell (interactive)**|`Skill("name")`|Caller's session|Full|`implement`, `build`, `review`, `audit-issues`, `find-skills`|
-|**Worker Skill**|`Skill("name")` + `context: fork`|Isolated|Task confirmations only|`compound`, `verify`, `scope-assessment`|
+|**Worker Skill**|`Skill("name")`|Isolated|Task confirmations only|`compound`, `verify`, `scope-assessment`|
 
 > **Protocol skills** (`user-invocable: false`) are adopted by the calling agent — never `Skill()`-invoked.
 

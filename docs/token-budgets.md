@@ -49,13 +49,11 @@ Compare system + tools + messages totals against targets. Relevant deltas:
 
 ## Instruction file placement
 
-The per-turn instruction file (e.g. `CLAUDE.md` for Claude Code, `AGENTS.md` for opencode) is loaded verbatim every turn. Where it lives determines who pays.
+The per-turn instruction file (`AGENTS.md` for opencode) is loaded verbatim every turn. Where it lives determines who pays.
 
 |Path|Loaded by|Lifetime|Use for|
 |-|-|-|-|
-|`~/.claude/CLAUDE.md`|Claude Code — every session, every project|User-global|Tone, formatting, global rules, memory pointers|
-|`./CLAUDE.md` or `./AGENTS.md`|Every session in this repo|Project, committed to git|Tech stack, build commands, project invariants, directory map|
-|`./CLAUDE.local.md`|Claude Code — every session in this repo, only this machine|Personal, gitignored|Local overrides, personal scratch rules, machine-specific paths|
+|`./AGENTS.md`|Every opencode session in this repo|Project, committed to git|Tech stack, build commands, project invariants, directory map|
 
 All files in the current path stack are loaded additively — every level pays tokens on every turn. Don't duplicate rules across levels.
 
@@ -71,7 +69,7 @@ Move anything not used in the majority of sessions: long rule blocks (>50 lines)
 
 ## `@`-imports
 
-Some tools (Claude Code) support `@path/to/file` to inline another markdown file at load time. Imports recurse up to **5 hops** ([Memory docs](https://code.claude.com/docs/en/memory)).
+OpenCode supports `@path/to/file` to inline another markdown file at load time.
 
 ```markdown
 # AGENTS.md
@@ -80,9 +78,6 @@ Tone and global rules go here directly.
 
 For the full lifecycle walkthrough — only relevant when working in this repo:
 @docs/workflow.md
-
-Personal overrides (gitignored, optional):
-@CLAUDE.local.md
 ```
 
 The cost of an `@`-import is identical to inlining the same content — imports are *organization*, not *deferral*. If a doc is only useful sometimes, link it (`See [docs/X.md](...) when ...`) rather than `@`-import it.
@@ -113,15 +108,11 @@ Fix: read the issue body or NOTES.md instead. The skill body has nothing to add 
 ## See also
 
 - [`context-hygiene.md`](context-hygiene.md) — *why* phases reset and how the four hygiene rules interact.
-- [`cross-plugin.md`](cross-plugin.md) — MCP-server sizing.
-- Invoke `Read _shared/notes-md-protocol.md` — `.claude/NOTES.md` shape and update cadence.
-- Invoke `Read _shared/handoff-artifact.md` — five-field issue-body structure.
-- Read `_shared/composition.md` — spawn cost models and parallel sub-agent rubric.
+- Invoke `Read @_shared/notes-md-protocol.md` — `.claude/NOTES.md` shape and update cadence.
+- Invoke `Read @_shared/handoff-artifact.md` — five-field issue-body structure.
+- Read `@_shared/composition.md` — spawn cost models and parallel sub-agent rubric.
 
 ## Sources
 
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
-- [Claude Code costs](https://code.claude.com/docs/en/costs)
-- [Memory](https://code.claude.com/docs/en/memory) — `@`-import syntax and recursion limit
 - [Managing context on the Claude Developer Platform](https://www.anthropic.com/news/context-management)
-- [anthropics/claude-code#11065](https://github.com/anthropics/claude-code/issues/11065) — skill-invocation duplication bug report

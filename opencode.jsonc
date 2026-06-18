@@ -5,6 +5,10 @@
     "memory": {
       "path": "~/Projects/claude-memory",
       "description": "Obsidian wiki vault containing all project knowledge"
+    },
+    "_shared": {
+      "path": "./_shared",
+      "description": "Shared protocol docs used by skills (AUTHORING, frontmatter, seed-brief, etc.)"
     }
   }
 }

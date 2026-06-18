@@ -4,7 +4,6 @@ description: Autonomous verification orchestrator. Groups AC, spawns qa-agents i
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: AskUserQuestion Write Edit
 permission:
   question: deny
   edit: deny

@@ -4,7 +4,6 @@ description: Audit skill authoring quality and prune dead state from ~/.claude/.
 model: haiku
 effort: low
 allowed-tools: Agent AskUserQuestion Bash Read
-compatibility: claude-code opencode
 ---
 Audit skill authoring quality and prune dead state from `~/.claude/`. Archive approved candidates — never delete.
 
@@ -27,13 +26,13 @@ Invoke `Skill("preflight")` at entry for repo verification.
 
 ### 2. Enumerate
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` § Main-Thread Overrun to confirm delegation threshold.
+Read `@_shared/composition.md` § Main-Thread Overrun to confirm delegation threshold.
 
-Run `${PLUGIN_ROOT}/bin/list-prune-files --<lane>` from the project root for each selected lane to get a concrete file list.
+Run `./bin/list-prune-files --<lane>` from the project root for each selected lane to get a concrete file list.
 
 ### 3. Dispatch
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/dispatch-decision.md` § Role taxonomy and `isolation: worktree`.
+Read `@_shared/dispatch-decision.md` § Role taxonomy and `isolation: worktree`.
 
 Spawn one `Agent("agents/workflow-prune-auditor.md")` per selected lane in parallel. Each spawn must include a seed-brief:
 
@@ -50,7 +49,7 @@ payload:
 </seed-brief>
 ```
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/seed-brief.md` for the YAML packaging convention.
+See `@_shared/seed-brief.md` for the YAML packaging convention.
 
 Files per lane are disjoint, so parallel dispatch is safe. Each must start with `cd <cwd> && pwd`. Checkpoint NOTES.md before each spawn per `Skill("orchestrator-rules")` § Progress tracking.
 

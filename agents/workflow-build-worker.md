@@ -4,7 +4,6 @@ description: Parallel build worker for one work unit. Implements a single sub-is
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion
 permission:
   task:
     "*": "deny"

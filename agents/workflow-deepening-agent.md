@@ -4,7 +4,6 @@ description: Gap-deepening research agent for /architecture. Explores one specif
 model: sonnet
 user-invocable: false
 hidden: true
-disallowedTools: Agent AskUserQuestion Write Edit
 permission:
   task:
     "*": "deny"
