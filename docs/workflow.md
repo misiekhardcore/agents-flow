@@ -12,7 +12,7 @@ Lifecycle walkthrough from discovery to closure.
 **State Management**:
 - **Inter-phase**: GitHub issue body (5-field structure — invoke `Read @_shared/handoff-artifact.md`).
 - **Intra-phase**: `./.claude/NOTES.md` (invoke `Read @_shared/notes-md-protocol.md`).
-- **Context Pressure**: Load the compaction-protocol skill for Edit → Delegate → Compact strategy.
+- **Context Pressure**: Load the "compaction-protocol" skill for Edit → Delegate → Compact strategy.
 
 ## Phase Details
 

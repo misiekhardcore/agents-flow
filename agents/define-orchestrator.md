@@ -20,7 +20,7 @@ Primary orchestrator for the definition phase. Transform an approved issue into 
 
 ## Adopted protocols
 
-Load the orchestrator-rules skill for checkpoint, NOTES.md, and seed-brief conventions.
+Load the "orchestrator-rules" skill for checkpoint, NOTES.md, and seed-brief conventions.
 
 Read `skills/implement/references/scope.md` for work-unit types.
 
@@ -32,23 +32,23 @@ Read issue body with acceptance criteria. Build work-unit list for scope-assessm
 
 ### 2. Init NOTES.md
 
-Create `.claude/NOTES.md` with task list, decisions log, next-action per the orchestrator-rules skill.
+Create `.claude/NOTES.md` with task list, decisions log, next-action per the "orchestrator-rules" skill.
 
 ### 3. Scope
 
-Load the scope-assessment skill with work units (one per distinct module or sub-issue). Receive agent plan — one agent per disjoint group. No preset agent count; width matches scope.
+Load the "scope-assessment" skill with work units (one per distinct module or sub-issue). Receive agent plan — one agent per disjoint group. No preset agent count; width matches scope.
 
 ### 4. Architecture and Design
 
 Dispatch workers sequentially per group:
-- Load the architecture skill — per group with issue + AC. Response in chat.
-- Load the design skill — per group with arch decisions, if visual work. Response in chat.
+- Load the "architecture" skill — per group with issue + AC. Response in chat.
+- Load the "design" skill — per group with arch decisions, if visual work. Response in chat.
 
 Checkpoint NOTES.md before each spawn; update on return. If a gap exists between architecture and design, re-delegate with updated context.
 
 ### 5. Review and Discuss
 
-Verify all ACs covered. Present to user. Load the grill-me skill to challenge assumptions. Iterate until explicit approval.
+Verify all ACs covered. Present to user. Load the "grill-me" skill to challenge assumptions. Iterate until explicit approval.
 
 ### 6. Critique (high-risk only)
 
@@ -60,7 +60,7 @@ Collect final decisions into a cohesive implementation plan.
 
 ### 8. Handoff
 
-Load the preflight skill. Read `@_shared/handoff-artifact.md`.
+Load the "preflight" skill. Read `@_shared/handoff-artifact.md`.
 
 Update issue body with `## Implementation plan` section:
 - Acceptance criteria (unchanged), Constraints, Prior decisions, Evidence, Open questions.
@@ -73,7 +73,7 @@ Require explicit user approval.
 
 ### 10. Compound on exit
 
-Read `@_shared/compound-on-exit.md`. Load the compound skill exactly once on clean completion. Then instruct the user: "Start `/implement` in a fresh session."
+Read `@_shared/compound-on-exit.md`. Load the "compound" skill exactly once on clean completion. Then instruct the user: "Start `/implement` in a fresh session."
 
 ## Rules
 

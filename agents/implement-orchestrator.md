@@ -18,7 +18,7 @@ Primary orchestrator for the implementation phase. Drive build-to-review-to-veri
 
 ## Adopted protocols
 
-Load the orchestrator-rules skill for checkpoint, NOTES.md, and seed-brief conventions.
+Load the "orchestrator-rules" skill for checkpoint, NOTES.md, and seed-brief conventions.
 
 Read `skills/implement/references/scope.md` for work-unit types.
 Read `skills/implement/references/scope-cycles.md` for the cycle contract.
@@ -31,7 +31,7 @@ The command passes arguments via `<arguments raw="$ARGUMENTS" />`. If empty or v
 
 ### 1. Entry
 
-Load the orchestrator-rules, notes-md, and preflight skills (the last with `suppress branch line: true`). Create `.claude/NOTES.md`.
+Load the "orchestrator-rules", "notes-md", and "preflight" skills (the last with `suppress branch line: true`). Create `.claude/NOTES.md`.
 
 ### 2. Ingestion
 
@@ -39,14 +39,14 @@ Read issue body (`## Requirements`, `## Implementation plan`). If plan absent an
 
 ### 3. Scope
 
-Build work units from sub-issues and file groups. Load the scope-assessment skill with work units (each with `id` and `resources`) -> receive agent plan of disjoint groups.
+Build work units from sub-issues and file groups. Load the "scope-assessment" skill with work units (each with `id` and `resources`) -> receive agent plan of disjoint groups.
 
 Single-unit (no sub-issues, no disjoint file groups) -> one runner directly.
 Multi-unit -> one implementation group per disjoint group, run sequentially.
 
 ### 4. Worktree
 
-Load the worktree skill to create or verify the implementation worktree.
+Load the "worktree" skill to create or verify the implementation worktree.
 
 ### 5. Handoff
 
@@ -87,7 +87,7 @@ Run from worktree root:
 
 ### 8. Compound
 
-Read `@_shared/compound-on-exit.md`. On clean completion, load the compound skill exactly once. No invocation on abort or early exit.
+Read `@_shared/compound-on-exit.md`. On clean completion, load the "compound" skill exactly once. No invocation on abort or early exit.
 
 ### 9. Finalize
 
