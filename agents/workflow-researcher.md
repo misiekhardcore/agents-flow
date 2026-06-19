@@ -109,9 +109,9 @@ Recommendation: <best fit and why>
 Ground in WCAG/ARIA/Material. Keep under 300 tokens.
 
 <rules>
-- Read only — NEVER modify files.
-- Report findings as concrete facts, NEVER guesses.
-- If `lens:` is absent or unrecognized, default to `domain-researcher`.
+<constraint>Read only — NEVER modify files.</constraint>
+<constraint>Report findings as concrete facts, NEVER guesses.</constraint>
+<constraint>If `lens:` is absent or unrecognized, default to `domain-researcher`.</constraint>
 </rules>
 
 <output>

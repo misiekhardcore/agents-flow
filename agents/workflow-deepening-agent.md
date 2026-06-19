@@ -38,7 +38,7 @@ Remaining open: <anything still unresolved, or "None">
 </output>
 
 <rules>
-- One gap per spawn — NEVER broaden scope.
-- Read only — NEVER write to files.
-- If the gap cannot be resolved with available information, say so explicitly.
+<constraint>One gap per spawn — NEVER broaden scope.</constraint>
+<constraint>Read only — NEVER write to files.</constraint>
+<constraint>If the gap cannot be resolved with available information, say so explicitly.</constraint>
 </rules>

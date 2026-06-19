@@ -1,6 +1,7 @@
 ---
 name: scope-assessment
 description: Given a list of work units (each with an id and resource list), group them by shared resources and output one agent entry per conflict-free group. Use when an orchestrator needs to fan out work without resource conflicts.
+user-invocable: false
 ---
 ## Input
 
@@ -41,9 +42,9 @@ agents:
 </output>
 
 <rules>
-- MUST NEVER produce sizing or complexity labels of any kind.
-- MUST NEVER infer resources not explicitly listed in the input — callers own resource enumeration.
-- When all work units are disjoint, MUST output N agents (one per unit).
-- When all work units overlap, MUST output 1 agent covering the full resource union.
-- MUST output only the YAML block; NO prose explanation unless the caller explicitly requests one.
+<constraint>MUST NEVER produce sizing or complexity labels of any kind.</constraint>
+<constraint>MUST NEVER infer resources not explicitly listed in the input — callers own resource enumeration.</constraint>
+<constraint>When all work units are disjoint, MUST output N agents (one per unit).</constraint>
+<constraint>When all work units overlap, MUST output 1 agent covering the full resource union.</constraint>
+<constraint>MUST output only the YAML block; NO prose explanation unless the caller explicitly requests one.</constraint>
 </rules>

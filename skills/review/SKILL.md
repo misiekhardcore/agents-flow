@@ -4,6 +4,7 @@ description: Review implementation against requirements or PR. Posts inline GitH
 argument-hint: "[PR# or URL]"
 when_to_use: Use after /build to review implementation quality. Invoked by /implement; can run standalone against a PR.
 effort: high
+user-invocable: true
 allowed-tools: Agent Bash Read
 ---
 Lead review phase. Goal: Thoroughly review implementation against requirements and produce actionable findings. Produce inline GitHub review comments.
@@ -22,8 +23,8 @@ Read `references/dispatch-process.md` for dispatch modes, process steps, and PR 
 4. Emit output per dispatch mode (fix brief, findings report, or posted GitHub review).
 
 <rules>
-- MUST NOT fix issues during review — report findings in the review output; fixes happen in a subsequent `/build` cycle.
-- All reviewers MUST agree before finalizing.
-- Critical findings MUST block. High-severity blocks for Security/Perf are non-waivable.
-- MUST flag changes outside issue scope.
+<critical>MUST NOT fix issues during review — report findings in the review output; fixes happen in a subsequent `/build` cycle.</critical>
+<constraint>All reviewers MUST agree before finalizing.</constraint>
+<critical>Critical findings MUST block. High-severity blocks for Security/Perf are non-waivable.</critical>
+<constraint>MUST flag changes outside issue scope.</constraint>
 </rules>

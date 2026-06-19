@@ -62,6 +62,6 @@ default_branch_ref: abc123def
 </output>
 
 <rules>
-- Read only — NEVER write to files.
-- No counter = `unverifiable`, not `stale`. NEVER invent evidence.
+<constraint>Read only — NEVER write to files.</constraint>
+<constraint>No counter = `unverifiable`, not `stale`. NEVER invent evidence.</constraint>
 </rules>

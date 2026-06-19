@@ -48,13 +48,13 @@ Read `_shared/compound-on-exit.md`. On clean completion, invoke the "compound" s
 Present PR URL. If findings remain after 3 cycles → binary: "Continue loop, or accept and close?" On continue → one more cycle → log escalation in PR body.
 
 <rules>
-- MUST NOT prompt the user between sub-skills.
-- MUST NOT open a PR before a clean pass OR 3 cycles are exhausted.
-- Each cycle MUST address ALL previous findings.
-- MUST NOT trigger an autonomous merge — exit at the awaiting-merge stage; NEVER trigger a merge.
-- MUST checkpoint NOTES.md before every spawn. See the "orchestrator-rules" skill § Progress tracking.
+<constraint>MUST NOT prompt the user between sub-skills.</constraint>
+<constraint>MUST NOT open a PR before a clean pass OR 3 cycles are exhausted.</constraint>
+<constraint>Each cycle MUST address ALL previous findings.</constraint>
+<critical>MUST NOT trigger an autonomous merge — exit at the awaiting-merge stage; NEVER trigger a merge.</critical>
+<constraint>MUST checkpoint NOTES.md before every spawn. See the "orchestrator-rules" skill § Progress tracking.</constraint>
 </rules>
 
 <guidelines>
-- Read at point of need, do not preload: `_shared/seed-brief.md` before spawning workers, `_shared/composition.md` when sizing team shape, `_shared/compound-on-exit.md` before the compound step, `references/scope-cycles.md` when evaluating cycles.
+<recommendation>Read at point of need, do not preload: `_shared/seed-brief.md` before spawning workers, `_shared/composition.md` when sizing team shape, `_shared/compound-on-exit.md` before the compound step, `references/scope-cycles.md` when evaluating cycles.</recommendation>
 </guidelines>

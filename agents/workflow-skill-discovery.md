@@ -1,6 +1,7 @@
 ---
 name: workflow-skill-discovery
 description: Skill marketplace discovery agent for /find-skills. Searches the skills.sh leaderboard and verifies quality signals. Returns a ranked candidate list for user confirmation.
+user-invocable: false
 hidden: true
 permission:
   task:
@@ -42,7 +43,7 @@ If no results: `candidates: []` with `message: No matching skills found.`
 </output>
 
 <rules>
-- You MUST NOT install anything — return candidates only.
-- You MUST report actual numbers from the marketplace — NO estimates.
-- If `npx skills` is unavailable, you MUST return `candidates: []` with `message: skills CLI unavailable.`
+<critical>You MUST NOT install anything — return candidates only.</critical>
+<constraint>You MUST report actual numbers from the marketplace — NO estimates.</constraint>
+<constraint>If `npx skills` is unavailable, you MUST return `candidates: []` with `message: skills CLI unavailable.`</constraint>
 </rules>

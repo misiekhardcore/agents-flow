@@ -4,6 +4,7 @@ description: QA verification of implementation against AC. Reports pass/fail per
 argument-hint: "[issue#]"
 when_to_use: Use after /build to verify all acceptance criteria are met. Invoked by /implement; can run standalone.
 effort: low
+user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
 Lead verification phase. Goal: Verify every AC from the issue is met with evidence. Report pass/fail per criterion.
@@ -19,8 +20,8 @@ Lead verification phase. Goal: Verify every AC from the issue is met with eviden
 3. Merge: any P0 finding (P0 = "AC not satisfied / golden path crash") in any group → overall FAIL; no P0 findings → overall PASS. Emit unified report ordered by AC group.
 
 <rules>
-- MUST NOT fix issues during verification — report failures in the verify output; fixes are a `/build` responsibility.
-- MUST be evidence-based: NO "it works" — every criterion MUST have evidence.
-- Any failure MUST send the report back to `/build` for fixes.
-- MUST pass only the AC group and diff to each reviewer — NEVER the full build session history.
+<critical>MUST NOT fix issues during verification — report failures in the verify output; fixes are a `/build` responsibility.</critical>
+<constraint>MUST be evidence-based: NO "it works" — every criterion MUST have evidence.</constraint>
+<constraint>Any failure MUST send the report back to `/build` for fixes.</constraint>
+<constraint>MUST pass only the AC group and diff to each reviewer — NEVER the full build session history.</constraint>
 </rules>

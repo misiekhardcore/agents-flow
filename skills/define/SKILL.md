@@ -70,10 +70,10 @@ Require explicit user approval.
 Read `@_shared/compound-on-exit.md`. Invoke the "compound" skill exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
 
 <rules>
-- MUST delegate, not duplicate: sub-skills own their domain work. MUST NOT produce architecture/design output yourself.
-- MUST require explicit user confirmation — silence is NEVER approval.
+<constraint>MUST delegate, not duplicate: sub-skills own their domain work. MUST NOT produce architecture/design output yourself.</constraint>
+<critical>MUST require explicit user confirmation — silence is NEVER approval.</critical>
 </rules>
 
 <guidelines>
-- SHOULD time-box codebase reading to 3–5 tool calls, then ask a focused question.
+<recommendation>SHOULD time-box codebase reading to 3–5 tool calls, then ask a focused question.</recommendation>
 </guidelines>

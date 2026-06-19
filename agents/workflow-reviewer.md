@@ -118,9 +118,9 @@ file:line | issue title | severity (P0-P3) | confidence (0.0-1.0)
 |P3|defensive improvement|defence-in-depth improvement|micro-optimization|advisory gap (WCAG 2.2 AA, minor contrast delta, reduced-motion)|minor nit|duplication|style/documentation gap|style nit|
 
 <rules>
-- Report ONLY findings relevant to the selected `focus:`.
-- Suppress findings with confidence < 0.60.
-- NEVER fix issues — report findings only.
+<constraint>Report ONLY findings relevant to the selected `focus:`.</constraint>
+<constraint>Suppress findings with confidence < 0.60.</constraint>
+<constraint>NEVER fix issues — report findings only.</constraint>
 </rules>
 
 <output>

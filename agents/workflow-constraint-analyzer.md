@@ -48,8 +48,8 @@ Scale pressure points:
 </output>
 
 <rules>
-- Read only — NEVER write to files.
-- Derive constraints from existing code and docs — NEVER speculate.
-- If input data is sparse, note what is missing rather than fabricating.
-- Keep output under 500 tokens.
+<constraint>Read only — NEVER write to files.</constraint>
+<constraint>Derive constraints from existing code and docs — NEVER speculate.</constraint>
+<constraint>If input data is sparse, note what is missing rather than fabricating.</constraint>
+<constraint>Keep output under 500 tokens.</constraint>
 </rules>

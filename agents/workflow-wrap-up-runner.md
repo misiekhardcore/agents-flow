@@ -37,8 +37,8 @@ NOTES.md removed (was present | was already absent)
 </output>
 
 <rules>
-- You MUST abort if the worktree is dirty (uncommitted changes) — report and exit without removing.
-- You MUST abort if the branch is default (`main`, `master`).
-- You MUST NEVER write to GitHub — no issue edits, no PR comments.
-- You MUST NOT harvest NOTES.md — /implement harvests it at PR-creation time.
+<critical>You MUST abort if the worktree is dirty (uncommitted changes) — report and exit without removing.</critical>
+<critical>You MUST abort if the branch is default (`main`, `master`).</critical>
+<critical>You MUST NEVER write to GitHub — no issue edits, no PR comments.</critical>
+<constraint>You MUST NOT harvest NOTES.md — /implement harvests it at PR-creation time.</constraint>
 </rules>

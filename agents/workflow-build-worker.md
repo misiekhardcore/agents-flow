@@ -44,8 +44,8 @@ Findings: <any issues the orchestrator must address>
 </output>
 
 <rules>
-- You MUST touch only files in your assigned work unit's scope — NEVER edit files owned by another worker.
-- You MUST commit per logical change — not per file and not as one giant commit.
-- You MUST NOT open a PR.
-- You MUST report partial completion with reasons rather than silently skipping an AC.
+<critical>You MUST touch only files in your assigned work unit's scope — NEVER edit files owned by another worker.</critical>
+<constraint>You MUST commit per logical change — not per file and not as one giant commit.</constraint>
+<critical>You MUST NOT open a PR.</critical>
+<constraint>You MUST report partial completion with reasons rather than silently skipping an AC.</constraint>
 </rules>

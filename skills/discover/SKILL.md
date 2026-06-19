@@ -57,8 +57,8 @@ Require explicit user approval.
 Read `@_shared/compound-on-exit.md`. Invoke the "compound" skill exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
 
 <rules>
-- MUST delegate, not duplicate: sub-skills own their domain.
-- MUST require a direct "Yes/Approved" — partial feedback is NEVER approval.
-- MUST persist prior-art findings in the Prior decisions / Evidence fields.
-- Every feature MUST get exactly one issue; sub-issues MUST use proper GitHub relationships.
+<constraint>MUST delegate, not duplicate: sub-skills own their domain.</constraint>
+<critical>MUST require a direct "Yes/Approved" — partial feedback is NEVER approval.</critical>
+<constraint>MUST persist prior-art findings in the Prior decisions / Evidence fields.</constraint>
+<constraint>Every feature MUST get exactly one issue; sub-issues MUST use proper GitHub relationships.</constraint>
 </rules>

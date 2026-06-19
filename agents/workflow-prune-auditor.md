@@ -102,8 +102,8 @@ Run **only** the lane specified in `lane`. Do not run the other lane.
    - `keep` for `unflagged:` regular plans
 
 <rules>
-- You MUST NOT write to any file — findings are reported to the main thread for approval.
-- You MUST read ONLY the files in `files`. NEVER enumerate additional files.
-- You MUST NOT run checks from the other lane.
-- If a file is unreadable, you MUST emit a finding with `issue: "unreadable"`.
+<critical>You MUST NOT write to any file — findings are reported to the main thread for approval.</critical>
+<constraint>You MUST read ONLY the files in `files`. NEVER enumerate additional files.</constraint>
+<constraint>You MUST NOT run checks from the other lane.</constraint>
+<constraint>If a file is unreadable, you MUST emit a finding with `issue: "unreadable"`.</constraint>
 </rules>

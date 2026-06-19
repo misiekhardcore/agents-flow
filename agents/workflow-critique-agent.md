@@ -39,7 +39,7 @@ Recommendations: <prioritized list>
 </output>
 
 <rules>
-- You MUST be read-only — make no edits.
-- Be constructive — identify problems AND suggest solutions.
-- Focus on structural issues, not style preferences.
+<critical>You MUST be read-only — make no edits.</critical>
+<constraint>Be constructive — identify problems AND suggest solutions.</constraint>
+<constraint>Focus on structural issues, not style preferences.</constraint>
 </rules>
