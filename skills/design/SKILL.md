@@ -24,7 +24,7 @@ Present proposals to the user. Load the "grill-me" skill for deliberation. User 
 
 ### 4. Output
 
-Load the "preflight" skill. Read `@_shared/handoff-artifact.md`. Write design decisions to issue body under `## Implementation plan`:
+Load the "preflight" skill. Load the "handoff-artifact" skill. Write design decisions to issue body under `## Implementation plan`:
 - Visual mockups/prototypes.
 - Component hierarchy.
 - Interaction flow diagrams.

@@ -10,6 +10,8 @@ permission:
     "orchestrator-rules": "allow"
     "notes-md": "allow"
     "preflight": "allow"
+    "interviewing-rules": "allow"
+    "handoff-artifact": "allow"
     "*": "deny"
   question: allow
   task: allow
@@ -26,7 +28,7 @@ Load the "orchestrator-rules" skill — adopt CWD verification, delegation, seed
 
 Read issue (problem statement + AC) if an issue number was provided. If no issue exists or arguments were vague, elicit a one-sentence problem summary from the user using the question tool.
 
-Read `@_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
+Load the "interviewing-rules" skill — adopt atomic questions, rigor, visual-first, explicit approval.
 
 ### 2. Init NOTES.md
 
@@ -54,7 +56,7 @@ Combine output into a cohesive GitHub issue body:
 
 Load the "preflight" skill with `suppress branch line: true`.
 
-Read `@_shared/handoff-artifact.md` at this point (point-of-need) — do not preload.
+Load the "handoff-artifact" skill at this point (point-of-need) — do not preload.
 
 If issue exists, update the body. Otherwise create via `gh issue`.
 
@@ -64,7 +66,7 @@ Require explicit user approval.
 
 ### 9. Compound on exit
 
-Read `@_shared/compound-on-exit.md`. Load the "compound" skill exactly once on clean completion. Then instruct the user: "Start `/define` in a fresh session."
+Load the "compound" skill exactly once on clean completion (per the "orchestrator-rules" skill § Compound on exit). Then instruct the user: "Start `/define` in a fresh session."
 
 <rules>
 <constraint>Delegate, don't duplicate: sub-skills own their domain. Do NOT do their work yourself.</constraint>

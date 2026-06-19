@@ -4,7 +4,7 @@ This document defines the structural and behavioral conventions for building ski
 
 ## Role Taxonomy
 
-Skills are classified by execution context and responsibility. See `docs/dispatch-primitives.md` for the canonical taxonomy and `_shared/dispatch-decision.md` for the condensed runtime reference.
+Skills are classified by execution context and responsibility. See `docs/dispatch-primitives.md` for the canonical taxonomy and `references/dispatch-decision.md` for the condensed runtime reference.
 
 ### Skill vs. Reference File
 
@@ -60,7 +60,7 @@ Orchestrators must remain "thin" to avoid context bloat and logic drift.
 When spawning agents to perform work, follow these requirements:
 
 ### 1. Seed-Briefs
-The caller must pass all needed context in the `prompt` argument. For single inputs, use one-line inline. For multiple inputs, use a structured YAML block. See `_shared/seed-brief.md` for the packaging convention.
+The caller must pass all needed context in the `prompt` argument. For single inputs, use one-line inline. For multiple inputs, use a structured YAML block. See AGENTS.md § Key Conventions — Seed-brief for the packaging convention.
 
 ### 2. Parallel Dispatch & Scope
 To prevent race conditions and "last-write-wins" conflicts:
@@ -175,7 +175,7 @@ Sequential step numbering. Orchestrators always include Init NOTES.md, Sign-off,
 
 ### Default Frontmatter by Role
 
-Per-role frontmatter defaults are documented in `_shared/frontmatter-reference.md` (§ Default Values by Role). That file also serves as the canonical field registry for both tools and both file types (SKILL.md + agent `.md`).
+Per-role frontmatter defaults are documented in `references/frontmatter.md` (§ Default Values by Role). That file also serves as the canonical field registry for both tools and both file types (SKILL.md + agent `.md`).
 
 ## Orchestrator Decomposition
 
@@ -189,20 +189,17 @@ Document the orchestrator's specific definition of "work unit" (what counts as a
 
 ## External Style & Config References
 
-See `_shared/rfc-xml-style-guide.md` for RFC 2119 + XML tag conventions and `_shared/opencode-config-reference.md` for opencode config/permission fields. These are the adopted external best-practice patterns for artifact authoring.
+See `references/rfc-xml-style.md` for RFC 2119 + XML tag conventions and `references/opencode-config.md` for opencode config/permission fields. These are the adopted external best-practice patterns for artifact authoring.
 
 ## `_shared/` File Catalogue
 
-Reference on-demand via `Read \`_shared/<file>.md\``:
+- `notes-md-protocol.md` — `.claude/NOTES.md` lifecycle, shape, and update cadence (S6 territory; access via `Read \`_shared/notes-md-protocol.md\``)
 
-- `composition.md` — team/sub-agent cost and shape
-- `frontmatter-reference.md` — canonical field registry for SKILL.md and agent `.md` files (both tools)
-- `dispatch-decision.md` — condensed role taxonomy and dispatch decision table
-- `handoff-artifact.md` — five-field issue-body structure for phase handoffs
-- `interviewing-rules.md` — one-question-at-a-time interviewing protocol for user-interactive discovery
-- `notes-md-protocol.md` — `.claude/NOTES.md` lifecycle, shape, and update cadence
-- `seed-brief.md` — spawn-time context packaging (caller-side YAML convention)
-- `worktree-protocol.md` — `wt` CLI command protocol for creating and managing feature worktrees
+All other shared docs have moved to skill-local `references/` directories or become skills. Access patterns:
+- Authoring refs: `skills/new-skill/references/<file>` (authoring.md, frontmatter.md, dispatch-decision.md, rfc-xml-style.md, opencode-config.md, agent-presets.md)
+- Spawn cost models: `skills/compound/references/composition.md`
+- Seed-brief format: AGENTS.md § Key Conventions
+- Worktree CLI: `skills/worktree/references/protocol.md`
 
 ## Agent File Template
 
@@ -212,8 +209,8 @@ Agent files live in `agents/<agent-name>.md`:
 ---
 name: <agent-name>
 description: <one sentence — what it does and when it's spawned>
-model: <sonnet|haiku|opus>
 mode: subagent  # primary | all | subagent
+# model: sonnet  # optional override
 # hidden: true  # hide from @ menu (subagent only)
 # permission:
 #   task:

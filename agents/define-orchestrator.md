@@ -12,6 +12,7 @@ permission:
     "orchestrator-rules": "allow"
     "notes-md": "allow"
     "preflight": "allow"
+    "handoff-artifact": "allow"
     "*": "deny"
   question: allow
   task: allow
@@ -66,7 +67,7 @@ Collect final decisions into a cohesive implementation plan.
 
 ### 8. Handoff
 
-Load the "preflight" skill. Read `@_shared/handoff-artifact.md`.
+Load the "preflight" skill. Load the "handoff-artifact" skill.
 
 Update issue body with `## Implementation plan` section:
 - Acceptance criteria (unchanged), Constraints, Prior decisions, Evidence, Open questions.
@@ -79,7 +80,7 @@ Require explicit user approval.
 
 ### 10. Compound on exit
 
-Read `@_shared/compound-on-exit.md`. Load the "compound" skill exactly once on clean completion. Then instruct the user: "Start `/implement` in a fresh session."
+Load the "compound" skill exactly once on clean completion (per the "orchestrator-rules" skill § Compound on exit). Then instruct the user: "Start `/implement` in a fresh session."
 
 <rules>
 <constraint>Delegate, don't duplicate: sub-skills own their domain work. Do NOT produce architecture/design output yourself.</constraint>

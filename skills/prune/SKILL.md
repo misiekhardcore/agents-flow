@@ -1,8 +1,6 @@
 ---
 name: prune
 description: Audit skill authoring quality and prune dead state from ~/.claude/. Vault health is delegated to /lint.
-effort: low
-allowed-tools: Agent AskUserQuestion Bash Read
 ---
 Audit skill authoring quality and prune dead state from `~/.claude/`. Archive approved candidates — never delete.
 
@@ -25,13 +23,13 @@ Invoke the "preflight" skill at entry for repo verification.
 
 ### 2. Enumerate
 
-Read `@_shared/composition.md` § Main-Thread Overrun to confirm delegation threshold.
+Read `skills/compound/references/composition.md` § Main-Thread Overrun to confirm delegation threshold.
 
 Run `./bin/list-prune-files --<lane>` from the project root for each selected lane to get a concrete file list.
 
 ### 3. Dispatch
 
-Read `@_shared/dispatch-decision.md` § Role taxonomy and `isolation: worktree`.
+Read `skills/new-skill/references/dispatch-decision.md` § Role taxonomy and `isolation: worktree`.
 
 Dispatch one `workflow-prune-auditor` via the task tool per selected lane in parallel. Each spawn must include a seed-brief:
 
@@ -48,7 +46,7 @@ payload:
 </seed-brief>
 ```
 
-See `@_shared/seed-brief.md` for the YAML packaging convention.
+See AGENTS.md § Key Conventions — Seed-brief for the YAML packaging convention.
 
 Files per lane are disjoint, so parallel dispatch is safe. Each must start with `cd <cwd> && pwd`. Checkpoint NOTES.md before each spawn per the "orchestrator-rules" skill § Progress tracking.
 

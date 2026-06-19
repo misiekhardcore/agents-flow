@@ -123,7 +123,7 @@ If the author picks **Restricted subset**, ask one free-text follow-up: "Which t
 - **No parallelism** — skill runs inline; no sub-agents
 - **Parallel subagents** — skill spawns independent subagents; lead merges results (applies to all roles)
 
-If the author picks **Parallel subagents**, ask a follow-up free-text: "Which conditions gate the spawn decision? (reference the rubric in `@_shared/composition.md` — e.g., scope class, file count, main-thread overrun)".
+If the author picks **Parallel subagents**, ask a follow-up free-text: "Which conditions gate the spawn decision? (reference the rubric in `skills/compound/references/composition.md` — e.g., scope class, file count, main-thread overrun)".
 
 - Store the answer as a "Spawn justification" block in the skill body.
 

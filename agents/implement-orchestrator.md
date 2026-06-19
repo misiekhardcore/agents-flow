@@ -10,6 +10,7 @@ permission:
     "preflight": "allow"
     "worktree": "allow"
     "scope-assessment": "allow"
+    "handoff-artifact": "allow"
     "*": "deny"
   question: allow
   task: allow
@@ -53,7 +54,7 @@ Invoke the "worktree" skill to create or verify a worktree. For parallel groups,
 
 ### 5. Handoff
 
-Read `@_shared/handoff-artifact.md` at this point. Ensure issue body has the five-field structure (AC, Constraints, Prior decisions, Evidence, Open questions).
+Load the "handoff-artifact" skill at this point. Ensure issue body has the five-field structure (AC, Constraints, Prior decisions, Evidence, Open questions).
 
 ### 6. Implementation loop
 
@@ -96,7 +97,7 @@ Run from worktree root:
 
 ### 9. Compound
 
-Read `@_shared/compound-on-exit.md`. On clean completion, invoke the "compound" skill inline exactly once. No invocation on abort or early exit.
+On clean completion, invoke the "compound" skill inline exactly once (per the "orchestrator-rules" skill § Compound on exit). No invocation on abort or early exit.
 
 ### 10. Finalize
 

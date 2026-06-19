@@ -1,9 +1,6 @@
 ---
 name: find-skills
 description: Discover and install agent skills when the user asks if Claude can do something or wants to extend capabilities.
-when_to_use: Use when the user asks whether Claude can do something or wants to install new skills.
-effort: low
-allowed-tools: Agent Bash WebFetch WebSearch
 ---
 Lead skill discovery and installation. Goal: Find and install agent skills from the open ecosystem when the user wants to extend capabilities. Discovery sub-agent (haiku) handles search + leaderboard fetch; main thread handles confirmation + install.
 

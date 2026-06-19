@@ -1,5 +1,7 @@
-# Interviewing Rules — User-Interactive Discovery Protocol
-
+---
+name: interviewing-rules
+description: Atomic-question interview protocol for user-interactive discovery. One question at a time, explicit approval only, evidence-first.
+---
 Directives for user-interactive discovery and approval.
 
 ## Constraints

@@ -1,14 +1,12 @@
 ---
 name: grill-me
 description: Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree.
-when_to_use: Use when the user wants to stress-test a plan, get grilled on a design, or mentions "grill me".
-allowed-tools: AskUserQuestion Read Write Bash
 ---
 <!-- Interactive primitive — requires back-and-forth with user. -->
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding, and there is no ambiguity. For each question, provide your recommended answer.
 
-Adopt the "notes-md" skill and read `@_shared/interviewing-rules.md` at point of need.
+Adopt the "notes-md" skill and load the "interviewing-rules" skill at point of need.
 
 ## Process
 

@@ -1,11 +1,10 @@
 ---
 name: worktree
 description: Worktree lifecycle protocol — always create a worktree before writing code, remove after PR is open.
-user-invocable: false
 ---
 Always create a git worktree before writing code. Read the shared reference for the full CLI reference.
 
-Read `@_shared/worktree-protocol.md` for `wt` CLI commands and worktree management.
+Read `references/protocol.md` for `wt` CLI commands and worktree management.
 
 ## Behavioral Protocol
 

@@ -1,6 +1,6 @@
 # Agent Role Presets
 
-Three reusable presets for opencode agent files. Validated against `_shared/opencode-config-reference.md`.
+Three reusable presets for opencode agent files. Validated against `references/opencode-config.md`.
 
 ## Read-only reviewer/researcher
 

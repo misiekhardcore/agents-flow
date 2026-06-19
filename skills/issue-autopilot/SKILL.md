@@ -1,10 +1,6 @@
 ---
 name: issue-autopilot
 description: Single-issue equivalent of /epic-autopilot. Chains /define → /implement → /resolve-pr-feedback → /compound → /wrap-up for one issue.
-when_to_use: Use when you have a single GitHub issue and want the full lifecycle automated end-to-end with natural pause points for human review and merge.
-argument-hint: <issue#>
-effort: high
-allowed-tools: Agent Bash Read TaskCreate TaskUpdate
 ---
 Orchestrate the single-issue ship pipeline. Take a GitHub issue number and drive it to a merged PR with clean local state — pausing only where human action is required (review, merge).
 
@@ -22,7 +18,7 @@ If issue lacks `## Implementation plan`: read `references/stage-1.md` at point o
 
 ### 3. Implement (Stage 2)
 
-If plan present, branch absent, no open PR: read `references/stage-2.md` at point of need. Checkpoint NOTES.md. Dispatch `workflow-implement-runner` via the task tool with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
+If plan present, branch absent, no open PR: read `references/stage-2.md` at point of need. Checkpoint NOTES.md. Dispatch `workflow-implement-runner` via the task tool with `<seed-brief>` YAML block per AGENTS.md § Key Conventions — Seed-brief:
 ```
 repo: <owner/repo>
 branch: feat/issue-<N>
@@ -41,7 +37,7 @@ If clean PR awaiting merge: read `references/stage-4.md` at point of need. Print
 
 ### 6. Post-merge cleanup (Stage 5)
 
-If PR merged: read `references/stage-5.md` at point of need. Checkpoint NOTES.md. Read `@_shared/compound-on-exit.md`. Invoke the "compound" skill exactly once on clean completion. Dispatch `workflow-wrap-up-runner` via the task tool with `<seed-brief>` YAML block per `_shared/seed-brief.md`:
+If PR merged: read `references/stage-5.md` at point of need. Checkpoint NOTES.md. Invoke the "compound" skill exactly once on clean completion (per the "orchestrator-rules" skill § Compound on exit). Dispatch `workflow-wrap-up-runner` via the task tool with `<seed-brief>` YAML block per AGENTS.md § Key Conventions — Seed-brief:
 ```
 repo: <owner/repo>
 branch: feat/issue-<N>
@@ -54,5 +50,5 @@ Print ship-complete summary. **Exit.**
 - **Loop-break**: Stage 3 — break if unresolved thread count non-zero and unchanged after one pass.
 - **Compound-on-exit**: Invoke the "compound" skill on clean completion only (Stage 3, Stage 5). No invocation on abort or early exit.
 - **No autonomous merge**: Merging is always human.
-- **Point-of-need reads**: Read `references/stage-<N>.md` before step N only. Read `_shared/seed-brief.md` before first spawn. Read `_shared/compound-on-exit.md` before compound step.
+- **Point-of-need reads**: Read `references/stage-<N>.md` before step N only. See AGENTS.md § Key Conventions — Seed-brief before first spawn.
 - **NOTES.md**: Checkpoint before every spawn per the "orchestrator-rules" skill § Progress tracking.

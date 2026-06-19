@@ -10,15 +10,15 @@ Every `permission` key in opencode agent frontmatter accepts one of three values
 |`"ask"`|Ask user for approval|
 |`"deny"`|Deny outright|
 
-Permission keys and their gated tools are documented in `_shared/frontmatter-reference.md` (§ Permission Keys).
+Permission keys and their gated tools are documented in `references/frontmatter.md` (§ Permission Keys).
 
 ## Agent Frontmatter Fields
 
 |Field|Required|Values|Description|
 |-|-|-|-|
 |`mode`|no|`primary`, `subagent`, `all`|`primary` = Tab-switchable; `subagent` = Task/@-invoke only; `all` = both. Default `all`.|
-|`model`|no|`provider/model-id`|Model override (cross-reference `_shared/frontmatter-reference.md` for Claude Code model syntax).|
-|`permission`|no|object|Tool permission overrides per the Permission Keys table in `frontmatter-reference.md`.|
+|`model`|no|`provider/model-id`|Model override (cross-reference `references/frontmatter.md` for Claude Code model syntax).|
+|`permission`|no|object|Tool permission overrides per the Permission Keys table in `frontmatter.md`.|
 |`tools`|no|list of tool names|Tool allowlist (opencode equivalent of Claude Code's `allowed-tools`).|
 |`template`|no|file path|Prompt template file path.|
 |`prompt`|no|string|Inline system prompt override.|
@@ -55,7 +55,7 @@ The IgorWarzocha/Opencode-Workflows repo uses different names for some fields. C
 
 ## Cross-Reference
 
-See `_shared/frontmatter-reference.md` for:
+See `references/frontmatter.md` for:
 - The full permission key table with tool mappings
 - Claude Code ↔ OpenCode field mapping table
 - Per-role default values by field

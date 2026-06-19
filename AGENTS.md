@@ -39,19 +39,48 @@ Pick the lightest path that fits the task:
 |Medium feature|`/discover` → `/implement`|
 |Large feature / epic|`/discover` → `/define` → `/implement`|
 
-Building blocks: `/describe`, `/specify`, `/architecture`, `/design`, `/build`, `/review`, `/verify`, `/grill-me`, `/wrap-up`, `/prune`, `/compound`. For the full lifecycle see `docs/workflow.md`.
+Building blocks: `/describe`, `/specify`, `/architecture`, `/design`, `/grill-me`, `/wrap-up`, `/prune`, `/compound`. For the full lifecycle see `docs/workflow.md`.
 
 During `/define` or `/discover` exploration: time-box codebase reading to 3–5 tool calls, then ask the user a focused question.
 
 ## Architecture
 
-- **Skills**: 26 skill dirs under `skills/`. Each has a `SKILL.md` (the actual skill body). Some also have `references/` (per-skill static docs).
+- **Skills**: 22 skill dirs under `skills/`. Each has a `SKILL.md` (the actual skill body). Some also have `references/` (per-skill static docs).
 - **Commands**: `commands/` at repo root — opencode command files.
-- **Agent files**: `agents/` at repo root — 18 agent files: the discover/define/implement orchestrators (`mode: primary`) plus 15 leaf worker agents, one per single-responsibility role. Dispatch is a single tier — orchestrators spawn leaf workers directly; no intermediate runner agents.
-- **Shared protocols**: `_shared/*.md` — reference docs, not skills. Use `Read` to access them.
+- **Agent files**: `agents/` at repo root — 16 agent files: the discover/define/implement orchestrators (`mode: primary`) plus 15 leaf worker agents, one per single-responsibility role. Dispatch is a single tier — orchestrators spawn leaf workers directly; no intermediate runner agents.
+- **Shared protocols**: Protocol behaviors are skills (allowlisted per-agent). Reference docs live in skill-local `references/` dirs. `_shared/notes-md-protocol.md` is the sole remaining shared doc (S6 territory).
 - **Templates**: `_templates/` — scaffolding skeletons for new skills (`AUTHORING.md` is the canonical authoring guide).
 - **Bin tools**: `bin/minify-md` (markdown minifier), `bin/list-prune-files` (used by `/prune` skill), `bin/install` (opencode symlink installer).
-- **Git worktrees**: `.worktrees/` dir, managed via `wt` CLI. Always create before writing code, remove after PR is open.
+- **Git worktrees**: `.worktrees/` dir, managed via `wt` CLI. Implementation MUST run in a worktree created before any code write. A draft PR MUST be open before any terminal/yield. Remove worktree after PR is open.
+
+### Skill-name registry
+
+Canonical surviving skills post-S5. Orchestrator/agent `permission.skill` allowlists reference exactly these names.
+
+| Skill name | Description (lazy-advertised ~100 tok) | Primary consumer(s) |
+|---|---|---|
+| `orchestrator-rules` | Standard directives for pipeline orchestrators coordinating specialist sub-skills. | all orchestrators |
+| `notes-md` | In-phase NOTES.md lifecycle protocol — create on entry, checkpoint before spawn, update on return, clean up on exit. | all orchestrators |
+| `preflight` | Repository and scope verification protocol before mutations or bulk file edits. | all orchestrators |
+| `compound` | Capture learnings from completed work into durable wiki notes. Delegates to /save when agents-memo is available. | all orchestrators |
+| `worktree` | Worktree lifecycle protocol — always create a worktree before writing code, remove after PR is open. | implement-orchestrator |
+| `scope-assessment` | Given a list of work units (each with an id and resource list), group them by shared resources and output one agent entry per conflict-free group. | implement-orchestrator, define-orchestrator |
+| `describe` | Explore and understand a problem space interactively. Uses visualizations and user stories to build shared understanding. | discover-orchestrator |
+| `specify` | Turn a problem statement into precise, testable acceptance criteria. | discover-orchestrator |
+| `architecture` | Decide on technical architecture for a feature (components, data flow, APIs, dependencies). | define-orchestrator |
+| `design` | Explore visual and UX design (UI layouts, interaction flows, component structure). | define-orchestrator |
+| `grill-me` | Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. | define-orchestrator, standalone |
+| `interviewing-rules` | Atomic-question interview protocol for user-interactive discovery. One question at a time, explicit approval only, evidence-first. | discover-orchestrator, new-skill |
+| `handoff-artifact` | Phase-boundary handoff protocol — five-field issue body structure (AC, Constraints, Prior decisions, Evidence, Open questions) for cross-phase state transfer. | all orchestrators |
+| `compaction-protocol` | Context management protocol for rot reduction using editing, delegation, and summarization. | utility |
+| `new-skill` | Scaffold a conformant SKILL.md. Interviews the author, generates the file, writes it. | standalone |
+| `find-skills` | Discover and install agent skills when the user asks if Claude can do something or wants to extend capabilities. | standalone |
+| `prune` | Audit skill authoring quality and prune dead state from ~/.claude/. | standalone |
+| `audit-issues` | Audit open GitHub issues for drift against repo state. Flags broken refs, stale claims, and contradictions. | standalone (S9 will convert) |
+| `resolve-pr-feedback` | Process PR review feedback in bulk — triage, fix in parallel, and reply with verdicts. | standalone (S9 will convert) |
+| `issue-autopilot` | Single-issue equivalent of /epic-autopilot. Chains /define → /implement → /resolve-pr-feedback → /compound → /wrap-up for one issue. | standalone (S7 will consolidate) |
+| `epic-autopilot` | Autonomous epic-to-PR pipeline. Chains /discover → /define → /implement end-to-end for each sub-issue, opening draft PRs. | standalone (S7 will consolidate) |
+| `wrap-up` | Clean up local state after a PR is open — remove the worktree, delete the branch, and clear NOTES.md. | standalone |
 
 ## Key conventions
 
@@ -59,7 +88,7 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 - **Worker SKILLs** run autonomously in isolation — the SKILL.md body becomes the task prompt.
 - **Preflight before gh/git push.** Invoke the "preflight" skill — verifies repo, branch, CWD. Spawned workers skip preflight.
 - **NOTES.md** at `.claude/NOTES.md` is the in-phase progress ledger (gitignored). Create on entry, checkpoint before spawn, update on return, leave for the phase-ending skill.
-- **Seed-brief** (`_shared/seed-brief.md`) packages spawn-time context as YAML in XML. Used by orchestrators when spawning agents. NOT for mid-cycle state (use NOTES.md) or phase-to-phase handoff (use issue body).
+- **Seed-brief** — spawn-time context packaged as raw YAML inside a `<seed-brief>` XML block in the agent's prompt. Fields: `repo` (owner/repo), `branch` (feat/slug), `payload` (research, prior art, findings). Single input → one-line inline; multiple inputs → structured YAML block. NOT for mid-cycle state (use NOTES.md) or phase-to-phase handoff (use issue body). Verify `repo` and `branch` against `git` before constructing.
 - **SKILL.md vs agent files**: SKILL.md owns process flow and spawn instructions. Agent files own the seed-brief I/O contract (input fields, output format). Never inline the contract in SKILL.md — reference the agent file. Agent file headings use `## Input (from spawn prompt)`. SKILL.md uses `## Worker Agent Inventory` with per-agent subsections.
 - **Handoff artifact** (`_shared/handoff-artifact.md`): five-field issue body structure (AC, Constraints, Prior decisions, Evidence, Open questions) for cross-phase state transfer.
 - **No autonomous merge.** Exit cleanly at awaiting-merge. Merging is always human.
@@ -68,13 +97,24 @@ During `/define` or `/discover` exploration: time-box codebase reading to 3–5 
 
 ## Authoring new skills
 
-Run `/new-skill` to scaffold a conformant `SKILL.md`. For the full authoring standard see `_shared/AUTHORING.md`.
+Run `/new-skill` to scaffold a conformant `SKILL.md`. For the full authoring standard see `skills/new-skill/references/authoring.md`.
 
 Token budgets per artifact/phase, instruction file placement rules, `@`-imports: `docs/token-budgets.md`.
 
 ## Shared protocol access
 
-Shared docs at `_shared/` are accessible via `@_shared/<file.md>` (configured in `opencode.jsonc` references). When a skill instructs `Read @_shared/seed-brief.md`, resolve it through the reference alias — no path variable needed.
+Protocol behaviors are opencode skills — load via the skill tool, allowlisted in agent frontmatter. Reference docs live in skill-local `references/` dirs.
+
+| Protocol / reference | Access |
+|---|---|
+| Interviewing rules | `skill("interviewing-rules")` |
+| Handoff artifact | `skill("handoff-artifact")` |
+| Orchestrator rules | `skill("orchestrator-rules")` |
+| Seed-brief format | AGENTS.md § Key Conventions — Seed-brief |
+| Worktree CLI | `skills/worktree/references/protocol.md` |
+| Spawn cost models | `skills/compound/references/composition.md` |
+| NOTES.md protocol | `_shared/notes-md-protocol.md` |
+| Authoring guide | `skills/new-skill/references/authoring.md` |
 
 ## Existing instruction files
 
@@ -83,7 +123,6 @@ Shared docs at `_shared/` are accessible via `@_shared/<file.md>` (configured in
 ## Rules
 
 - `.gitignore` entries: `.claude/NOTES.md`, `.worktrees/`, `node_modules/` — do not commit these.
-- Skills specify their own `model:` and `effort:` in frontmatter — trust them.
 - Orchestrator agents (`mode: primary`) drive the process and own the loop. They delegate domain work to sub-skills and subagents. Orchestrator SKILL.md files must be ≤ 150 lines.
 - Worker agents should include `permission: { task: {"*": "deny"}, question: "deny" }` to prevent recursive spawning and user interaction.
 - **Persist lessons to AGENTS.md**: When you discover a project-level convention, gotcha, or architecture rule that future agents would benefit from, add it to this file under the relevant section. NOTES.md is ephemeral session scratch — durable knowledge lives here.

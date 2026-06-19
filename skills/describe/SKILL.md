@@ -4,7 +4,7 @@ description: Explore and understand a problem space interactively. Uses visualiz
 ---
 Lead the user conversation during discovery. Deeply understand the problem space via interactive exploration and validation. Produces structured problem statements (What, Why, Who, Boundaries) with prior-art findings.
 
-Read `@_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
+Load the "interviewing-rules" skill — adopt atomic questions, rigor, visual-first, explicit approval.
 
 ## I/O
 
@@ -26,7 +26,7 @@ If invoked with a seed-brief (from discover), use the provided `domain` and `pro
 
 ### 2. Scope
 
-Read `@_shared/composition.md` for spawn cost models.
+Read `skills/compound/references/composition.md` for spawn cost models.
 
 Read `references/scope.md` for work-unit types. Load the "scope-assessment" skill with work units derived from the problem. Each independent domain is a work unit. Scope-assessment groups disjoint domains for parallel research.
 

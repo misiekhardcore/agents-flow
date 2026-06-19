@@ -5,7 +5,7 @@
 **Entry condition**: PR for `feat/issue-<N>` is merged.
 
 1. Echo resolved repo `owner/repo`.
-2. Checkpoint NOTES.md. Read `@_shared/compound-on-exit.md`. Invoke the "compound" skill exactly once on clean completion to capture final learnings.
+2. Checkpoint NOTES.md. Invoke the "compound" skill exactly once on clean completion (per the "orchestrator-rules" skill § Compound on exit) to capture final learnings.
 3. Dispatch `workflow-wrap-up-runner` via the task tool from the worktree root:
    ```
    repo: <owner/repo>

@@ -26,7 +26,7 @@ Scan for vague language or thin sections → spawn `workflow-deepening-agent` vi
 
 ### 5. Output
 
-Load the "preflight" skill. Read `@_shared/handoff-artifact.md`. Write decisions to issue body under `## Implementation plan`:
+Load the "preflight" skill. Load the "handoff-artifact" skill. Write decisions to issue body under `## Implementation plan`:
 - Component diagram (Mermaid).
 - Key interfaces and data flow.
 - Sub-issues with GitHub relationships.

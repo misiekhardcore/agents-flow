@@ -1,7 +1,6 @@
 ---
 name: orchestrator-rules
 description: Standard directives for pipeline orchestrators coordinating specialist sub-skills.
-user-invocable: false
 ---
 Rules that apply to all pipeline orchestrators.
 
@@ -19,7 +18,7 @@ Merging is always a human action. Exit cleanly at the awaiting-merge stage; neve
 
 ## Seed-brief contract
 
-See `_shared/seed-brief.md` for the YAML packaging convention. Each agent spawn includes all needed context in the prompt — callers define the input contract; receivers do not detect or switch modes.
+See AGENTS.md § Key Conventions — Seed-brief for the YAML packaging convention. Each agent spawn includes all needed context in the prompt — callers define the input contract; receivers do not detect or switch modes.
 
 ## Progress tracking via NOTES.md
 
@@ -79,3 +78,7 @@ Slice rules:
 - **Checkpoint before every skill invocation or agent spawn.** If the session dies mid-spawn, NOTES.md is the sole resume source.
 - **No issue body updates for intra-orchestrator state.** Phase boundaries use the handoff-artifact; everything else stays in NOTES.md.
 - **Keep under 2k tokens.** - ummarize stable decisions if it grows.
+
+## Compound on exit
+
+Invoke the "compound" skill exactly once on clean completion. No invocation on abort, refusal, or early exit. The assessment gate (whether learnings are worth capturing) is left to compound — the orchestrator does not pre-screen.

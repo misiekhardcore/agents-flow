@@ -1,5 +1,7 @@
-# Handoff Artifact — Protocol
-
+---
+name: handoff-artifact
+description: Phase-boundary handoff protocol — five-field issue body structure (AC, Constraints, Prior decisions, Evidence, Open questions) for cross-phase state transfer.
+---
 Phase-boundary skills hand off state by updating the GitHub issue body. Read on-demand at handoff steps; do not preload.
 
 Each skill that produces a handoff artifact documents its own section heading and field requirements in its own file.

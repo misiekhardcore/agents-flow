@@ -1,7 +1,6 @@
 ---
 name: specify
 description: Turn a problem statement into precise, testable acceptance criteria.
-when_to_use: Use after /describe. Invoked by /discover; can run standalone.
 ---
 <!-- Stays inline: interactive — requires back-and-forth with user. -->
 
@@ -9,7 +8,7 @@ Lead requirements team. Transforms problem statements into testable, non-vague a
 
 ## I/O
 - **Input**: Problem statement (from /describe) or user description.
-- **Optional**: Prior-art brief (`problem_domain`, `existing_patterns`, `constraints`). Skip duplicate internal research if present. See `@_shared/composition.md`.
+- **Optional**: Prior-art brief (`problem_domain`, `existing_patterns`, `constraints`). Skip duplicate internal research if present. See `skills/compound/references/composition.md`.
 - **Output**: Numbered list of testable AC scenarios.
 
 ## Process
@@ -33,5 +32,5 @@ Lead requirements team. Transforms problem statements into testable, non-vague a
 <rules>
 <critical>MUST NOT use vague terms like "fast", "user-friendly", or "appropriate" — every AC MUST be testable.</critical>
 <constraint>MUST fetch and confirm URLs/external claims before citing them in specs.</constraint>
-<constraint>MUST read `@_shared/interviewing-rules.md`.</constraint>
+<constraint>MUST load the "interviewing-rules" skill.</constraint>
 </rules>
