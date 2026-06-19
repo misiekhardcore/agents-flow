@@ -45,8 +45,8 @@ For each tier in ascending order:
 1. **Before dispatching tier T**, verify every tier-T−1 sub-task has settled (PR open or FAILED). Tier 1 has no prerequisite.
 2. Dispatch all sub-tasks in current tier as parallel `Task` sub-agents **in a single message**. For each sub-issue M:
    - Emit: `[sub-issue #<M>] dispatched (tier <T>)`
-   - Create worktree for branch `feat/epic-<N>-sub-<M>` on base `<base-branch>`. Invoke the worktree protocol (`Read ${CLAUDE_PLUGIN_ROOT}/_shared/worktree-protocol.md`).
-   - Dispatch `Agent("agents/workflow-implement-runner.md")` with seed brief:
+   - Create worktree for branch `feat/epic-<N>-sub-<M>` on base `<base-branch>`. Invoke the worktree protocol (`Read @_shared/worktree-protocol.md`).
+   - Dispatch `workflow-implement-runner` via the task tool with seed brief:
      - `repo`: owner/repo
      - `branch`: `feat/epic-<N>-sub-<M>`
      - `active_issue`: `<M>`

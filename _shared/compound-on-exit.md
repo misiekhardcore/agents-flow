@@ -4,11 +4,7 @@ Phase-ending orchestrators invoke `/compound` once upon clean completion to capt
 
 ## Directive
 
-After the final phase completes, invoke the `compound` skill:
-
-```
-Skill("compound")
-```
+After the final phase completes, invoke the "compound" skill.
 
 ## Scope
 

@@ -4,7 +4,7 @@
 
 On every invocation:
 
-1. Invoke `Skill("preflight")`. Echo resolved `owner/repo`. Create `.claude/NOTES.md` with task list and next-action per `Skill("orchestrator-rules")`.
+1. Invoke the "preflight" skill. Echo resolved `owner/repo`. Create `.claude/NOTES.md` with task list and next-action per the "orchestrator-rules" skill.
 2. Detect current state using the commands in **State detection** below.
 3. Consult the **Resume state machine** to determine which stage to enter.
 

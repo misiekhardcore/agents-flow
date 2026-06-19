@@ -2,13 +2,13 @@
 
 ## Purpose
 
-A **seed-brief** is a payload format that orchestrators use to hand off context to spawned agents or sub-skills at spawn time. It solves the **zero context inheritance** problem: when you spawn a new Claude session with `Agent()` or call a sub-skill, the spawned agent arrives with no knowledge of prior work, decisions, or findings.
+A **seed-brief** is a payload format that orchestrators use to hand off context to spawned agents or sub-skills at spawn time. It solves the **zero context inheritance** problem: when you spawn a new agent via the task tool or invoke a sub-skill, the spawned agent arrives with no knowledge of prior work, decisions, or findings.
 
 The seed-brief packages critical state—scope, repo, branch, active issue, prior art, findings—as raw YAML inside a `<seed-brief>` XML block in the agent's prompt. Agents use it to arrive with full context without re-researching — no detection or mode-switching required.
 
 ## When to Use
 
-Use seed-briefs when spawning worker agents via `Agent()` to hand off context at spawn time.
+Use seed-briefs when spawning worker agents via the task tool to hand off context at spawn time.
 
 Do NOT use for:
 - **Mid-cycle state within the same worktree.** Use `.claude/NOTES.md` for findings, failing AC, prior decisions during the same phase.
@@ -46,7 +46,7 @@ payload:
 1. **Run repo/scope-preflight once at entry.**
 2. **Construct seed-brief** with `repo`, `branch`, `active_issue`, and `payload`.
 3. **Checkpoint NOTES.md before constructing the brief.**
-   Write `## Current task` and `## Next action on resume` before every `Skill()` or `Agent()` call so NOTES.md contains enough state to reconstruct if the session dies mid-spawn.
+   Write `## Current task` and `## Next action on resume` before every skill invocation or agent spawn so NOTES.md contains enough state to reconstruct if the session dies mid-spawn.
 4. **Pass to every agent spawn.**
 
 ## Rules

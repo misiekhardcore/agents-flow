@@ -12,7 +12,7 @@ Skills and reference files serve different purposes and require different access
 
 |What you're accessing|When to use|How to access|
 |-|-|-|
-|Protocol or Worker skill|Runtime behavior agents must adopt or execute|`Invoke \`Skill("<name>")\``|
+|Protocol or Worker skill|Runtime behavior agents must adopt or execute|Invoke the `<name>` skill|
 |Per-skill reference doc|Static tables, checklists, or context scoped to one skill|`Read \`references/<file>.md\``|
 |Shared reference doc|Static tables, checklists, or context shared across skills|`Read \`_shared/<file>.md\``|
 
@@ -53,7 +53,7 @@ Orchestrators must remain "thin" to avoid context bloat and logic drift.
 
 - **SKILL.md Limit**: Must be ≤ 150 lines.
 - **No Inline Domain Work**: Orchestrators should not perform the actual task (e.g., writing code, auditing files).
-- **Delegation**: All domain work must be delegated via `Skill()` (for Worker or Protocol skills) or `Agent()` (for Worker Agents).
+- **Delegation**: All domain work must be delegated via the skill tool (for Worker or Protocol skills) or the task tool (for Worker Agents).
 
 ## Worker-Agent Dispatch Pattern
 
@@ -68,24 +68,23 @@ To prevent race conditions and "last-write-wins" conflicts:
 - **Isolation Escape Hatch**: If disjoint scope cannot be guaranteed, use `isolation: "worktree"` to provide each agent with its own git worktree.
 
 ### 3. Defensive Frontmatter
-Worker agents should include both Claude Code and opencode guardrails:
+Worker agents should include opencode guardrails:
 
-- **Claude Code**: `disallowedTools: Agent AskUserQuestion` — prevents recursive agent spawning and user interaction.
-- **OpenCode**: `permission: { task: {"*": "deny"}, question: "deny" }` — equivalent for opencode's permission system.
-- **Read-only workers** (reviewers, scanners): Add `Write Edit` to `disallowedTools` and `edit: "deny"` to `permission`.
+- **Permission**: `permission: { task: {"*": "deny"}, question: "deny" }` — prevents recursive agent spawning and user interaction.
+- **Read-only workers** (reviewers, scanners): Add `edit: "deny"` to `permission`.
 
 ## Custom Agent Authoring
 
 ### When to use a Custom Agent File
 Use a dedicated file in the `agents/` directory when:
-- Specific tool restrictions are required (`disallowedTools` for Claude Code, `permission` for opencode).
+- Specific tool restrictions are required (`permission` for opencode).
 - A specific model override is needed.
 - `mode` classification must be set (`primary` for orchestrators, `all` for sub-orchestrators, `subagent` for workers).
 - A `maxTurns` (`steps` in opencode) cap is required.
 
 ### Body Bug Workaround (GitHub #13627)
 Due to a bug where agent file bodies are occasionally ignored:
-- **Constraint**: All critical rules and personas must be embedded directly in the `prompt` argument of the `Agent()` call, not just in the agent file.
+- **Constraint**: All critical rules and personas must be embedded directly in the spawn prompt when dispatching via the task tool, not just in the agent file.
 - `TODO: remove this workaround when GitHub #13627 is resolved`.
 
 ## Orchestrator Loop Pattern
@@ -100,7 +99,7 @@ For tasks requiring iterative refinement (e.g., Build → Review → Verify):
 Orchestrators (and standalone L2 skills) use `.claude/NOTES.md` as their in-phase progress tracker:
 
 - **Create on entry**: Write `## Current task` and initial state when the phase starts.
-- **Checkpoint before spawn**: Before every `Skill()` or `Agent()` call, write the current task, next action, and any open questions. This provides crash recovery if the session dies mid-spawn.
+- **Checkpoint before spawn**: Before every skill invocation or agent spawn, write the current task, next action, and any open questions. This provides crash recovery if the session dies mid-spawn.
 - **Update on return**: After sub-agent completes, append findings, decisions, and updated task state.
 - **Slice in seed-brief**: Include a `progress` field in the seed-brief payload carrying the relevant NOTES.md slice (task list subset + decisions).
 
@@ -147,7 +146,7 @@ Each skill maps to a role and tier. `/new-skill` derives the tier from the role,
 
 **`## Protocol skills`** (Orchestrator, Specialist, Utility):
 ```
-Adopt `Skill("<protocol-name>")`.
+Adopt the "<protocol-name>" skill.
 ```
 One line per protocol. Usually `orchestrator-rules` for orchestrators, `interviewing-rules` for interactive skills.
 
@@ -178,16 +177,6 @@ Sequential step numbering. Orchestrators always include Init NOTES.md, Sign-off,
 
 Per-role frontmatter defaults are documented in `_shared/frontmatter-reference.md` (§ Default Values by Role). That file also serves as the canonical field registry for both tools and both file types (SKILL.md + agent `.md`).
 
-### Dual-Compat Frontmatter
-
-All skills in `agents-flow` carry frontmatter for both Claude Code and opencode:
-
-- **SKILL.md files**: Include `compatibility: claude-code opencode` as the last field before `---`. All existing Claude Code fields remain in place — opencode ignores unrecognized fields.
-- **Agent `.md` files**: Carry both Claude Code fields and opencode fields (`mode`, `permission`, `hidden`). Each tool reads its own frontmatter; unknown fields are silently ignored.
-- **New skills**: `/new-skill` automatically adds `compatibility: claude-code opencode` to every generated SKILL.md.
-
-See `_shared/frontmatter-reference.md` for the complete field registry, per-role defaults, and Claude Code → OpenCode field mapping.
-
 ## Orchestrator Decomposition
 
 When an orchestrator must decide how to fan out work across agents, use `/scope-assessment` as the canonical decomposition step:
@@ -208,7 +197,7 @@ Reference on-demand via `Read \`_shared/<file>.md\``:
 
 - `composition.md` — team/sub-agent cost and shape
 - `frontmatter-reference.md` — canonical field registry for SKILL.md and agent `.md` files (both tools)
-- `dispatch-decision.md` — condensed role taxonomy and `context: fork` decision table
+- `dispatch-decision.md` — condensed role taxonomy and dispatch decision table
 - `handoff-artifact.md` — five-field issue-body structure for phase handoffs
 - `interviewing-rules.md` — one-question-at-a-time interviewing protocol for user-interactive discovery
 - `notes-md-protocol.md` — `.claude/NOTES.md` lifecycle, shape, and update cadence
@@ -217,22 +206,13 @@ Reference on-demand via `Read \`_shared/<file>.md\``:
 
 ## Agent File Template
 
-Agent files live in `agents/<agent-name>.md`. Use this dual-compat template:
+Agent files live in `agents/<agent-name>.md`:
 
 ```yaml
 ---
-# --- Shared fields (both tools) ---
 name: <agent-name>
 description: <one sentence — what it does and when it's spawned>
 model: <sonnet|haiku|opus>
-
-# --- Claude Code fields ---
-user-invocable: false
-disallowedTools: Agent AskUserQuestion  # + Write Edit for read-only agents
-# maxTurns: 15
-# background: true  # for parallel workers
-
-# --- OpenCode fields ---
 mode: subagent  # primary | all | subagent
 # hidden: true  # hide from @ menu (subagent only)
 # permission:
@@ -266,7 +246,6 @@ structured output block
 
 ## Agent Catalogue
 
-All agent files live under `agents/`. See each skill's `## Worker Agent Inventory` section for spawned agents. Common patterns:
-- `agents/<skill>-runner.md` — autonomous core (Tier 2 shell + runner split)
-- `agents/<role>-agent.md` — parallel worker (spawned by runner)
-- `agents/reviewer-<domain>.md` — domain reviewer (spawned by review-runner)
+All agent files live under `agents/`. See each skill's `## Worker Agent Inventory` section for spawned agents. Dispatch is a single tier — the primary orchestrator (or a lifecycle skill) dispatches leaf workers directly; no intermediate runner agents. Common patterns:
+- `agents/<role>-agent.md` / `agents/workflow-<role>.md` — parallel leaf worker (spawned directly by the orchestrator)
+- `agents/workflow-reviewer.md` — parameterized reviewer, one dispatch per `focus:` (replaces the old per-domain reviewer agents)

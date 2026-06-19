@@ -36,7 +36,7 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 - **Specialist** — executes a bounded task; receives a seed brief from an orchestrator (e.g. `/build`, `/review`, `/architecture`)
 - **Interactive primitive** — reusable inline behavior; invoked by specialists; no team, no handoff (e.g. `/grill-me`)
 - **Utility** — user-invocable maintenance/post-work skill; no seed brief, no handoff artifact (e.g. `/compound`, `/prune`, `/resolve-pr-feedback`)
-- **Protocol** — encodes behavioral rules; invoked via `Skill()`; never user-invocable; no agents (e.g. `orchestrator-rules`, `interviewing-rules`)
+- **Protocol** — encodes behavioral rules; invoked via the skill tool; never user-invocable; no agents (e.g. `orchestrator-rules`, `interviewing-rules`)
 
 **If Orchestrator:** Ask one follow-up `AskUserQuestion` with `header: "Orchestrator type"`, question: "Does this orchestrator do its own deep reasoning, or sequence already-designed sub-skills?"
 
@@ -47,10 +47,10 @@ Only generate `when_to_use` frontmatter when the author answers Yes; omit otherw
 **If Specialist or Primitive:** Ask one follow-up `AskUserQuestion` with `header: "Contract"`, question: "Does this skill require user interaction during execution (deliberation, decisions, grill-me), or is it fully autonomous (research, verification, code work)?"
 
 **Options:**
-- **Interactive (Recommended)** — user must be present; invoked via `Skill()`; set `user-invocable: true`
-- **Autonomous** — no user interaction; invoked via `Agent()`; set `user-invocable: false`
+- **Interactive (Recommended)** — user must be present; invoked via the skill tool; set `user-invocable: true`
+- **Autonomous** — no user interaction; dispatched via the task tool; set `user-invocable: false`
 
-> **If the skill needs BOTH research and user interaction**: it must be split into two skills — an autonomous research skill (`user-invocable: false`, `Agent()`-only) and an interactive skill (`user-invocable: true`, `Skill()`-only). Name the research skill `<name>-research`. See `_shared/composition.md` § Consumption Contracts.
+> **If the skill needs BOTH research and user interaction**: it must be split into two skills — an autonomous research skill (`user-invocable: false`, task-tool-only) and an interactive skill (`user-invocable: true`, skill-tool-only). Name the research skill `<name>-research`. See `_shared/composition.md` § Consumption Contracts.
 
 Then ask one follow-up `AskUserQuestion` with `header: "Visibility"`, question: "Should this skill be hidden from the slash-command menu?"
 
@@ -123,7 +123,7 @@ If the author picks **Restricted subset**, ask one free-text follow-up: "Which t
 - **No parallelism** — skill runs inline; no sub-agents
 - **Parallel subagents** — skill spawns independent subagents; lead merges results (applies to all roles)
 
-If the author picks **Parallel subagents**, ask a follow-up free-text: "Which conditions gate the spawn decision? (reference the rubric in `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` — e.g., scope class, file count, main-thread overrun)".
+If the author picks **Parallel subagents**, ask a follow-up free-text: "Which conditions gate the spawn decision? (reference the rubric in `@_shared/composition.md` — e.g., scope class, file count, main-thread overrun)".
 
 - Store the answer as a "Spawn justification" block in the skill body.
 
@@ -152,7 +152,7 @@ Then a second `AskUserQuestion` call: `header: "Composition"`, question: "Does t
 **Options:**
 - **Personal (Recommended)** — `~/.claude/skills/<name>/SKILL.md` (individual use)
 - **Project** — `<cwd>/.claude/skills/<name>/SKILL.md` (committed to the current repo)
-- **Plugin** — `${CLAUDE_PLUGIN_ROOT}/skills/<name>/SKILL.md` (contributing to this plugin; dogfooding)
+- **Plugin** — `./skills/<name>/SKILL.md` (contributing to this plugin; dogfooding)
 
 ## Step 13: Reference file loading phases
 

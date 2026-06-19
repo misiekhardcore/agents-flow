@@ -4,7 +4,7 @@
 
 ### Step 0 — Pre-flight
 
-Invoke `Skill("preflight")`.
+Invoke the "preflight" skill.
 Confirmation prompt: "Does this match the repo and branch you intend to work on?"
 
 ### Step 1 — Issue Review
@@ -17,7 +17,7 @@ Create a git worktree (`wt switch --create`). Worktrees keep the main workspace 
 
 Before creating `./.claude/NOTES.md`, verify `/.claude/NOTES.md` is listed in `.gitignore` at repo root; add if missing. Create `./.claude/NOTES.md` with the initial task list harvested from the issue. This is the living worklog — it survives unexpected session close.
 
-Reference: Invoke `Read ${CLAUDE_PLUGIN_ROOT}/_shared/notes-md-protocol.md`.
+Reference: Invoke `Read @_shared/notes-md-protocol.md`.
 
 ### Step 3 — Spawn Workers
 
@@ -47,7 +47,7 @@ Keep context focused. Trigger on **concept shifts**, not percentages:
 - Stale tool results after work has moved on → clear with context editing.
 - About to read a large file or grep wide → delegate to sub-agent that returns focused report.
 - About to start a new sub-issue or just spawned a sub-agent → natural reset.
-- Invoke `Skill("compaction-protocol")`. Context editing first, sub-agents second, `/compact` last.
+- Invoke the "compaction-protocol" skill. Context editing first, sub-agents second, `/compact` last.
 
 ### Step 8 — Incremental Commits & Notes
 

@@ -2,12 +2,9 @@
 name: wrap-up
 description: Clean up local state after a PR is open — remove the worktree, delete the branch, and clear NOTES.md.
 when_to_use: Run when ready to discard the feature worktree after a PR is open.
-model: sonnet
-user-invocable: true
 allowed-tools: Bash Read
-compatibility: claude-code opencode
 ---
-Safely remove the feature worktree, delete the branch, and clear any remaining NOTES.md. In standalone mode, confirms before destructive actions and refuses when the operation would destroy protected state. When invoked with `confirmed` as skill arg (e.g., `/wrap-up confirmed`), executes directly without user prompts. Orchestrators spawn `Agent('agents/workflow-wrap-up-runner.md')` for fully autonomous cleanup. Cleans up local state: removes worktree, deletes branch, clears NOTES.md. Expects PR to be in a terminal state. Refuses destructive actions on dirty state in standalone mode.
+Safely remove the feature worktree, delete the branch, and clear any remaining NOTES.md. In standalone mode, confirms before destructive actions and refuses when the operation would destroy protected state. When invoked with `confirmed` as skill arg (e.g., `/wrap-up confirmed`), executes directly without user prompts. Orchestrators dispatch `workflow-wrap-up-runner` via the task tool for fully autonomous cleanup. Cleans up local state: removes worktree, deletes branch, clears NOTES.md. Expects PR to be in a terminal state. Refuses destructive actions on dirty state in standalone mode.
 
 ## Input
 
@@ -18,15 +15,15 @@ Safely remove the feature worktree, delete the branch, and clear any remaining N
 ## Process
 
 1. Check for `confirmed` in skill args.
-2. Invoke `Skill("worktree")` — adopt worktree lifecycle protocol.
-3. Invoke `Skill("notes-md")` — adopt NOTES.md lifecycle protocol.
+2. Invoke the "worktree" skill — adopt worktree lifecycle protocol.
+3. Invoke the "notes-md" skill — adopt NOTES.md lifecycle protocol.
 4. Read `references/procedure.md` for the step-by-step removal procedure.
 5. Run step 1 (detect state) in all cases.
 6. If `confirmed` arg present: skip to step 5 (execute removal). If worktree is dirty in this mode, **refuse**.
 7. Otherwise (standalone mode): run steps 2–4 (state machine + user confirmations), then step 5.
 8. Report what was removed.
 
-**Orchestrator mode**: orchestrators should spawn `Agent('agents/workflow-wrap-up-runner.md')` directly instead of calling this skill — the runner is fully autonomous.
+**Orchestrator mode**: orchestrators should dispatch `workflow-wrap-up-runner` via the task tool directly instead of calling this skill — the runner is fully autonomous.
 
 ## Output
 

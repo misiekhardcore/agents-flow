@@ -7,10 +7,10 @@
 3. **`/verify`**: QA team → verifies every AC.
 4. **Evaluation**:
    - **Clean pass** → PR creation.
-   - **Findings present & cycles < 3** → Package **fix brief** (failing AC + `file:line` findings) in `./.claude/NOTES.md`. Invoke `Skill("compaction-protocol")` to format concisely. Resume `/build` → `/review` → `/verify`.
-   - **Cycles = 3** → PR creation → surface remaining findings in Finalize.
+   - **Findings present & cycles < 5** → Package **fix brief** (failing AC + `file:line` findings) in `./.claude/NOTES.md`. Resume build → review → verify.
+   - **Cycles = 5** → PR creation → surface remaining findings in Finalize.
 
-**Reporting**: Emit one status line per cycle: `Cycle N/3 — /build <state>, /review <n findings>, /verify <n failures>`.
+**Reporting**: Emit one status line per cycle: `Cycle N/<max_cycles> — build <state>, review <n findings>, verify <n failures>`.
 
 ## PR Creation & Finalize
 
@@ -26,6 +26,6 @@ Run from worktree root.
 ### Finalize
 
 - **Clean exit** → present PR URL.
-- **Exhausted exit** (3 cycles, findings remain):
+- **Exhausted exit** (5 cycles, findings remain):
   - PR URL + findings → binary question: "Continue loop, or accept and close?"
     - **Continue** → One more cycle → log escalation in PR `## Notes` → return to Finalize.

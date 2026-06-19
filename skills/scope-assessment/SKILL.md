@@ -1,11 +1,6 @@
 ---
 name: scope-assessment
 description: Given a list of work units (each with an id and resource list), group them by shared resources and output one agent entry per conflict-free group. Use when an orchestrator needs to fan out work without resource conflicts.
-model: haiku
-user-invocable: false
-context: fork
-agent: Explore
-compatibility: claude-code opencode
 ---
 ## Input
 
@@ -30,23 +25,25 @@ work_units:
    - `resources`: deduplicated, sorted union of all resources in the group.
 6. Output the agent plan (see Output).
 
-## Output
-
+<output>
+<format>
 ```yaml
 agents:
   - scope: "<one sentence>"
     resources: [<file_or_path>, ...]
 ```
+</format>
 
 - One entry per disjoint group.
 - `scope` is a single sentence; no bullet lists or sub-items.
 - `resources` is a flat, deduplicated, sorted list.
 - No sizing or complexity labels — output is agent-consumable only.
+</output>
 
-## Rules
-
-- Never produce sizing or complexity labels of any kind.
-- Never infer resources not explicitly listed in the input — callers own resource enumeration.
-- When all work units are disjoint, output N agents (one per unit).
-- When all work units overlap, output 1 agent covering the full resource union.
-- Output only the YAML block; no prose explanation unless the caller explicitly requests one.
+<rules>
+<constraint>MUST NEVER produce sizing or complexity labels of any kind.</constraint>
+<constraint>MUST NEVER infer resources not explicitly listed in the input — callers own resource enumeration.</constraint>
+<constraint>When all work units are disjoint, MUST output N agents (one per unit).</constraint>
+<constraint>When all work units overlap, MUST output 1 agent covering the full resource union.</constraint>
+<constraint>MUST output only the YAML block; NO prose explanation unless the caller explicitly requests one.</constraint>
+</rules>

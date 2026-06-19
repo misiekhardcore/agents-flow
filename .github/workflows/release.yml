@@ -41,8 +41,7 @@ jobs:
         id: bump
         run: |
           set -euo pipefail
-          name=$(jq -r '.name' .claude-plugin/plugin.json)
-          current=$(jq -r '.version' .claude-plugin/plugin.json)
+          current=$(jq -r '.version' package.json)
           IFS='.' read -r major minor patch <<<"$current"
           case "${{ inputs.bump }}" in
             major) major=$((major+1)); minor=0; patch=0 ;;
@@ -51,20 +50,17 @@ jobs:
           esac
           new="${major}.${minor}.${patch}"
           {
-            echo "name=$name"
             echo "version=$new"
             echo "tag=v$new"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Bump plugin.json and marketplace.json
+      - name: Bump package.json
         run: |
           set -euo pipefail
           v="${{ steps.bump.outputs.version }}"
           tmp=$(mktemp)
-          jq --arg v "$v" '.version = $v' .claude-plugin/plugin.json > "$tmp"
-          mv "$tmp" .claude-plugin/plugin.json
-          jq --arg v "$v" '.metadata.version = $v | .plugins[0].version = $v' .claude-plugin/marketplace.json > "$tmp"
-          mv "$tmp" .claude-plugin/marketplace.json
+          jq --arg v "$v" '.version = $v' package.json > "$tmp"
+          mv "$tmp" package.json
 
       - name: Update CHANGELOG
         run: |
@@ -76,7 +72,7 @@ jobs:
       - name: Commit, tag, push
         run: |
           set -euo pipefail
-          git add .claude-plugin/plugin.json .claude-plugin/marketplace.json CHANGELOG.md
+          git add package.json CHANGELOG.md
           git commit -m "chore: release ${{ steps.bump.outputs.tag }}"
           git tag -a "${{ steps.bump.outputs.tag }}" -m "${{ steps.bump.outputs.tag }}"
           git push origin HEAD
@@ -90,7 +86,7 @@ jobs:
       - name: Package source tarball
         run: |
           set -euo pipefail
-          name="${{ steps.bump.outputs.name }}"
+          name=$(jq -r '.name' package.json)
           version="${{ steps.bump.outputs.version }}"
           file="${name}-${version}.tar.gz"
           git archive \

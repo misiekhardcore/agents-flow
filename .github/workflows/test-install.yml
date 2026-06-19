@@ -1,0 +1,17 @@
+name: Test install
+
+on:
+  pull_request:
+    branches: [main, epic/opencode-native-rebuild]
+
+jobs:
+  smoke-test:
+    name: Install smoke test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Run install smoke test
+        run: tests/install-smoke.sh

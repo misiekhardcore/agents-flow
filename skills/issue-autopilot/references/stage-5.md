@@ -5,8 +5,8 @@
 **Entry condition**: PR for `feat/issue-<N>` is merged.
 
 1. Echo resolved repo `owner/repo`.
-2. Checkpoint NOTES.md. Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion to capture final learnings.
-3. Spawn `Agent("agents/workflow-wrap-up-runner.md")` from the worktree root:
+2. Checkpoint NOTES.md. Read `@_shared/compound-on-exit.md`. Invoke the "compound" skill exactly once on clean completion to capture final learnings.
+3. Dispatch `workflow-wrap-up-runner` via the task tool from the worktree root:
    ```
    repo: <owner/repo>
    branch: feat/issue-<N>

@@ -11,7 +11,7 @@
 ## Process
 
 1. **Acquire Review Package** (Context Isolation).
-2. **Triage**: Gate evaluation is handled by `review-runner` agent — it reads diff and file paths, activates reviewers, and returns merged findings.
+2. **Triage**: The caller (orchestrator or `review` skill) evaluates focus gates against the diff and file paths, dispatches one `workflow-reviewer` per activated focus, and merges findings — no intermediate runner.
 3. **Review**: Reviewers work in parallel → use `superpowers:requesting-code-review`.
 4. **Findings Format**: `file:line | issue title | severity (P0-P3) | confidence (0.0-1.0)`.
 5. **Merge & Dedup**:
@@ -23,7 +23,7 @@
 ## PR Mode: Idempotent Posting
 
 1. **Fingerprint**: `fp = sha256(file:line_bucket:normalized_title)[:12]`.
-2. **Pre-scan**: Fetch existing comments by runner → skip if `<!-- review-fp: <fp> -->` exists.
+2. **Pre-scan**: Fetch existing review comments → skip if `<!-- review-fp: <fp> -->` exists.
 3. **Payload**:
    - Inline findings: `**[P1, conf 0.85]** Title \n\n Elaboration \n\n <!-- review-fp: <fp> -->`.
    - Summary: Top 3 findings sorted by severity → confidence. End with `<!-- review-summary-fp: <sum_fp> -->`.

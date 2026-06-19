@@ -3,54 +3,58 @@ name: implement
 description: Full implementation cycle — build, review, and verify, then open a PR.
 when_to_use: Use to run the full implementation cycle (build → review → verify → PR) from an approved issue.
 argument-hint: "[issue#]"
-model: sonnet
 effort: high
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
-compatibility: claude-code opencode
 ---
 Orchestrate build → review → verify → fix cycles to produce a ready-to-merge PR. Delegates all phase work to sub-skills and worker agents — never codes, reviews, or runs tests inline.
 
-Adopt `Skill("orchestrator-rules")` for checkpoint, NOTES.md, and seed-brief conventions.
+Adopt the "orchestrator-rules" skill for checkpoint, NOTES.md, and seed-brief conventions.
 
 Read `references/scope.md` for work-unit types.
 
 ## Process
 
 ### 1. Entry
-Invoke `Skill("orchestrator-rules")`, `Skill("notes-md")`, `Skill("preflight")` (with `suppress branch line: true`). Create `.claude/NOTES.md`.
+Load the "orchestrator-rules", "notes-md", and "preflight" skills (the last with `suppress branch line: true`). Create `.claude/NOTES.md`.
 
 ### 2. Ingestion
 Read issue body (`## Requirements`, `## Implementation plan`). If plan absent and non-trivial → prompt: "Run `/define` first, or confirm this is trivial." If trivial → proceed as single-unit.
 
 ### 3. Scope
-Build work units from sub-issues and file groups. Invoke `Skill("scope-assessment")` with work units (each with `id` and `resources`) → receive agent plan of disjoint groups. Single-unit (no sub-issues, no disjoint file groups) → one runner directly. Multi-unit → one runner per disjoint group.
+Build work units from sub-issues and file groups. Invoke the "scope-assessment" skill with work units (each with `id` and `resources`) → receive agent plan of disjoint groups. Single-unit (no sub-issues, no disjoint file groups) → one group, run the loop directly. Multi-unit → one loop per disjoint group.
 
 ### 4. Worktree
-Invoke `Skill("worktree")` to create or verify the implementation worktree.
+Invoke the "worktree" skill to create or verify the implementation worktree.
 
 ### 5. Handoff
 Read `_shared/handoff-artifact.md` at this point. Ensure issue body has the five-field structure (AC, Constraints, Prior decisions, Evidence, Open questions).
 
-### 6. Delegate
-Per disjoint group, spawn `Agent("agents/workflow-implement-runner.md")` with seed-brief containing `repo`, `branch`, `active_issue`, `max_cycles: 3`, `scope`, and `payload` (resources + NOTES.md progress slice). See `_shared/seed-brief.md` for seed-brief format and `agents/workflow-implement-runner.md` for the runner I/O contract. Runner handles build → review → verify cycles internally (3-cycle hard stop per `references/scope-cycles.md`).
+### 6. Build → review → verify loop
+Per disjoint group, run a bounded loop (3-cycle hard stop per `references/scope-cycles.md`), dispatching leaf workers directly — no intermediate runner:
+1. **Build**: spawn `workflow-build-worker` via the task tool with a `<seed-brief>` (`repo`, `branch`, `active_issue`, `scope`, `payload` = resources + NOTES.md progress slice).
+2. **Review**: invoke the "review" skill (dispatch_mode: fix-brief) — it dispatches `workflow-reviewer` per activated focus and returns merged findings.
+3. **Verify**: invoke the "verify" skill — it dispatches `workflow-reviewer focus: correctness` per AC group and returns the pass/fail report.
+4. **Evaluate**: clean pass → step 7; findings present & cycle < 3 → write fix brief to NOTES.md, resume; cycle = 3 → step 7 with remaining findings surfaced.
 
-Each `Agent()` spawn includes a `<seed-brief>` YAML block per `_shared/seed-brief.md`.
+Checkpoint NOTES.md before each spawn. See `_shared/seed-brief.md` for seed-brief format and `@_shared/composition.md` for spawn cost models.
 
-See `${CLAUDE_PLUGIN_ROOT}/_shared/composition.md` for spawn cost models.
-
-### 7. Collect
-Wait for runner return. Collect PR URL and findings.
+### 7. PR creation
+From the worktree root: harvest `## Decisions made this session` + `## Open questions` from `.claude/NOTES.md`; push the branch; resolve base (`git symbolic-ref refs/remotes/origin/HEAD` or fall back to `main`); `gh pr create --draft --base <base>` with `## Summary`, `## Testing notes`, `## Notes`; then delete `.claude/NOTES*.md`.
 
 ### 8. Compound
-Read `_shared/compound-on-exit.md`. On clean completion, invoke `Skill("compound")` exactly once. No invocation on abort or early exit.
+Read `_shared/compound-on-exit.md`. On clean completion, invoke the "compound" skill exactly once. No invocation on abort or early exit.
 
 ### 9. Finalize
 Present PR URL. If findings remain after 3 cycles → binary: "Continue loop, or accept and close?" On continue → one more cycle → log escalation in PR body.
 
-## Rules
-- **Zero prompts**: No user prompting between sub-skills.
-- **Rigor**: No PR before clean pass OR 3 cycles exhausted.
-- **Completeness**: Each cycle must address ALL previous findings.
-- **No autonomous merge**: Exit at awaiting-merge stage; never trigger a merge.
-- **Point-of-need reads**: Read `_shared/seed-brief.md` before spawning workers, `_shared/composition.md` when sizing team shape, `_shared/compound-on-exit.md` before compound step, `references/scope-cycles.md` when evaluating cycles. Do not preload.
-- **NOTES.md**: Checkpoint before every spawn. See `Skill("orchestrator-rules")` § Progress tracking.
+<rules>
+<constraint>MUST NOT prompt the user between sub-skills.</constraint>
+<constraint>MUST NOT open a PR before a clean pass OR 3 cycles are exhausted.</constraint>
+<constraint>Each cycle MUST address ALL previous findings.</constraint>
+<critical>MUST NOT trigger an autonomous merge — exit at the awaiting-merge stage; NEVER trigger a merge.</critical>
+<constraint>MUST checkpoint NOTES.md before every spawn. See the "orchestrator-rules" skill § Progress tracking.</constraint>
+</rules>
+
+<guidelines>
+<recommendation>Read at point of need, do not preload: `_shared/seed-brief.md` before spawning workers, `_shared/composition.md` when sizing team shape, `_shared/compound-on-exit.md` before the compound step, `references/scope-cycles.md` when evaluating cycles.</recommendation>
+</guidelines>

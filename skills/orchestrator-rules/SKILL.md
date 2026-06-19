@@ -2,13 +2,12 @@
 name: orchestrator-rules
 description: Standard directives for pipeline orchestrators coordinating specialist sub-skills.
 user-invocable: false
-compatibility: claude-code opencode
 ---
 Rules that apply to all pipeline orchestrators.
 
 ## CWD verification
 
-Invoke `Skill("preflight")` at entry. Echo resolved `owner/repo` before every downstream cross-repo `gh` mutation.
+Invoke the "preflight" skill at entry. Echo resolved `owner/repo` before every downstream cross-repo `gh` mutation.
 
 ## Delegation
 
@@ -27,7 +26,7 @@ See `_shared/seed-brief.md` for the YAML packaging convention. Each agent spawn 
 Orchestrators use NOTES.md as the progress ledger for multi-step pipelines that delegate to sub-agents. The pattern:
 
 1. **Create** — On entry (after preflight), create NOTES.md with the full task list derived from work units.
-2. **Checkpoint before sub-agent spawn** — Write `## Current task` (what the sub-agent will do) and `## Next action on resume` (how to reconstruct if session dies) before every `Skill()` or `Agent()` call. This ensures crash-safe resume.
+2. **Checkpoint before sub-agent spawn** — Write `## Current task` (what the sub-agent will do) and `## Next action on resume` (how to reconstruct if session dies) before every skill invocation or agent spawn. This ensures crash-safe resume.
 3. **Update after sub-agent returns** — The sub-skill may have written its own progress, decisions, and task updates to NOTES.md while it ran. Read the file, integrate its results, flip checkboxes, and log any new decisions. The orchestrator's view is authoritative for the overall pipeline; the sub-skill's entries are intermediate working state.
 4. **Wrap-up** — On clean exit, leave NOTES.md in place for the phase-ending skill to harvest. On abnormal exit, NOTES.md serves as the resume point.
 
@@ -77,6 +76,6 @@ Slice rules:
 
 ### Rules
 
-- **Checkpoint before every `Skill()` or `Agent()` call.** If the session dies mid-spawn, NOTES.md is the sole resume source.
+- **Checkpoint before every skill invocation or agent spawn.** If the session dies mid-spawn, NOTES.md is the sole resume source.
 - **No issue body updates for intra-orchestrator state.** Phase boundaries use the handoff-artifact; everything else stays in NOTES.md.
 - **Keep under 2k tokens.** - ummarize stable decisions if it grows.

@@ -3,13 +3,8 @@ name: verify
 description: QA verification of implementation against AC. Reports pass/fail per criterion.
 argument-hint: "[issue#]"
 when_to_use: Use after /build to verify all acceptance criteria are met. Invoked by /implement; can run standalone.
-model: haiku
 effort: low
-user-invocable: true
 allowed-tools: Agent Bash Read TaskCreate TaskUpdate
-context: fork
-agent: general-purpose
-compatibility: claude-code opencode
 ---
 Lead verification phase. Goal: Verify every AC from the issue is met with evidence. Report pass/fail per criterion.
 
@@ -20,10 +15,12 @@ Lead verification phase. Goal: Verify every AC from the issue is met with eviden
 
 ## Process
 1. Acquire verification package: `git diff` for diff, `gh issue view` for AC.
-2. Spawn `Agent("agents/workflow-verify-runner.md")` with `acceptance_criteria` and `diff`. Runner groups AC, spawns qa-agents in parallel, and returns the unified report.
+2. Group the acceptance criteria into disjoint domain groups (API, UI, DB, auth, …) and dispatch one `workflow-reviewer` via the task tool with `focus: correctness` per group in parallel (pass the group as `acceptance_criteria` + `diff`). If the AC or plan mention migration/rollback/backwards-compatibility or the diff contains schema changes, also dispatch `workflow-reviewer` via the task tool with `focus: migration`. No verify-runner — dispatch leaf reviewers directly.
+3. Merge: any P0 finding (P0 = "AC not satisfied / golden path crash") in any group → overall FAIL; no P0 findings → overall PASS. Emit unified report ordered by AC group.
 
-## Rules
-- **Separation**: Never fix issues during verification. Report failures in the verify output; fixes are a `/build` responsibility.
-- **Evidence-Based**: No "it works" — every criterion needs evidence.
-- **Feedback Loop**: Any failure → report goes back to `/build` for fixes.
-- **Isolation**: Pass only acceptance_criteria and diff to the runner — not the full build session history.
+<rules>
+<critical>MUST NOT fix issues during verification — report failures in the verify output; fixes are a `/build` responsibility.</critical>
+<constraint>MUST be evidence-based: NO "it works" — every criterion MUST have evidence.</constraint>
+<constraint>Any failure MUST send the report back to `/build` for fixes.</constraint>
+<constraint>MUST pass only the AC group and diff to each reviewer — NEVER the full build session history.</constraint>
+</rules>

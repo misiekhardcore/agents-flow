@@ -2,11 +2,8 @@
 name: find-skills
 description: Discover and install agent skills when the user asks if Claude can do something or wants to extend capabilities.
 when_to_use: Use when the user asks whether Claude can do something or wants to install new skills.
-model: haiku
 effort: low
 allowed-tools: Agent Bash WebFetch WebSearch
-user-invocable: true
-compatibility: claude-code opencode
 ---
 Lead skill discovery and installation. Goal: Find and install agent skills from the open ecosystem when the user wants to extend capabilities. Discovery sub-agent (haiku) handles search + leaderboard fetch; main thread handles confirmation + install.
 
@@ -24,7 +21,7 @@ Use this skill when the user:
 
 ## Process
 1. Read `references/search-guide.md` for search strategy and `references/categories.md` for category guidance and fallback options.
-2. Spawn `Agent("agents/workflow-skill-discovery.md")` with the `query`. Agent checks the leaderboard and runs `npx skills find [query]`.
+2. Dispatch `workflow-skill-discovery` via the task tool with the `query`. Agent checks the leaderboard and runs `npx skills find [query]`.
 3. Sub-agent verifies quality — install count, source reputation, and GitHub stars.
 4. Present candidate skills to the user with name, description, install count, and source.
 5. On confirmation, install with `npx skills add <package> -g -y`.

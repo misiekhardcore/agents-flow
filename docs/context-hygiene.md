@@ -22,4 +22,4 @@ Fixed shape per `Read _shared/handoff-artifact.md`:
 
 ## See also
 - `docs/token-budgets.md` for concrete numbers.
-- Invoke `Skill("compaction-protocol")` for in-phase pressure.
+- Invoke the "compaction-protocol" skill for in-phase pressure.

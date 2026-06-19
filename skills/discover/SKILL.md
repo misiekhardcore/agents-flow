@@ -3,14 +3,12 @@ name: discover
 description: Full discovery phase — explore a problem and produce a GitHub issue with AC.
 when_to_use: Start of any new feature or vague problem. Precedes /define.
 argument-hint: "[issue# | description]"
-model: opus
 effort: high
 allowed-tools: Agent Bash Read
-compatibility: claude-code opencode
 ---
 Lead discovery phase. Transform vague ideas into well-specified GitHub issues ready for architecture and implementation. Pure orchestrator — delegates all domain work to sub-skills.
 
-Invoke `Skill("orchestrator-rules")` — adopt CWD verification, delegation, seed-brief contract, NOTES.md progress tracking.
+Invoke the "orchestrator-rules" skill — adopt CWD verification, delegation, seed-brief contract, NOTES.md progress tracking.
 
 ## Process
 
@@ -18,19 +16,19 @@ Invoke `Skill("orchestrator-rules")` — adopt CWD verification, delegation, see
 
 Read issue (problem statement + AC), if specified. If no issue exists, elicit a one-sentence problem summary from the user.
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
+Read `@_shared/interviewing-rules.md` — adopt atomic questions, rigor, visual-first, explicit approval.
 
 ### 2. Init NOTES.md
 
-Create `.claude/NOTES.md` with task list, and next-action per `Skill("orchestrator-rules")`.
+Create `.claude/NOTES.md` with task list, and next-action per the "orchestrator-rules" skill.
 
 ### 3. Problem exploration
 
-Invoke `Skill("describe")` with seed-brief containing the problem statement. Describe owns the full user conversation — research, PPT grilling, visualization, problem statement. Returns structured understanding (What, Why, Who, Boundaries, Prior art).
+Invoke the "describe" skill with seed-brief containing the problem statement. Describe owns the full user conversation — research, PPT grilling, visualization, problem statement. Returns structured understanding (What, Why, Who, Boundaries, Prior art).
 
 ### 4. Acceptance criteria
 
-Invoke `Skill("specify")` with seed-brief containing the problem statement and prior-art findings from describe. Specify derives testable AC via grill-me passes. Returns GIVEN/WHEN/THEN scenarios.
+Invoke the "specify" skill with seed-brief containing the problem statement and prior-art findings from describe. Specify derives testable AC via grill-me passes. Returns GIVEN/WHEN/THEN scenarios.
 
 ### 5. Review
 
@@ -44,9 +42,9 @@ Combine output into a cohesive GitHub issue body:
 
 ### 7. Handoff
 
-Invoke `Skill("preflight")`. Suppress branch line: true.
+Invoke the "preflight" skill. Suppress branch line: true.
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/handoff-artifact.md` at this point (point-of-need) — do not preload.
+Read `@_shared/handoff-artifact.md` at this point (point-of-need) — do not preload.
 
 If issue exists, update the body. Otherwise create via `gh issue`.
 
@@ -56,11 +54,11 @@ Require explicit user approval.
 
 ### 9. Compound on exit
 
-Read `${CLAUDE_PLUGIN_ROOT}/_shared/compound-on-exit.md`. Invoke `Skill("compound")` exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
+Read `@_shared/compound-on-exit.md`. Invoke the "compound" skill exactly once on clean completion. Then instruct user: "Start `/implement` in a fresh session."
 
-## Rules
-
-- **Delegate, don't duplicate**: Sub-skills own their domain.
-- **Explicit approval**: Partial feedback ≠ approval. Require direct "Yes/Approved".
-- **Persistence**: Prior-art findings persisted in Prior decisions / Evidence fields.
-- **Traceability**: Every feature gets one issue; sub-issues use proper GitHub relationships.
+<rules>
+<constraint>MUST delegate, not duplicate: sub-skills own their domain.</constraint>
+<critical>MUST require a direct "Yes/Approved" — partial feedback is NEVER approval.</critical>
+<constraint>MUST persist prior-art findings in the Prior decisions / Evidence fields.</constraint>
+<constraint>Every feature MUST get exactly one issue; sub-issues MUST use proper GitHub relationships.</constraint>
+</rules>

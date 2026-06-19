@@ -43,21 +43,20 @@ Every skill has a primary consumption contract. Callers must use the correct inv
 
 |Contract|Invocation|Session|User Interaction|Examples|
 |-|-|-|-|-|
-|**Runner (autonomous)**|`Agent("agents/runner.md")`|Isolated|None|`implement-runner`, `review-runner`|
-|**Worker (autonomous)**|`Agent("agents/worker.md")`|Isolated|Parallel|`build-worker`, `reviewer-correctness`|
-|**Shell (interactive)**|`Skill("name")`|Caller's session|Full|`implement`, `build`, `review`, `audit-issues`, `find-skills`|
-|**Worker Skill**|`Skill("name")` + `context: fork`|Isolated|Task confirmations only|`compound`, `verify`, `scope-assessment`|
+|**Worker (autonomous)**|task tool|Isolated|Parallel|`build-worker`, `workflow-reviewer`|
+|**Shell (interactive)**|skill tool|Caller's session|Full|`implement`, `build`, `review`, `audit-issues`, `find-skills`|
+|**Worker Skill**|skill tool|Isolated|Task confirmations only|`compound`, `verify`, `scope-assessment`|
 
-> **Protocol skills** (`user-invocable: false`) are adopted by the calling agent — never `Skill()`-invoked.
+> **Protocol skills** (`user-invocable: false`) are adopted by the calling agent — never invoked via the skill tool.
 
 ### Rules
 
 - **If a skill needs both research and interaction: split it.** Do not add mode-switching inside a single skill. The interactive phases are run in main context, while the research phases or other non-interactive tasks are handled by autonomous sub-agents. Either create sub-skills or spawn agents internally from the interactive skill as needed.
-- **Interactive skills may internally spawn autonomous Agents.** This is an implementation detail invisible to the caller.
-- **Never spawn an interactive skill as `Agent()`** — the user must be present for deliberation.
+- **Interactive skills may internally dispatch autonomous agents via the task tool.** This is an implementation detail invisible to the caller.
+- **Never dispatch an interactive skill via the task tool** — the user must be present for deliberation.
 
 ## Input Contracts
-Spawn-time context is passed directly in the Agent() prompt. See `_shared/seed-brief.md` for the YAML packaging convention.
+Spawn-time context is passed directly in the task tool spawn prompt. See `_shared/seed-brief.md` for the YAML packaging convention.
 - **Single input** → one-line inline in spawn prompt.
 - **Multiple inputs** → structured YAML block in spawn prompt.
 
