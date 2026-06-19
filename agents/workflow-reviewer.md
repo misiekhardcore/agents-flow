@@ -112,10 +112,10 @@ file:line | issue title | severity (P0-P3) | confidence (0.0-1.0)
 
 |Level|correctness|security|perf|a11y|architecture|docs|migration|standards|
 |-|-|-|-|-|-|-|-|-|
-|P0|AC not satisfied / golden path crash|auth bypass, data exfiltration, RCE|feature unusable at production load|—|breaks stated AC|—|data loss or irreversible corruption|—|
-|P1|incorrect on common input|exploitable under common conditions|measurable degradation on common paths|—|clear scope violation|—|blocks deploy or breaks old version|—|
-|P2|edge case not handled|latent risk, hard to trigger|latent risk at scale|—|premature generalization|stale mention|safe but no rollback plan|deviation confusing maintainers|
-|P3|defensive improvement|defence-in-depth improvement|micro-optimization|—|minor nit|duplication|style/documentation gap|style nit|
+|P0|AC not satisfied / golden path crash|auth bypass, data exfiltration, RCE|feature unusable at production load|WCAG 2.1 AA violation breaks golden path (keyboard trap, no focus, critical ARIA missing)|breaks stated AC|—|data loss or irreversible corruption|—|
+|P1|incorrect on common input|exploitable under common conditions|measurable degradation on common paths|keyboard nav broken or screen reader silent on common interaction|clear scope violation|—|blocks deploy or breaks old version|—|
+|P2|edge case not handled|latent risk, hard to trigger|latent risk at scale|ARIA gap, missing label, or low contrast creates friction|premature generalization|stale mention|safe but no rollback plan|deviation confusing maintainers|
+|P3|defensive improvement|defence-in-depth improvement|micro-optimization|advisory gap (WCAG 2.2 AA, minor contrast delta, reduced-motion)|minor nit|duplication|style/documentation gap|style nit|
 
 <rules>
 <constraint>Report ONLY findings relevant to the selected `focus:`.</constraint>

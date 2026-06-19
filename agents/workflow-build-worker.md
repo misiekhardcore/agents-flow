@@ -2,7 +2,6 @@
 name: workflow-build-worker
 description: Parallel build worker for one work unit. Implements a single sub-issue or file group in the shared worktree. Dispatched in parallel by the implement orchestrator (or the /implement skill) per work unit.
 model: sonnet
-user-invocable: false
 hidden: true
 permission:
   task:

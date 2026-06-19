@@ -2,7 +2,6 @@
 name: workflow-constraint-analyzer
 description: Architecture constraint analyzer for /architecture. Reads codebase-scanner and patterns-researcher outputs and maps system constraints, topology, integration risks, and assumption challenges.
 model: sonnet
-user-invocable: false
 hidden: true
 permission:
   task:
@@ -50,8 +49,8 @@ Scale pressure points:
 </output>
 
 <rules>
-<critical>You MUST be read-only — make no edits.</critical>
-<constraint>You MUST derive constraints from existing code and docs — NEVER from speculation.</constraint>
-<constraint>If input data is sparse, you MUST note what is missing rather than fabricating.</constraint>
-<constraint>Output MUST stay under 500 tokens.</constraint>
+<constraint>Read only — NEVER write to files.</constraint>
+<constraint>Derive constraints from existing code and docs — NEVER speculate.</constraint>
+<constraint>If input data is sparse, note what is missing rather than fabricating.</constraint>
+<constraint>Keep output under 500 tokens.</constraint>
 </rules>

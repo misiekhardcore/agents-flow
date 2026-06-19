@@ -2,7 +2,6 @@
 name: workflow-flow-analyst
 description: High-risk flow mapper. Maps control flow, error paths, and failure modes for the target domain. Activated when high-risk signals are detected.
 model: sonnet
-user-invocable: false
 hidden: true
 permission:
   task:
@@ -48,7 +47,3 @@ Failure modes:
 <critical>You MUST be read-only — make no edits.</critical>
 <constraint>You MUST flag missing error handlers explicitly.</constraint>
 </rules>
-
-<guidelines>
-<recommendation>Focus on failure modes and error handling — happy path is secondary.</recommendation>
-</guidelines>

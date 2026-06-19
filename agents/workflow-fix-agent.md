@@ -2,7 +2,6 @@
 name: workflow-fix-agent
 description: PR feedback fix agent. Reads one review thread, applies the fix, verifies it, and returns a verdict. Spawned in parallel by /resolve-pr-feedback — one per file group.
 model: sonnet
-user-invocable: false
 hidden: true
 permission:
   task:
@@ -60,8 +59,6 @@ threads:
 </output>
 
 <rules>
-<critical>You MUST touch only files in the assigned thread list — NO collateral changes.</critical>
-<constraint>Each logical fix MUST be a separate commit referencing the thread.</constraint>
-<critical>You MUST NOT resolve the GitHub thread — the orchestrator does that.</critical>
-<constraint>If verification fails after 2 retries, you MUST mark `needs-human` and move on.</constraint>
+<critical>Touch ONLY files in the assigned thread list — no collateral changes.</critical>
+<constraint>Each logical fix as a separate commit referencing the thread.</constraint>
 </rules>
