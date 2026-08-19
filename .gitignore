@@ -1,4 +1,5 @@
-.claude/NOTES.md
-.worktrees/
+.forge/logs
+.forge/worktrees
+.forge/worktrees.json
 node_modules/
 opencode.local.json
