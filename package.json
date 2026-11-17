@@ -11,9 +11,9 @@
     "format:fix": "bin/minify-md --write"
   },
   "devDependencies": {
-    "git-cliff": "^2.13.1",
-    "husky": "^9.1",
-    "lint-staged": "^15.5"
+    "git-cliff": "^2.14.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.1"
   },
   "lint-staged": {
     "*.md": [
